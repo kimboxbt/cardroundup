@@ -674,7 +674,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 <div class="toast" id="toast"><span id="toastMsg"></span></div>
 
 <script>
-const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
+const FORMSPREE_ID = 'xdapokdn';
 
 const AFF={
   csr:'https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve?ICID=AFFL_KBYLI_CJ',
@@ -974,7 +974,7 @@ async function submitEmail(){
   const inp=document.getElementById('ebInput'),email=inp.value.trim();
   if(!email||!email.includes('@')){inp.style.borderColor='rgba(255,90,90,.4)';inp.focus();return;}
   inp.style.borderColor='';
-  if(FORMSPREE_ID!=='YOUR_FORMSPREE_ID'){
+  if(FORMSPREE_ID!=='xdapokdn'){
     try{await fetch(`https://formspree.io/f/${FORMSPREE_ID}`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email,cards:[...myCards].join(',')})});}catch{}
   }
   console.log('[KBYLI] email signup:',email);
@@ -1377,7 +1377,7 @@ async function sendMagicLink(){
   const email = document.getElementById('magicEmail').value.trim();
   if(!email || !email.includes('@')){ return; }
   const msg = document.getElementById('magicMsg');
-  if(FORMSPREE_ID !== 'YOUR_FORMSPREE_ID'){
+  if(FORMSPREE_ID !== 'xdapokdn'){
     try {
       await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
         method:'POST',
