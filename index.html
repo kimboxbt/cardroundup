@@ -6,6 +6,12 @@
 <title>Card Roundup — Never lose a credit card benefit again</title>
 <meta name="description" content="Track every credit card benefit before it expires. 46 premium cards, organized by reset cadence. Free.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- PostHog Analytics — tracks affiliate clicks and page views -->
+<script>
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString()+" (stub)"},o="capture identify alias people.set people.set_once set register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+// Replace YOUR_POSTHOG_KEY below with key from posthog.com after creating account
+posthog.init('YOUR_POSTHOG_KEY',{api_host:'https://us.i.posthog.com',loaded:function(ph){if('YOUR_POSTHOG_KEY'==='YOUR_POSTHOG_KEY')ph.opt_out_capturing();}});
+</script>
 <style>
 :root{
   --bg:#0B0B0F;--s0:#0F0F14;--s1:#141419;--s2:#1C1C23;--s3:#24242D;
@@ -674,8 +680,10 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 <div class="toast" id="toast"><span id="toastMsg"></span></div>
 
 <script>
-const FORMSPREE_ID = 'xdapokdn';
+// Analytics — replace with your PostHog key from posthog.com
+const POSTHOG_KEY = 'YOUR_POSTHOG_KEY';
 
+// Affiliate tracking
 const AFF={
   csr:'https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve?ICID=AFFL_KBYLI_CJ',
   csp:'https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred?ICID=AFFL_KBYLI_CJ',
@@ -970,14 +978,22 @@ function syncHeader(){
 /* ── EMAIL BAR ─────────────────── */
 function initEmailBar(){if(localStorage.getItem('eb_d'))document.getElementById('emailBar').style.display='none';}
 function dismissEmail(){localStorage.setItem('eb_d','1');document.getElementById('emailBar').style.display='none';}
+const RESEND_CONFIGURED = true; // set to false until you add your Resend API key to Vercel
+
 async function submitEmail(){
   const inp=document.getElementById('ebInput'),email=inp.value.trim();
   if(!email||!email.includes('@')){inp.style.borderColor='rgba(255,90,90,.4)';inp.focus();return;}
   inp.style.borderColor='';
-  if(FORMSPREE_ID!=='xdapokdn'){
-    try{await fetch(`https://formspree.io/f/${FORMSPREE_ID}`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email,cards:[...myCards].join(',')})});}catch{}
+  try {
+    const res = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, cards: [...myCards].join(',')})
+    });
+    if(!res.ok) throw new Error('failed');
+  } catch(e) {
+    console.log('[CardRoundup] email signup:', email);
   }
-  console.log('[KBYLI] email signup:',email);
   document.getElementById('ebForm').innerHTML='<div class="eb-ok">✓ You\'re on the list — we\'ll remind you before credits expire.</div>';
   localStorage.setItem('eb_d','1');
   setTimeout(()=>document.getElementById('emailBar').style.display='none',4000);
@@ -1268,8 +1284,8 @@ function updateTabCounts(){
 
 function trackApply(id){
   const card=CARDS.find(c=>c.id===id);
-  console.log('[KBYLI affiliate] click →',id,card?.name);
-  // posthog?.capture('apply_click',{card_id:id,card_name:card?.name,section});
+  console.log('[CardRoundup affiliate] click →',id,card?.name);
+  if(window.posthog) posthog.capture('apply_click',{card_id:id,card_name:card?.name,section});
 }
 function flagCard(id){const card=CARDS.find(c=>c.id===id);showToast(`Flagged "${card?.name}" as outdated — thanks`);}
 
@@ -1377,18 +1393,16 @@ async function sendMagicLink(){
   const email = document.getElementById('magicEmail').value.trim();
   if(!email || !email.includes('@')){ return; }
   const msg = document.getElementById('magicMsg');
-  if(FORMSPREE_ID !== 'xdapokdn'){
-    try {
-      await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body: JSON.stringify({type:'magic_link', email, cards:[...myCards].join(',')}),
-      });
-    } catch {}
-  }
-  // For now show success — in production Supabase auth.signInWithOtp handles the link
+  // Save email to Resend audience via our API
+  try {
+    await fetch('/api/subscribe', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({type:'magic_link', email, cards:[...myCards].join(',')}),
+    });
+  } catch {}
   msg.style.display = 'block';
-  console.log('[KBYLI] Magic link sent to:', email);
+  console.log('[CardRoundup] Magic link requested:', email);
   setTimeout(closeAuthModal, 3500);
 }
 
