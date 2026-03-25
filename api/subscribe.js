@@ -1,17 +1,62 @@
 // api/subscribe.js
-// Saves email signups to Resend
-// Auto-finds your audience ID — no manual lookup needed
+// Saves email + card IDs to Resend using correct API (Nov 2025+)
+// Contacts are now global in Resend — no audience ID needed
+// Custom properties used to store cards and welcomed flag
 //
-// ONLY THING YOU NEED:
-// Vercel → Settings → Environment Variables → Add:
-// RESEND_API_KEY = your re_ key from resend.com/api-keys
+// SETUP: Add RESEND_API_KEY to Vercel environment variables. That's it.
+
+const RESEND_BASE = 'https://api.resend.com';
+const UA = 'CardRoundup/1.0'; // Required by Resend — missing = 403
+
+function headers(apiKey) {
+  return {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json',
+    'User-Agent': UA,
+  };
+}
+
+// Ensures the 'cards' and 'welcomed' custom properties exist in Resend
+// Idempotent — safe to call every time, won't fail if already exists
+async function ensureProperties(apiKey) {
+  const props = [
+    { key: 'cards',    type: 'string',  fallbackValue: '' },
+    { key: 'welcomed', type: 'string',  fallbackValue: 'false' },
+  ];
+  for (const prop of props) {
+    try {
+      await fetch(`${RESEND_BASE}/contact-properties`, {
+        method: 'POST',
+        headers: headers(apiKey),
+        body: JSON.stringify(prop),
+      });
+      // 409 Conflict = already exists — that's fine, we ignore it
+    } catch {}
+  }
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { email, cards } = req.body;
+  // sendBeacon sends as text/plain — parse accordingly
+  let email, cards;
+  const contentType = req.headers['content-type'] || '';
+  if (contentType.includes('application/json')) {
+    ({ email, cards } = req.body);
+  } else {
+    // sendBeacon sends body as text — parse manually
+    try {
+      const parsed = typeof req.body === 'string'
+        ? JSON.parse(req.body)
+        : req.body;
+      email = parsed.email;
+      cards = parsed.cards;
+    } catch {
+      return res.status(400).json({ error: 'Invalid body' });
+    }
+  }
 
   if (!email || !email.includes('@')) {
     return res.status(400).json({ error: 'Invalid email' });
@@ -20,60 +65,54 @@ export default async function handler(req, res) {
   const apiKey = process.env.RESEND_API_KEY;
 
   if (!apiKey) {
-    console.log('[CardRoundup] Email signup (Resend not configured yet):', email);
+    console.log('[CardRoundup] Signup (RESEND_API_KEY not set):', email);
     return res.status(200).json({ success: true });
   }
 
   try {
-    // Auto-fetch audience ID
-    let audienceId = null;
-    const audiencesRes = await fetch('https://api.resend.com/audiences', {
-      headers: { 'Authorization': `Bearer ${apiKey}` }
-    });
+    // Ensure custom properties exist (idempotent)
+    await ensureProperties(apiKey);
 
-    if (audiencesRes.ok) {
-      const audiencesData = await audiencesRes.json();
-      if (audiencesData.data && audiencesData.data.length > 0) {
-        audienceId = audiencesData.data[0].id;
+    // Check if contact already exists — preserve welcomed flag
+    let alreadyWelcomed = 'false';
+    try {
+      const existing = await fetch(
+        `${RESEND_BASE}/contacts/${encodeURIComponent(email)}`,
+        { headers: headers(apiKey) }
+      );
+      if (existing.ok) {
+        const d = await existing.json();
+        alreadyWelcomed = d.properties?.welcomed || 'false';
       }
-    }
+    } catch {} // New contact — welcomed stays 'false'
 
-    // If no audience exists, create one automatically
-    if (!audienceId) {
-      const createRes = await fetch('https://api.resend.com/audiences', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: 'Card Roundup Subscribers' }),
-      });
-      if (createRes.ok) {
-        const created = await createRes.json();
-        audienceId = created.data?.id || created.id;
-      }
-    }
-
-    if (!audienceId) {
-      console.error('[CardRoundup] Could not get or create audience');
-      return res.status(200).json({ success: true });
-    }
-
-    // Add contact to audience
-    await fetch(`https://api.resend.com/audiences/${audienceId}/contacts`, {
+    // Create or update contact with latest card list
+    // POST to /contacts upserts by email
+    const contactRes = await fetch(`${RESEND_BASE}/contacts`, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, unsubscribed: false }),
+      headers: headers(apiKey),
+      body: JSON.stringify({
+        email,
+        unsubscribed: false,
+        properties: {
+          cards: cards || '',         // e.g. "csr,amexp,venturex"
+          welcomed: alreadyWelcomed,  // preserve — only set true by send-digest
+        },
+      }),
     });
 
-    console.log('[CardRoundup] Email saved:', email);
+    if (contactRes.ok) {
+      console.log('[CardRoundup] Contact saved:', email,
+        '| cards:', cards || '(none)', '| welcomed:', alreadyWelcomed);
+    } else {
+      const err = await contactRes.text();
+      console.error('[CardRoundup] Contact save error:', contactRes.status, err);
+    }
+
     return res.status(200).json({ success: true });
 
   } catch (error) {
     console.error('[CardRoundup] Subscribe error:', error);
-    return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true }); // Always 200 to user
   }
 }
