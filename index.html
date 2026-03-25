@@ -211,10 +211,9 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 }
 .promo-bar-inner{
   display:flex;width:max-content;
-  animation:pticker 50s linear infinite;
 }
 .promo-bar-inner:hover{animation-play-state:paused}
-@keyframes pticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pticker{from{transform:translateX(0)}to{transform:translateX(-33.333%)}}
 .pb-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
 .pp{display:flex;align-items:center;gap:8px;padding:7px 20px;border-right:1px solid rgba(240,168,48,0.07);flex-shrink:0;white-space:nowrap}
@@ -222,6 +221,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .pp-bonus{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--amber)}
 .pp-arr{color:var(--txd);font-size:10px}
 .pp-partner{font-size:10.5px;font-weight:500;color:var(--tx)}
+.pp-cards{font-size:9px;color:var(--txd);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .pp-exp{font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:1px 5px;border-radius:3px;background:rgba(240,168,48,0.08);color:var(--amber)}
 .pp-exp.hot{background:rgba(255,90,90,0.12);color:var(--red)}
 .promo-close{
@@ -554,8 +554,8 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 </div>
 
 <div class="ws" id="walletSetup" style="display:none">
-  <div class="ws-t">Your Card Wallet</div>
-  <div class="ws-s">Select the cards you carry. Your view filters to these across all tabs.</div>
+  <div class="ws-t">Add your cards</div>
+  <div class="ws-s">Tap the cards you carry — credits and resets track across all tabs. Changes save automatically.</div>
   <div class="ws-rows" id="wsRows"></div>
 </div>
 
@@ -601,10 +601,10 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   <div id="emptyState" style="display:none">
     <div class="ew">
       <div class="ew-i">◈</div>
-      <div class="ew-t">Which cards are in your wallet?</div>
-      <div class="ew-s">Select the cards you carry and we'll track every expiring credit across all tabs.</div>
-      <button class="btn btn-p" id="ewPickBtn"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Pick your cards</button>
-      <div class="ew-browse">or <button class="ew-browse-link" id="ewBrowseBtn">compare any of the 46 cards</button></div>
+      <div class="ew-t">Which cards do you carry?</div>
+      <div class="ew-s">Add the cards in your wallet and we'll show every credit expiring this month, quarter, and year — so you never leave money on the table.</div>
+      <button class="btn btn-p" id="ewPickBtn"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Add my cards</button>
+      <div class="ew-browse">or <button class="ew-browse-link" id="ewBrowseBtn">compare all 46 cards side by side</button></div>
     </div>
   </div>
   <div class="toolbar">
@@ -1031,25 +1031,31 @@ function daysUntil(d){const n=new Date();n.setHours(0,0,0,0);const t=new Date(d)
 function renderPromoTicker(){
   const bar=document.getElementById('promoBar');
   const inner=document.getElementById('promoInner');
+  if(!bar||!inner)return;
   if(promoClosed){bar.style.display='none';return;}
-  const active=mode==='mycards'?myCards:browseCards;
-  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0&&p.cards.some(c=>active.has(c)));
+  // Show ALL live promos always — not filtered by owned cards
+  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0);
   if(live.length===0){bar.style.display='none';return;}
-  bar.style.display='block';
-  // Build pill HTML
+  bar.style.display='flex';
   const pill=p=>{
     const d=daysUntil(p.expires),hot=d<=7;
-    return`<div class="pp"><span class="pp-cur">${p.currency}</span><span class="pp-bonus">${p.bonus}</span><span class="pp-arr">→</span><span class="pp-partner">${p.partner}</span><span class="pp-exp${hot?' hot':''}">exp ${d}d</span></div>`;
+    // Show card shorthands that qualify
+    const eligible=CARDS.filter(cd=>p.cards.includes(cd.id));
+    const cardStr=eligible.slice(0,3).map(cd=>cd.short).join(', ')+(eligible.length>3?' +more':'');
+    return`<div class="pp"><span class="pp-cur">${p.currency}</span><span class="pp-bonus">${p.bonus}</span><span class="pp-arr">→</span><span class="pp-partner">${p.partner}</span><span class="pp-cards">${cardStr}</span><span class="pp-exp${hot?' hot':''}">exp ${d}d</span></div>`;
   };
-  const html=live.map(pill).join('');
-  // Duplicate for seamless infinite loop
-  inner.innerHTML=html+html;
-  // Adjust animation speed to content width
-  const single=inner.scrollWidth/2;
-  const speed=Math.max(30,single/8); // ~8px per second
-  inner.style.animationDuration=speed+'s';
+  const single=live.map(pill).join('');
+  // Triple the content so there's always enough to fill any screen width seamlessly
+  inner.innerHTML=single+single+single;
+  // Must measure AFTER browser lays out — use double rAF
+  inner.style.animation='none';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    const w=inner.scrollWidth/3; // width of one copy
+    const speed=Math.max(15,w/80); // 80px/sec
+    inner.style.cssText=`animation:pticker ${speed}s linear infinite`;
+  }));
 }
-function closePromo(){promoClosed=true;document.getElementById('promoBar').style.display='none';}
+function closePromo(){promoClosed=true;const b=document.getElementById('promoBar');if(b)b.style.display='none';}
 
 /* ── MODE ─────────────────────── */
 function setMode(m){
@@ -1104,7 +1110,7 @@ function renderBrowsePicker(){
   const selCount=browseCards.size;
   el.innerHTML=`<div class="bp-row"><span class="bp-l">Compare cards</span><div class="bp-div"></div><button class="bp-a" onclick="browseAll()">All 46</button>${selCount>0?`<button class="bp-a" onclick="browseClear()">Clear (${selCount})</button>`:''}<span class="bp-cnt">${selCount===0?'Select cards to compare':selCount+' selected'}</span></div><div class="bp-chips">${groups}</div>`;
 }
-function toggleBrowse(id){if(browseCards.has(id)){if(browseCards.size>1)browseCards.delete(id);}else browseCards.add(id);renderBrowsePicker();renderGrid();}
+function toggleBrowse(id){if(browseCards.has(id))browseCards.delete(id);else browseCards.add(id);renderBrowsePicker();renderGrid();}
 function browseAll(){browseCards=new Set(CARDS.map(c=>c.id));renderBrowsePicker();renderGrid();}
 function browseClear(){browseCards.clear();renderBrowsePicker();renderGrid();}
 
