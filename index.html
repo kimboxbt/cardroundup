@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Card Roundup — Never lose a credit card benefit again</title>
+<meta name="description" content="Track every credit card benefit before it expires. 46 premium cards, organized by reset cadence. Free.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0F;--s0:#0F0F14;--s1:#141419;--s2:#1C1C23;--s3:#24242D;
+  --bd:rgba(255,255,255,0.07);--bd2:rgba(255,255,255,0.13);--bd3:rgba(255,255,255,0.24);
+  --tx:#E4E4EF;--txm:#9090A8;--txd:#525264;
+  --amber:#F0A830;--red:#FF5A5A;--blue:#6AAEF0;--green:#3DD68C;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-size:13.5px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* ── PAGE HEADER ─────────────────────────────────── */
+.ph{background:linear-gradient(150deg,#0D0D16 0%,#10101A 55%,#0E0F1C 100%);padding:22px 40px 18px;border-bottom:1px solid var(--bd2);position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:-80px;right:-60px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(140,140,220,0.06);pointer-events:none}
+.ph-left{flex:1;min-width:0}
+.ph-logo{
+  font-family:'Cormorant',serif;
+  font-size:clamp(26px,3.5vw,36px);font-weight:600;
+  letter-spacing:-.02em;line-height:1;
+  background:linear-gradient(140deg,#EEEEF8 20%,#7878AA 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:5px;
+}
+.ph-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.ph-acts{display:flex;gap:7px;align-items:center;flex-wrap:wrap;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:5px;font-family:'Figtree',sans-serif;font-size:10.5px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--bd2);white-space:nowrap;text-decoration:none}
+.btn-g{background:transparent;color:var(--txm)}.btn-g:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.btn-p{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}.btn-p:hover{background:#C8C8DC}
+/* "Save my wallet" — nudges anonymous users with a wallet to sign in */
+.btn-save{background:rgba(255,255,255,0.05);color:var(--txm);border-color:var(--bd2)}
+.btn-save:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+/* Share button — lives in profile panel + summary tab only */
+.btn-share{background:rgba(61,214,140,0.07);color:var(--green);border-color:rgba(61,214,140,0.20)}
+.btn-share:hover{background:rgba(61,214,140,0.14);border-color:rgba(61,214,140,0.35);color:var(--green)}
+
+/* ── SHARE MODAL ─────────────────────────────────── */
+.share-modal{
+  background:var(--s1);border:1px solid var(--bd2);
+  border-radius:14px;padding:0;
+  width:100%;max-width:560px;
+  position:relative;overflow:hidden;
+  animation:mslide .2s ease;
+}
+.share-header{
+  padding:20px 24px 16px;
+  border-bottom:1px solid var(--bd);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+}
+.share-title{font-family:'Cormorant',serif;font-size:21px;font-weight:500;color:var(--tx)}
+.share-sub{font-size:11.5px;color:var(--txm);margin-top:3px;line-height:1.5}
+/* Canvas preview inside modal */
+.share-preview{
+  padding:20px 24px 0;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
+.share-canvas-wrap{
+  width:100%;border-radius:8px;overflow:hidden;border:1px solid var(--bd2);
+  position:relative;
+}
+.share-canvas-wrap canvas{
+  width:100%;height:auto;display:block;
+}
+.share-generating{
+  position:absolute;inset:0;
+  background:var(--s2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:var(--txd);
+}
+/* Share action buttons */
+.share-actions{
+  padding:16px 24px 20px;
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+}
+.share-act{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 16px;border-radius:6px;
+  font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;
+  cursor:pointer;transition:all .15s;border:1px solid var(--bd2);
+  text-decoration:none;white-space:nowrap;
+}
+.share-act-primary{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}
+.share-act-primary:hover{background:#C8C8DC}
+.share-act-secondary{background:transparent;color:var(--txm)}
+.share-act-secondary:hover{background:var(--s2);color:var(--tx)}
+.share-act-reddit{background:rgba(255,69,0,0.08);color:#FF6634;border-color:rgba(255,69,0,0.18)}
+.share-act-reddit:hover{background:rgba(255,69,0,0.15)}
+.share-act-twitter{background:rgba(29,161,242,0.08);color:#4DA8F0;border-color:rgba(29,161,242,0.18)}
+.share-act-twitter:hover{background:rgba(29,161,242,0.15)}
+.share-empty{
+  padding:24px;text-align:center;font-size:12px;color:var(--txm);line-height:1.65;
+}
+.share-empty strong{color:var(--tx);display:block;margin-bottom:6px;font-size:14px;font-family:'Cormorant',serif;font-weight:500}
+.ph-sub{font-size:12px;color:var(--txm);line-height:1.5}
+.ph-meta{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
+.phm{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--txd);letter-spacing:.04em}
+.phm strong{color:var(--txm);font-weight:500}
+
+/* ── MODE BAR ─────────────────────────────────────── */
+.mode-bar{background:var(--s0);border-bottom:1px solid var(--bd);padding:0 40px;display:flex;align-items:stretch}
+.mb{padding:9px 15px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:11px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s;display:flex;align-items:center;gap:5px}
+.mb:hover{color:var(--txm)}.mb.on{color:var(--tx);border-bottom-color:var(--tx)}
+.mb-dot{width:5px;height:5px;border-radius:50%;display:inline-block;flex-shrink:0}
+.mcb{font-family:'JetBrains Mono',monospace;font-size:8.5px;background:var(--s3);color:var(--txm);padding:1px 5px;border-radius:8px}
+/* Edit wallet in mode bar — not a tab, just a utility button */
+.mb-edit{color:var(--txd);font-size:10.5px;border-bottom:none!important}
+.mb-edit:hover{color:var(--txm);background:transparent}
+
+/* ── ONBOARDING STRIP — first visit only ─────────── */
+.onboard-strip{
+  background:linear-gradient(90deg,rgba(61,214,140,0.04),rgba(106,174,240,0.04));
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  padding:14px 40px;
+  display:flex;align-items:center;gap:32px;flex-wrap:wrap;
+}
+.ob-step{display:flex;align-items:center;gap:8px}
+.ob-num{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--s3);border:1px solid var(--bd2);
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--txm);display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.ob-txt{font-size:11.5px;color:var(--txm)}
+.ob-txt strong{color:var(--tx);font-weight:500}
+.ob-arr{color:var(--txd);font-size:14px}
+.ob-dismiss{
+  margin-left:auto;background:none;border:none;color:var(--txd);
+  cursor:pointer;font-size:11px;font-family:'Figtree',sans-serif;
+  transition:color .15s;white-space:nowrap;
+}
+.ob-dismiss:hover{color:var(--txm)}
+
+/* ── WALLET SETUP ─────────────────────────────────── */
+.ws{padding:22px 40px;border-bottom:1px solid var(--bd);background:var(--s0)}
+.ws-t{font-family:'Cormorant',serif;font-size:19px;font-weight:500;margin-bottom:4px}
+.ws-s{font-size:11.5px;color:var(--txm);margin-bottom:14px}
+.ws-rows{display:flex;flex-direction:column;gap:10px}
+.ws-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ws-il{font-size:8.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--txd);width:76px;flex-shrink:0}
+.ws-chips{display:flex;flex-wrap:wrap;gap:4px}
+.wchip{display:inline-flex;align-items:center;gap:3px;padding:3px 8px 3px 5px;border-radius:4px;font-size:9.5px;font-weight:500;cursor:pointer;border:1px solid var(--chip-c,var(--bd2));color:var(--txd);background:transparent;transition:all .13s;font-family:'Figtree',sans-serif;white-space:nowrap}
+.wchip-d{width:4px;height:4px;border-radius:50%;background:var(--chip-c,var(--txd));flex-shrink:0}
+.wchip.on{color:#fff;background:color-mix(in srgb,var(--chip-c) 20%,transparent);border-color:var(--chip-c)}
+.wchip.on .wchip-d{background:rgba(255,255,255,.38)}
+
+/* ── BROWSE PICKER ────────────────────────────────── */
+.bpicker{background:var(--s0);border-bottom:1px solid var(--bd);padding:8px 40px 10px}
+.bp-row{display:flex;align-items:center;gap:9px;margin-bottom:7px}
+.bp-l{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--txd);flex-shrink:0}
+.bp-div{width:1px;height:11px;background:var(--bd2);flex-shrink:0}
+.bp-a{font-family:'Figtree',sans-serif;font-size:10px;font-weight:500;color:var(--txd);background:none;border:none;cursor:pointer;padding:2px 0;transition:color .15s}
+.bp-a:hover{color:var(--txm)}
+.bp-cnt{font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--txd);margin-left:auto;letter-spacing:.06em}
+.bp-chips{display:flex;flex-wrap:wrap;gap:4px 12px}
+.bp-g{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+.bp-il{font-size:8px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--txd);padding-right:3px;border-right:1px solid var(--bd2);margin-right:2px}
+.chip{display:inline-flex;align-items:center;gap:3px;padding:2px 7px 2px 5px;border-radius:3px;font-size:9.5px;font-weight:500;cursor:pointer;border:1px solid var(--chip-c,var(--bd2));color:var(--txd);background:transparent;transition:all .13s;font-family:'Figtree',sans-serif;white-space:nowrap}
+.chip-d{width:4px;height:4px;border-radius:50%;background:var(--chip-c,var(--txd));flex-shrink:0}
+.chip.on{color:#fff;background:color-mix(in srgb,var(--chip-c) 16%,transparent);border-color:var(--chip-c)}
+.chip:not(.on):hover{color:var(--txm)}
+
+/* ── EMAIL BAR ────────────────────────────────────── */
+.email-bar{background:rgba(61,214,140,0.03);border-bottom:1px solid rgba(61,214,140,0.10);padding:9px 40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.eb-text{font-size:11.5px;color:var(--txm);display:flex;align-items:center;gap:7px;flex-shrink:0}
+.eb-text strong{color:var(--tx);font-weight:600}
+.eb-form{display:flex;align-items:center;gap:6px;flex:1;min-width:220px;max-width:380px}
+.eb-input{flex:1;padding:6px 10px;background:var(--s2);border:1px solid var(--bd2);border-radius:4px;font-family:'Figtree',sans-serif;font-size:11.5px;color:var(--tx);outline:none;transition:border-color .15s}
+.eb-input::placeholder{color:var(--txd)}.eb-input:focus{border-color:rgba(61,214,140,.3)}
+.eb-sub{padding:6px 13px;border-radius:4px;border:none;cursor:pointer;background:rgba(61,214,140,0.14);border:1px solid rgba(61,214,140,0.28);color:var(--green);font-family:'Figtree',sans-serif;font-size:11px;font-weight:600;transition:all .15s;white-space:nowrap;flex-shrink:0}
+.eb-sub:hover{background:rgba(61,214,140,0.22)}
+.eb-x{margin-left:auto;background:none;border:none;color:var(--txd);cursor:pointer;font-size:15px;line-height:1;padding:2px 4px;transition:color .15s;flex-shrink:0}
+.eb-x:hover{color:var(--txm)}
+.eb-ok{font-size:11.5px;color:var(--green);display:flex;align-items:center;gap:6px}
+
+/* ── PROMO TICKER — infinite scroll ───────────────── */
+.promo-bar{
+  background:rgba(240,168,48,0.03);
+  border-bottom:1px solid rgba(240,168,48,0.10);
+  display:flex;align-items:stretch;
+  overflow:hidden;
+}
+/* Inline label — no absolute positioning, no overlap */
+.promo-bar-label{
+  flex-shrink:0;
+  display:flex;align-items:center;gap:5px;
+  padding:0 14px;
+  background:rgba(240,168,48,0.09);
+  border-right:1px solid rgba(240,168,48,0.14);
+  font-family:'JetBrains Mono',monospace;font-size:8.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--amber);
+  white-space:nowrap;
+}
+/* Scrolling area — mask only on right edge */
+.promo-scroll-wrap{
+  flex:1;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,black calc(100% - 48px),transparent 100%);
+  mask-image:linear-gradient(to right,black calc(100% - 48px),transparent 100%);
+}
+.promo-bar-inner{
+  display:flex;width:max-content;
+  animation:pticker 50s linear infinite;
+}
+.promo-bar-inner:hover{animation-play-state:paused}
+@keyframes pticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.pb-dot{width:5px;height:5px;border-radius:50%;background:var(--amber);animation:pulse 2.2s ease-in-out infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+.pp{display:flex;align-items:center;gap:8px;padding:7px 20px;border-right:1px solid rgba(240,168,48,0.07);flex-shrink:0;white-space:nowrap}
+.pp-cur{font-size:10px;font-weight:500;color:var(--txm)}
+.pp-bonus{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--amber)}
+.pp-arr{color:var(--txd);font-size:10px}
+.pp-partner{font-size:10.5px;font-weight:500;color:var(--tx)}
+.pp-exp{font-family:'JetBrains Mono',monospace;font-size:8.5px;padding:1px 5px;border-radius:3px;background:rgba(240,168,48,0.08);color:var(--amber)}
+.pp-exp.hot{background:rgba(255,90,90,0.12);color:var(--red)}
+.promo-close{
+  flex-shrink:0;display:flex;align-items:center;
+  padding:0 11px;border:none;cursor:pointer;
+  color:var(--txd);font-size:13px;
+  background:var(--bg);
+  border-left:1px solid rgba(240,168,48,0.10);
+  transition:color .15s;
+}
+.promo-close:hover{color:var(--txm)}
+
+/* ── NAV ──────────────────────────────────────────── */
+.nav-wrap{background:var(--s0);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:100}
+.nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 40px;position:relative}
+.nav::-webkit-scrollbar{display:none}
+.nb{padding:9px 12px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:11.5px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:color .15s;flex-shrink:0}
+.nb:hover{color:var(--txm)}.nb.on{color:var(--tx)}
+.nd{width:5px;height:5px;border-radius:50%;display:inline-block;flex-shrink:0}
+/* count badge on nav tabs — tells you how many cards have credits here */
+.nb-cnt{
+  font-family:'JetBrains Mono',monospace;font-size:8px;
+  background:var(--s3);color:var(--txd);
+  padding:0px 4px;border-radius:8px;
+  min-width:14px;text-align:center;
+  transition:background .15s,color .15s;
+}
+.nb.on .nb-cnt{background:rgba(255,255,255,0.12);color:var(--txm)}
+.nav-ind{position:absolute;bottom:0;left:0;height:1.5px;background:var(--tx);border-radius:2px 2px 0 0;transition:transform .24s cubic-bezier(.4,0,.2,1),width .24s cubic-bezier(.4,0,.2,1)}
+.reset-b{display:flex;align-items:center;gap:8px;padding:3px 40px;background:var(--s1);border-bottom:1px solid var(--bd)}
+.reset-b.urg{background:rgba(255,122,60,0.04);border-bottom-color:rgba(255,122,60,0.10)}
+.rb-t{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--txd)}
+.rb-t strong{color:var(--txm)}.rb-t.hot strong{color:#FF7A3C}
+
+/* ── MAIN ─────────────────────────────────────────── */
+.main{padding:14px 40px 48px}
+.toolbar{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.sw{position:relative;width:200px;flex-shrink:0}  /* fixed width, not flex:1 */
+.sw svg{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:11px;height:11px;color:var(--txd);pointer-events:none}
+.si-inp{width:100%;padding:5px 24px 5px 23px;background:var(--s2);border:1px solid var(--bd2);border-radius:4px;font-family:'Figtree',sans-serif;font-size:11.5px;color:var(--tx);outline:none;transition:border-color .15s}
+.si-inp::placeholder{color:var(--txd)}.si-inp:focus{border-color:var(--bd3)}
+.sc-x{display:none;position:absolute;right:6px;top:50%;transform:translateY(-50%);width:13px;height:13px;align-items:center;justify-content:center;background:var(--s3);border-radius:50%;cursor:pointer;font-size:8px;color:var(--txd);border:none}
+.tb-cnt{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--txd);margin-left:auto}
+.tb-cnt strong{color:var(--txm)}
+.tb-cal{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:4px;font-family:'Figtree',sans-serif;font-size:10px;font-weight:500;color:var(--txd);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s}
+.tb-cal:hover{color:var(--txm);border-color:var(--bd3)}
+
+/* ── GRID ─────────────────────────────────────────── */
+.gw{position:relative}
+/* Right fade only — no pseudo-element arrow, gradient is enough */
+.gfade{
+  position:absolute;right:0;top:0;bottom:0;width:72px;
+  background:linear-gradient(to right,transparent,var(--bg) 80%);
+  pointer-events:none;z-index:2;
+}
+.grid{
+  display:flex;gap:9px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,0.14) transparent;
+  /* padding-right so last card doesn't hide under fade */
+  padding-right:60px;
+}
+.grid::-webkit-scrollbar{height:3px}
+.grid::-webkit-scrollbar-track{background:rgba(255,255,255,0.03)}
+.grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.16);border-radius:2px}
+/* Single thin progress track below grid — scrollbar is the affordance, this is supplemental */
+.scroll-track{
+  height:1.5px;background:var(--bd);border-radius:1px;
+  margin-top:6px;overflow:hidden;
+}
+.scroll-thumb-el{
+  height:100%;background:var(--bd3);border-radius:1px;
+  transition:width .08s,transform .08s;
+}
+
+/* ── CARD COLUMN ──────────────────────────────────── */
+.col{
+  background:var(--s1);
+  border:1px solid var(--bd);
+  border-top:2px solid var(--cc,#333);
+  border-radius:0 0 8px 8px;
+  flex:1 1 268px;min-width:248px;max-width:298px; /* slightly wider for better readability */
+  scroll-snap-align:start;
+  display:flex;flex-direction:column;
+  transition:border-color .18s;
+}
+.col:hover{border-color:var(--bd2);border-top-color:var(--cc,#333)}
+
+/* card header — clean: name, fee, date, flag. nothing else. */
+.ch{padding:9px 13px 7px;background:rgba(0,0,0,.20);border-bottom:1px solid var(--bd);flex-shrink:0}
+.ch-top{display:flex;align-items:baseline;justify-content:space-between;gap:5px}
+.ch-name{font-size:10.5px;font-weight:600;letter-spacing:.02em;color:var(--ccm,var(--txm));line-height:1.3;flex:1}
+.ch-fee{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--txd);white-space:nowrap;flex-shrink:0}
+.ch-meta{display:flex;align-items:center;gap:5px;margin-top:3px}
+.ch-ver{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--txd)}
+.ch-ver.stale{color:var(--amber)}
+.ch-flag{font-size:8px;color:var(--txd);cursor:pointer;border:none;background:none;font-family:'Figtree',sans-serif;padding:0;text-decoration:underline;text-decoration-color:transparent;transition:all .15s}
+.ch-flag:hover{color:var(--txm);text-decoration-color:currentColor}
+
+/* credit items — amount is the hero */
+.cb{flex:1;display:flex;flex-direction:column;min-height:0}
+.ci{padding:8px 13px;border-bottom:1px solid var(--bd)}.ci:last-child{border-bottom:none}
+.ci-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.ci-n{
+  font-size:11.5px;font-weight:400;color:var(--txm); /* muted — amount is the star */
+  flex:1;line-height:1.4;
+}
+.ci-n.warn{color:#FF7A3C;font-weight:500}
+.ci-a{
+  font-family:'JetBrains Mono',monospace;
+  font-size:12.5px;font-weight:500;  /* bigger, bolder */
+  color:var(--ccm,var(--txm));
+  white-space:nowrap;margin-top:0;flex-shrink:0;
+  letter-spacing:-.01em;
+}
+.ci-note{font-size:9.5px;color:var(--txd);margin-top:3px;line-height:1.5}
+.empty{padding:24px 13px;font-size:11px;color:var(--txd);font-style:italic;text-align:center;flex:1;display:flex;align-items:center;justify-content:center}
+.nomatch{padding:9px 13px;font-size:10px;color:var(--txd);font-style:italic;text-align:center}
+
+/* summary bars */
+.si{padding:7px 13px;border-bottom:1px solid var(--bd)}.si:last-child{border-bottom:none}
+.si-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:3px}
+.si-l{font-size:10.5px;font-weight:400;color:var(--txm)}.si-v{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;color:var(--ccm,var(--txm))}
+.bar{height:2px;background:var(--bd2);border-radius:1px;overflow:hidden}
+.bar-f{height:100%;border-radius:1px;background:var(--ccm,var(--txm));transition:width .7s ease}
+.si-note{font-size:9.5px;color:var(--txd);margin-top:2px}
+.si.tot{background:rgba(255,255,255,.018)}.si.tot .si-l{font-weight:500;font-size:11px;color:var(--tx)}.si.tot .si-v{font-size:13.5px}
+.si-fee{padding:7px 13px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between}
+.si-fl{font-size:10.5px;color:var(--txm)}.si-fv{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--txd)}
+
+/* ── APPLY ROW — all tabs ─────────────────────────── */
+.apply-row{
+  margin-top:auto;
+  padding:7px 13px 8px;
+  border-top:1px solid var(--bd);
+  display:flex;align-items:center;justify-content:space-between;
+  gap:8px;flex-shrink:0;
+}
+.apply-row-offer{
+  font-size:10px;color:var(--txd);flex:1;line-height:1.45;min-width:0;
+}
+.apply-row-offer strong{color:var(--txm);font-weight:500}
+/* Muted by default — not a CTA button, not screaming blue */
+.apply-link{
+  display:inline-flex;align-items:center;gap:3px;
+  font-family:'Figtree',sans-serif;
+  font-size:10.5px;font-weight:500;
+  color:var(--txd);  /* intentionally muted — revenue without noise */
+  text-decoration:none;white-space:nowrap;flex-shrink:0;
+  transition:color .14s;
+}
+.apply-link:hover{color:var(--ccm,var(--txm))}
+.apply-link svg{transition:transform .14s;opacity:.6}
+.apply-link:hover svg{transform:translateX(2px);opacity:1}
+
+/* ── AUTH MODAL ───────────────────────────────────── */
+.modal-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.72);
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;
+  animation:mfade .18s ease;
+}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal{
+  background:var(--s1);border:1px solid var(--bd2);
+  border-radius:12px;padding:28px 28px 24px;
+  width:100%;max-width:360px;
+  position:relative;
+  animation:mslide .2s ease;
+}
+@keyframes mslide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.modal-close{
+  position:absolute;top:12px;right:14px;
+  background:none;border:none;color:var(--txd);cursor:pointer;
+  font-size:16px;line-height:1;padding:4px;transition:color .15s;
+}
+.modal-close:hover{color:var(--txm)}
+.modal-title{font-family:'Cormorant',serif;font-size:22px;font-weight:500;margin-bottom:6px}
+.modal-sub{font-size:12px;color:var(--txm);margin-bottom:20px;line-height:1.6}
+.modal-divider{display:flex;align-items:center;gap:10px;margin:16px 0}
+.modal-divider-line{flex:1;height:1px;background:var(--bd)}
+.modal-divider-txt{font-size:10px;color:var(--txd);letter-spacing:.06em;text-transform:uppercase}
+.google-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:10px 16px;
+  background:var(--s2);border:1px solid var(--bd2);border-radius:7px;
+  font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:500;
+  color:var(--tx);cursor:pointer;transition:all .15s;text-decoration:none;
+}
+.google-btn:hover{background:var(--s3);border-color:var(--bd3)}
+.google-btn svg{width:18px;height:18px;flex-shrink:0}
+.magic-input{
+  width:100%;padding:9px 12px;
+  background:var(--s2);border:1px solid var(--bd2);border-radius:6px;
+  font-family:'Figtree',sans-serif;font-size:12.5px;color:var(--tx);
+  outline:none;transition:border-color .15s;
+}
+.magic-input::placeholder{color:var(--txd)}.magic-input:focus{border-color:var(--bd3)}
+.magic-submit{
+  width:100%;margin-top:8px;padding:9px;
+  background:var(--tx);border:none;border-radius:6px;
+  font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:600;
+  color:var(--bg);cursor:pointer;transition:background .15s;
+}
+.magic-submit:hover{background:#C8C8DC}
+
+/* auth avatar in header */
+.auth-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border-radius:5px;
+  font-family:'Figtree',sans-serif;font-size:10.5px;font-weight:500;
+  color:var(--txm);background:transparent;border:1px solid var(--bd2);
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.auth-btn:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.auth-avatar{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--s3);border:1px solid var(--bd2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:600;color:var(--txm);
+  overflow:hidden;flex-shrink:0;
+}
+.auth-avatar img{width:100%;height:100%;object-fit:cover}
+
+/* user profile panel */
+.profile-panel{
+  background:var(--s1);border:1px solid var(--bd2);
+  border-radius:10px;padding:16px;
+  position:absolute;top:calc(100% + 8px);right:40px;
+  width:240px;z-index:200;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+  animation:mslide .16s ease;
+}
+.profile-name{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:2px}
+.profile-email{font-size:10px;color:var(--txd);margin-bottom:12px}
+.profile-stat{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--bd)}
+.profile-stat:last-of-type{border-bottom:none;margin-bottom:8px}
+.profile-stat-l{font-size:11px;color:var(--txm)}
+.profile-stat-v{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--tx)}
+.profile-actions{display:flex;gap:6px}
+.profile-action{
+  flex:1;padding:6px 8px;border-radius:5px;
+  font-family:'Figtree',sans-serif;font-size:10.5px;font-weight:500;
+  cursor:pointer;transition:all .15s;border:1px solid var(--bd2);
+  color:var(--txm);background:transparent;text-align:center;
+}
+.profile-action:hover{background:var(--s2);color:var(--tx)}
+.profile-action.danger{color:var(--txd)}.profile-action.danger:hover{color:var(--red);border-color:rgba(255,90,90,.2)}
+.ew{padding:44px 40px;text-align:center;background:var(--s1);border:1px dashed var(--bd2);border-radius:10px;margin:16px 40px}
+.ew-i{font-size:26px;margin-bottom:10px;opacity:.3}
+.ew-t{font-family:'Cormorant',serif;font-size:20px;font-weight:500;margin-bottom:6px}
+.ew-s{font-size:11.5px;color:var(--txm);margin-bottom:16px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.65}
+
+/* ── TOAST ────────────────────────────────────────── */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--s3);border:1px solid var(--bd2);border-radius:7px;padding:8px 14px;font-size:11.5px;color:var(--txm);display:flex;align-items:center;gap:6px;box-shadow:0 6px 28px rgba(0,0,0,.4);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:999;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── FOOTER ───────────────────────────────────────── */
+.footer-legal{
+  font-size:10px;color:var(--txd);
+  padding:10px 40px 8px;
+  background:var(--s0);border-top:1px solid var(--bd);
+  line-height:1.7;
+}
+.footer-legal a{color:var(--txd);text-decoration:underline;text-underline-offset:2px}
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media(max-width:768px){
+  .ph,.bpicker,.main,.ws,.footer-legal,.mode-bar,.email-bar{padding-left:20px;padding-right:20px}
+  .nav,.reset-b{padding-left:20px}
+  .col{flex:0 0 232px}.gfade{display:none}
+  .toolbar{flex-wrap:wrap}.sw{max-width:100%;flex:0 0 100%}.tb-cnt{margin-left:0}
+  .email-bar{flex-wrap:wrap;gap:8px}
+  .eb-form{min-width:100%;flex:0 0 100%}
+  .ew{margin:12px 20px}
+}
+.ganim{animation:gfade .15s ease}
+@keyframes gfade{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="ph">
+  <div class="ph-row">
+    <div class="ph-left">
+      <div class="ph-logo">Card Roundup</div>
+      <p class="ph-sub">Track every credit card benefit before it expires.</p>
+    </div>
+    <div class="ph-acts">
+      <!-- Only shown when user has wallet but no account -->
+      <button class="btn btn-save" id="saveWalletBtn" style="display:none" onclick="toggleAuthModal()">
+        Save my wallet
+      </button>
+      <!-- Auth: Sign in (anonymous) or Avatar (signed in) -->
+      <button class="auth-btn" id="authBtn" onclick="handleAuthClick()">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+        Sign in
+      </button>
+    </div>
+  </div>
+  <div class="ph-meta" id="phMeta">
+    <span class="phm"><strong id="hMine">0</strong> in my wallet</span>
+    <span class="phm">·</span>
+    <span class="phm"><strong>46</strong> cards tracked</span>
+    <span class="phm">·</span>
+    <span class="phm"><strong>8</strong> issuers</span>
+  </div>
+</div>
+
+<!-- MODE BAR -->
+<div class="mode-bar">
+  <button class="mb on" data-m="mycards" onclick="setMode('mycards')">
+    <span class="mb-dot" style="background:#3DD68C"></span>My Cards
+    <span class="mcb" id="mcBadge">0</span>
+  </button>
+  <button class="mb" data-m="browse" onclick="setMode('browse')">
+    <span class="mb-dot" style="background:#6AAEF0"></span>Browse All
+  </button>
+  <!-- Edit wallet lives here — contextual to mode, not header-level -->
+  <button class="mb mb-edit" id="editWalletMb" onclick="toggleWalletEdit()" style="margin-left:auto;border-left:1px solid var(--bd);padding-left:14px">
+    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
+    Edit wallet
+  </button>
+</div>
+
+<!-- ONBOARDING STRIP — first visit only, auto-dismissed after wallet added -->
+<div class="onboard-strip" id="onboardStrip" style="display:none">
+  <div class="ob-step"><div class="ob-num">1</div><span class="ob-txt"><strong>Add your cards</strong> to My Cards</span></div>
+  <div class="ob-arr">→</div>
+  <div class="ob-step"><div class="ob-num">2</div><span class="ob-txt"><strong>Browse</strong> credits by expiry date</span></div>
+  <div class="ob-arr">→</div>
+  <div class="ob-step"><div class="ob-num">3</div><span class="ob-txt"><strong>Never miss</strong> a credit again</span></div>
+  <button class="ob-dismiss" onclick="dismissOnboard()">Got it</button>
+</div>
+<div class="ws" id="walletSetup" style="display:none">
+  <div class="ws-t">Your Card Wallet</div>
+  <div class="ws-s">Select the cards you carry. Your view filters to these across all tabs.</div>
+  <div class="ws-rows" id="wsRows"></div>
+</div>
+
+<!-- BROWSE PICKER (hidden in My Cards mode) -->
+<div class="bpicker" id="browsePicker" style="display:none"></div>
+
+<!-- EMAIL BAR -->
+<div class="email-bar" id="emailBar">
+  <div class="eb-text">🔔 <strong>Get reset reminders</strong> — 7 days before your credits expire</div>
+  <div class="eb-form" id="ebForm">
+    <input class="eb-input" type="email" id="ebInput" placeholder="your@email.com" autocomplete="email">
+    <button class="eb-sub" onclick="submitEmail()">Remind me</button>
+  </div>
+  <button class="eb-x" onclick="dismissEmail()">✕</button>
+</div>
+
+<!-- PROMO TICKER — infinite scroll -->
+<div class="promo-bar" id="promoBar">
+  <div class="promo-bar-label"><span class="pb-dot"></span>Live promos</div>
+  <div class="promo-scroll-wrap">
+    <div class="promo-bar-inner" id="promoInner"></div>
+  </div>
+  <button class="promo-close" onclick="closePromo()" title="Dismiss">✕</button>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav" id="navEl">
+    <div class="nav-ind" id="navInd"></div>
+    <button class="nb on" data-s="monthly"><span class="nd" style="background:#FF7A3C"></span>Monthly</button>
+    <button class="nb" data-s="quarterly"><span class="nd" style="background:#AA82F0"></span>Quarterly</button>
+    <button class="nb" data-s="semiannual"><span class="nd" style="background:#45C9A8"></span>Semi-annual</button>
+    <button class="nb" data-s="annual"><span class="nd" style="background:#6AAEF0"></span>Annual</button>
+    <button class="nb" data-s="multiyear"><span class="nd" style="background:#E8C84E"></span>Multi-year</button>
+    <button class="nb" data-s="static"><span class="nd" style="background:#888898"></span>Always-on</button>
+    <button class="nb" data-s="summary"><span class="nd" style="background:#C0C0D8"></span>Summary</button>
+  </nav>
+  <div class="reset-b" id="resetBadge"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main" id="mainContent">
+  <div class="toolbar">
+    <div class="sw">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
+      <input class="si-inp" type="text" id="searchInput" placeholder="Search benefits…" autocomplete="off">
+      <button class="sc-x" id="scX" onclick="clearSearch()">✕</button>
+    </div>
+    <button class="tb-cal" onclick="exportCalendar()" title="Sync reset dates to your calendar">
+      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
+      Sync calendar
+    </button>
+    <span class="tb-cnt" id="tbCnt"></span>
+  </div>
+  <div class="gw">
+    <div class="gfade" id="gFade"></div>
+    <div class="grid ganim" id="grid"></div>
+  </div>
+  <div class="scroll-track"><div class="scroll-thumb-el" id="scrollThumb" style="width:100%"></div></div>
+  <!-- Summary tab: aggregate share CTA shown below all cards -->
+  <div id="summaryFooter"></div>
+</div>
+
+<!-- FOOTER: one FTC line only -->
+<div class="footer-legal">
+  Some cards include affiliate links — we earn a commission if you apply and are approved, at no cost to you. This never influences our data. <a href="#">Affiliate policy</a> · <a href="#">Terms</a>
+</div>
+<!-- SHARE MODAL -->
+<div id="shareModal" style="display:none">
+  <div class="modal-overlay" onclick="if(event.target===this)closeShareModal()">
+    <div class="share-modal">
+      <div class="share-header">
+        <div>
+          <div class="share-title">Share your stack</div>
+          <div class="share-sub">A snapshot of your wallet — credits, fees, and net value. Post it anywhere.</div>
+        </div>
+        <button class="modal-close" style="position:static;margin-top:-2px" onclick="closeShareModal()">✕</button>
+      </div>
+      <div id="shareBody"></div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div id="authModal" style="display:none">
+  <div class="modal-overlay" onclick="if(event.target===this)closeAuthModal()">
+    <div class="modal">
+      <button class="modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="modal-title">Save your wallet</div>
+      <div class="modal-sub">Sign in to sync your cards across devices and get expiry reminders by email.</div>
+
+      <!-- Google Sign-In -->
+      <button class="google-btn" onclick="signInGoogle()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="modal-divider"><div class="modal-divider-line"></div><span class="modal-divider-txt">or</span><div class="modal-divider-line"></div></div>
+
+      <input class="magic-input" type="email" id="magicEmail" placeholder="your@email.com" autocomplete="email">
+      <button class="magic-submit" onclick="sendMagicLink()">Send magic link</button>
+      <div id="magicMsg" style="font-size:10.5px;color:var(--green);margin-top:8px;display:none">✓ Check your email for a sign-in link.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PANEL (shown when signed in, anchored to auth button) -->
+<div id="profilePanel" style="display:none;position:relative;z-index:200"></div>
+
+<div class="toast" id="toast"><span id="toastMsg"></span></div>
+
+<script>
+const FORMSPREE_ID = 'YOUR_FORMSPREE_ID';
+
+const AFF={
+  csr:'https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve?ICID=AFFL_KBYLI_CJ',
+  csp:'https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred?ICID=AFFL_KBYLI_CJ',
+  cf:'https://creditcards.chase.com/cash-back-credit-cards/freedom/flex?ICID=AFFL_KBYLI_CJ',
+  cfu:'https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited?ICID=AFFL_KBYLI_CJ',
+  ink:'https://creditcards.chase.com/business-credit-cards/ink/preferred?ICID=AFFL_KBYLI_CJ',
+  hyatt:'https://creditcards.chase.com/travel-credit-cards/world-of-hyatt?ICID=AFFL_KBYLI_CJ',
+  unitedq:'https://creditcards.chase.com/travel-credit-cards/united/quest?ICID=AFFL_KBYLI_CJ',
+  swpri:'https://creditcards.chase.com/travel-credit-cards/southwest/priority?ICID=AFFL_KBYLI_CJ',
+  ihg:'https://creditcards.chase.com/travel-credit-cards/ihg?ICID=AFFL_KBYLI_CJ',
+  marriottbon:'https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless?ICID=AFFL_KBYLI_CJ',
+  chaseaero:'https://creditcards.chase.com/travel-credit-cards/united/aeroplan?ICID=AFFL_KBYLI_CJ',
+  amexp:'https://www.americanexpress.com/us/credit-cards/card/platinum/?eep=AFFL_KBYLI_IMP',
+  amexbp:'https://www.americanexpress.com/us/credit-cards/card/business-platinum/?eep=AFFL_KBYLI_IMP',
+  amexg:'https://www.americanexpress.com/us/credit-cards/card/gold-card/?eep=AFFL_KBYLI_IMP',
+  amexbg:'https://www.americanexpress.com/us/credit-cards/card/business-gold-card/?eep=AFFL_KBYLI_IMP',
+  amexgrn:'https://www.americanexpress.com/us/credit-cards/card/green-card/?eep=AFFL_KBYLI_IMP',
+  amexbcp:'https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/?eep=AFFL_KBYLI_IMP',
+  amexeday:'https://www.americanexpress.com/us/credit-cards/card/amex-everyday-preferred/?eep=AFFL_KBYLI_IMP',
+  deltagrn:'https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold/?eep=AFFL_KBYLI_IMP',
+  deltag:'https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-business/?eep=AFFL_KBYLI_IMP',
+  deltares:'https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve/?eep=AFFL_KBYLI_IMP',
+  aspire:'https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/?eep=AFFL_KBYLI_IMP',
+  hiltsurp:'https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/?eep=AFFL_KBYLI_IMP',
+  brilliant:'https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/?eep=AFFL_KBYLI_IMP',
+  mariottbiz:'https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-business/?eep=AFFL_KBYLI_IMP',
+  hiltbiz:'https://www.americanexpress.com/us/credit-cards/card/hilton-honors-business/?eep=AFFL_KBYLI_IMP',
+  venturex:'https://creditcards.capitalone.com/venture-x-credit-card/?external_id=AFFL_KBYLI_IMP',
+  venture:'https://creditcards.capitalone.com/venture-rewards-credit-card/?external_id=AFFL_KBYLI_IMP',
+  sparkcash:'https://creditcards.capitalone.com/spark-business-credit-cards/miles/?external_id=AFFL_KBYLI_IMP',
+  sparkcash2:'https://creditcards.capitalone.com/spark-business-credit-cards/cash-plus/?external_id=AFFL_KBYLI_IMP',
+  savor:'https://creditcards.capitalone.com/savor-cash-rewards-credit-card/?external_id=AFFL_KBYLI_IMP',
+  strata:'https://www.citi.com/credit-cards/citi-strata-premier-credit-card/?ICID=AFFL_KBYLI_CJ',
+  aaexec:'https://www.citi.com/credit-cards/american-airlines/aadvantage-executive/?ICID=AFFL_KBYLI_CJ',
+  aaplatpres:'https://www.citi.com/credit-cards/american-airlines/aadvantage-platinum-select/?ICID=AFFL_KBYLI_CJ',
+  doublecash:'https://www.citi.com/credit-cards/citi-double-cash-credit-card/?ICID=AFFL_KBYLI_CJ',
+  custcash:'https://www.citi.com/credit-cards/citi-custom-cash-card/?ICID=AFFL_KBYLI_CJ',
+  rewardsp:'https://www.citi.com/credit-cards/citi-rewards-plus-credit-card/?ICID=AFFL_KBYLI_CJ',
+  bilt:'https://www.biltrewards.com/card?ref=KBYLI',
+  wfauto:'https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card/?product_code=AFFL_KBYLI',
+  altres:'https://www.usbank.com/credit-cards/altitude-reserve-visa-infinite-credit-card.html?pid=KBYLI',
+  altconn:'https://www.usbank.com/credit-cards/altitude-connect-visa-signature-credit-card.html?pid=KBYLI',
+  boapre:'https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/?ref=KBYLI',
+  boatrav:'https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/?ref=KBYLI',
+  aadvbiz:'https://cards.barclay.com/aviator/silver?ref=KBYLI',
+  jbtravel:'https://cards.barclay.com/jetblue-plus?ref=KBYLI',
+  aadvsel:'https://cards.barclay.com/aviator-red?ref=KBYLI',
+};
+
+const PROMOS=[
+  {currency:'Amex MR',partner:'Air France/Flying Blue',bonus:'+30%',expires:'2026-04-15',cards:['amexp','amexbp','amexg','amexbg','amexgrn','amexeday','deltares','aspire','brilliant','mariottbiz','deltagrn','deltag']},
+  {currency:'Amex MR',partner:'Avianca LifeMiles',bonus:'+20%',expires:'2026-03-31',cards:['amexp','amexbp','amexg','amexbg','amexgrn']},
+  {currency:'Chase UR',partner:'United MileagePlus',bonus:'+25%',expires:'2026-05-01',cards:['csr','csp','cf','cfu','ink']},
+  {currency:'Citi TY',partner:'Turkish Miles&Smiles',bonus:'+20%',expires:'2026-04-30',cards:['strata','aaexec','aaplatpres','doublecash','custcash','rewardsp']},
+  {currency:'Capital One',partner:'Air Canada Aeroplan',bonus:'+10%',expires:'2026-03-28',cards:['venturex','venture','sparkcash','sparkcash2','savor']},
+  {currency:'Bilt Points',partner:'World of Hyatt',bonus:'+25%',expires:'2026-04-01',cards:['bilt']},
+];
+
+const CARDS=[
+{id:'csr',name:'Chase Sapphire Reserve',short:'CSR',issuer:'Chase',fee:795,c:'#0A2463',cm:'#3A6BC7',verified:'2026-03',
+  sob:{offer:'60,000 Ultimate Rewards points',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[{n:'Lyft rides',a:'$10/mo',note:'Link card. Valid through Sept 2027. Excludes Wait & Save, bike/scooter.'},{n:'DoorDash promos',a:'$25/mo',note:'2×$10 non-restaurant + 1×$5 restaurant. Requires DashPass. Unused balance forfeited if order doesn\'t exhaust credit.'},{n:'Peloton membership',a:'Up to $10/mo',note:'Through Dec 2027. Pay Peloton directly. Activation required.'}],quarterly:[],semiannual:[{n:'The Edit hotel credit',a:'$250/half ($500/yr)',note:'Prepaid 2-night min via Chase Travel "The Edit." H1/H2.'},{n:'Exclusive Tables dining',a:'$150/half ($300/yr)',note:'At Sapphire Reserve Exclusive Tables / OpenTable Visa Dining.'},{n:'StubHub / Viagogo',a:'$150/half ($300/yr)',note:'Activation required.'}],annual:[{n:'Travel credit ⚠ Anniversary-based',a:'$300/yr',warn:true,note:'Resets on cardmember anniversary — NOT Jan 1. Covers flights, hotels, transit, rideshare. Auto-applied.'},{n:'The Shops at Chase',a:'Up to $250',note:'Dyson, Sony, Tumi, Therabody. Resets Jan 1.'},{n:'Apple TV+ & Apple Music',a:'Compl. (~$250)',note:'Through June 22, 2027.'},{n:'DashPass membership',a:'Compl. (~$120)',note:'Activate by Dec 31, 2027.'}],multiyear:[{n:'Global Entry / TSA PreCheck / NEXUS',a:'Up to $120/4 yrs',note:''}],static:[{n:'Lounge access',a:'Unlimited + 2 guests',note:'Chase Sapphire Lounges + Priority Pass Select.'},{n:'Trip cancellation/interruption',a:'$10k/traveler, $20k/trip',note:''},{n:'Trip delay reimbursement',a:'Up to $500/ticket',note:'6+ hour delay.'},{n:'Primary auto rental CDW',a:'Included',note:''},{n:'Points transfers',a:'1:1 to 14 partners',note:'United, Hyatt, SW, BA, Singapore, AF/KLM, Marriott.'}]},
+  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $540',v:540},{l:'Semi-annual',a:'Up to $1,100',v:1100},{l:'Annual credits',a:'Up to $550',v:550}],total:'~$2,190+',totalV:2190,note:'Plus Apple TV/Music, DashPass, lounge access, travel protections.'}},
+{id:'csp',name:'Chase Sapphire Preferred',short:'CSP',issuer:'Chase',fee:95,c:'#0E3A7A',cm:'#2E7AC8',verified:'2026-03',
+  sob:{offer:'60,000 UR points',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Hotel credit via Chase Travel',a:'Up to $50/yr',note:'Resets on cardmember anniversary.'},{n:'DashPass membership',a:'Complimentary',note:'Must activate.'}],multiyear:[],static:[{n:'3x dining & streaming',a:'3x UR pts',note:''},{n:'5x Chase Travel',a:'5x UR pts',note:''},{n:'Points transfers',a:'1:1 to 14 partners',note:''}]},
+  summary:{rows:[{l:'Annual hotel credit',a:'Up to $50',v:50}],total:'~$50+',totalV:50,note:'Value is in 1:1 transfers to Hyatt/United/SW at $95 fee.'}},
+{id:'cf',name:'Chase Freedom Flex',short:'Freedom Flex',issuer:'Chase',fee:0,c:'#1A4A8A',cm:'#3070C8',verified:'2026-03',
+  sob:{offer:'$200 cash + 5% gas/grocery yr 1',req:'$500 in 3 months',tags:['c']},
+  credits:{monthly:[],quarterly:[{n:'5% rotating categories',a:'5% (up to $1,500/qtr)',note:'Must activate quarterly.'}],semiannual:[],annual:[],multiyear:[],static:[{n:'3x dining & drugstores',a:'3x UR pts',note:''},{n:'Cell phone protection',a:'Up to $800/claim',note:'$50 deductible.'}]},
+  summary:{rows:[{l:'Quarterly 5% categories',a:'Up to $300/yr',v:300}],total:'~$300+',totalV:300,note:'Pairs with CSR/CSP to unlock travel transfers.'}},
+{id:'cfu',name:'Chase Freedom Unlimited',short:'Freedom Unlimited',issuer:'Chase',fee:0,c:'#153A70',cm:'#2860B0',verified:'2026-03',
+  sob:{offer:'Extra 1.5% all purchases yr 1',req:'None',tags:['c']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'1.5x everywhere',a:'1.5x UR pts',note:''},{n:'3x dining & drugstores',a:'3x UR pts',note:''},{n:'5x Chase Travel',a:'5x UR pts',note:''}]},
+  summary:{rows:[],total:'$0 fee',totalV:0,note:'Value is 1.5x UR on everything.'}},
+{id:'ink',name:'Ink Business Preferred',short:'Ink Preferred',issuer:'Chase',fee:95,c:'#0A3060',cm:'#1858A8',verified:'2026-03',
+  sob:{offer:'90,000 UR points',req:'$8,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'3x on first $150k (travel, shipping, ads, internet)',a:'3x UR pts',note:'$150k cap then 1x.'},{n:'Cell phone protection',a:'Up to $1,000/claim',note:'$100 deductible.'},{n:'Points transfers',a:'1:1 to 14 partners',note:''}]},
+  summary:{rows:[],total:'~$0 in credits',totalV:0,note:'Value: 90k sign-on + best 3x business earning.'}},
+{id:'hyatt',name:'Chase World of Hyatt',short:'Hyatt',issuer:'Chase',fee:95,c:'#1A2F4A',cm:'#2E6CA8',verified:'2026-03',
+  sob:{offer:'30,000 Hyatt pts + up to 30k more',req:'$3,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Cert (Cat 1–4)',a:'1 cert/yr',note:'On anniversary. Typically $100–$350+.'},{n:'2nd Free Night at $15k spend',a:'Cat 1–4 cert',note:''}],multiyear:[],static:[{n:'Hyatt Discoverist status',a:'Complimentary',note:''},{n:'5 Elite Night Credits',a:'Annually',note:'Plus 2 per $5k spend.'},{n:'4x at Hyatt',a:'4x WoH pts',note:''}]},
+  summary:{rows:[{l:'Annual cert (Cat 1–4)',a:'~$100–$350',v:200}],total:'~$150–$700+',totalV:200,note:'Two certs at $15k spend = $500–$700 value.'}},
+{id:'unitedq',name:'Chase United Quest',short:'United Quest',issuer:'Chase',fee:250,c:'#002244',cm:'#1456B0',verified:'2026-03',
+  sob:{offer:'60,000 United miles',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'United travel credit',a:'$125/yr',note:'On United purchases.'},{n:'Anniversary bonus miles',a:'5,000 miles/yr',note:'Worth ~$70.'},{n:'2 United Club 1-day passes',a:'2 passes/yr',note:'~$59 each.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'3x on United',a:'3x United miles',note:''},{n:'First & second bag free',a:'Complimentary',note:'Cardholder + companion.'}]},
+  summary:{rows:[{l:'Annual travel credit',a:'$125',v:125},{l:'Anniversary miles',a:'5k (~$70)',v:70},{l:'Club passes (2)',a:'~$118',v:118}],total:'~$313+',totalV:313,note:''}},
+{id:'swpri',name:'Chase Southwest Priority',short:'SW Priority',issuer:'Chase',fee:149,c:'#304CB2',cm:'#5574CC',verified:'2026-03',
+  sob:{offer:'50,000 Rapid Rewards points',req:'$1,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Southwest travel credit',a:'$75/yr',note:''},{n:'Anniversary bonus points',a:'7,500 pts/yr',note:'Worth ~$112.'},{n:'Upgraded boardings',a:'4/year',note:'Each ~$30–$50.'}],multiyear:[],static:[{n:'3x on Southwest',a:'3x Rapid Rewards',note:''},{n:'1,500 TQPs/yr',a:'Tier qualifying pts',note:''}]},
+  summary:{rows:[{l:'Travel credit',a:'$75',v:75},{l:'Anniversary pts',a:'7.5k (~$112)',v:112},{l:'Upgraded boardings',a:'4 (~$140)',v:140}],total:'~$327+',totalV:327,note:''}},
+{id:'ihg',name:'IHG One Rewards Premier',short:'IHG Premier',issuer:'Chase',fee:99,c:'#003E6B',cm:'#0066A1',verified:'2026-03',
+  sob:{offer:'140,000 IHG points',req:'$3,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Cert (≤40k pts)',a:'1 cert/yr',note:'Holiday Inn to select InterContinental.'},{n:'4th Night Free on award stays',a:'Complimentary',note:'25% discount on 4+ night awards.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'IHG Platinum Elite status',a:'Complimentary',note:''},{n:'26x at IHG properties',a:'26x IHG pts',note:''}]},
+  summary:{rows:[{l:'Annual free night',a:'≤40k pts (~$100–$300)',v:200}],total:'~$100–$300+',totalV:200,note:'4th night free is a hidden gem.'}},
+{id:'marriottbon',name:'Chase Bonvoy Boundless',short:'Bonvoy Boundless',issuer:'Chase',fee:95,c:'#4A0E16',cm:'#9A2030',verified:'2026-03',
+  sob:{offer:'3 Free Night Awards (≤50k pts each)',req:'$3,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Award (≤35k pts)',a:'1 cert/yr',note:'Cat 1–5 Marriott.'}],multiyear:[],static:[{n:'Marriott Silver Elite',a:'Complimentary',note:''},{n:'15 Elite Night Credits',a:'Annually',note:''},{n:'6x at Marriott',a:'6x Marriott pts',note:''}]},
+  summary:{rows:[{l:'Annual free night',a:'≤35k pts (~$100–$250)',v:175}],total:'~$100–$250+',totalV:175,note:''}},
+{id:'chaseaero',name:'Chase Aeroplan',short:'Chase Aeroplan',issuer:'Chase',fee:95,c:'#8B0000',cm:'#C02020',verified:'2026-03',
+  sob:{offer:'100,000 Aeroplan pts',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[{n:'DoorDash credit',a:'Up to $5/mo ($60/yr)',note:'Requires DashPass.'}],quarterly:[],semiannual:[],annual:[{n:'250 Status Qualifying Dollars',a:'Toward Air Canada status',note:''}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'3x Air Canada & Aeroplan partners',a:'3x Aeroplan pts',note:''},{n:'3x dining & grocery',a:'3x Aeroplan pts',note:''},{n:'Free first bag',a:'Complimentary',note:'On Air Canada.'}]},
+  summary:{rows:[{l:'Monthly DoorDash (ann.)',a:'Up to $60',v:60}],total:'~$60+',totalV:60,note:'Best card for Aeroplan loyalists.'}},
+{id:'amexp',name:'Amex Platinum Personal',short:'Plat Personal',issuer:'American Express',fee:895,c:'#2D1B69',cm:'#7B5EA7',verified:'2026-03',
+  sob:{offer:'80,000 Membership Rewards points',req:'$8,000 in 6 months',tags:['t']},
+  credits:{monthly:[{n:'Uber Cash',a:'$15/mo (Jan–Nov), $35 Dec',warn:true,note:'⚠ Expires end of month — no rollover. U.S. only.'},{n:'Digital entertainment',a:'Up to $25/mo',note:'Disney+, Hulu, ESPN+, Peacock, Paramount+, YouTube Premium, NYT, WSJ.'},{n:'Walmart+ membership',a:'Up to $12.95/mo',note:'Covers monthly cost.'}],quarterly:[{n:'Resy dining',a:'Up to $100/qtr ($400/yr)',note:'Any U.S. Resy-affiliated restaurant. No rollover. New Sept 2025.'},{n:'Lululemon',a:'Up to $75/qtr ($300/yr)',note:'U.S. stores (excl. outlets). No rollover.'}],semiannual:[{n:'Fine Hotels + Resorts / Hotel Collection',a:'$300/half ($600/yr)',note:'Prepaid AmexTravel.com. H1/H2.'}],annual:[{n:'Airline incidental fees',a:'Up to $200/yr',note:'ONE qualifying airline. Bags, upgrades — NOT airfare.'},{n:'CLEAR Plus',a:'Up to $209/yr',note:''},{n:'OURA Ring',a:'Up to $200/yr',note:'OURAring.com only.'},{n:'Equinox membership',a:'Up to $300/yr',note:''},{n:'Uber One membership',a:'Up to $120/yr',note:'Separate from monthly Uber Cash.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $120/4 yrs',note:''}],static:[{n:'Centurion Lounge access',a:'Unlimited (solo)',note:'Guest access requires $75k annual spend.'},{n:'Priority Pass Select',a:'Unlimited visits',note:''},{n:'Delta Sky Club',a:'10 visits/year',note:''},{n:'Marriott Bonvoy Gold',a:'Complimentary',note:''},{n:'Hilton Honors Gold',a:'Complimentary',note:''},{n:'Points transfers',a:'1:1 to 20+ partners',note:''}]},
+  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $575',v:575},{l:'Quarterly (ann.)',a:'Up to $700',v:700},{l:'Semi-annual',a:'Up to $600',v:600},{l:'Annual credits',a:'Up to $1,029',v:1029}],total:'~$2,904+',totalV:2904,note:'Plus Centurion Lounge, hotel/car status, transfer partners.'}},
+{id:'amexbp',name:'Amex Biz Platinum',short:'Biz Platinum',issuer:'American Express',fee:895,c:'#0A4A3A',cm:'#2E8B6E',verified:'2026-03',
+  sob:{offer:'150,000 MR points',req:'$20,000 in 3 months',tags:['t']},
+  credits:{monthly:[{n:'Wireless phone service',a:'Up to $10/mo ($120/yr)',note:'U.S. wireless providers only.'}],quarterly:[{n:'Indeed',a:'Up to $90/qtr ($360/yr)',note:'Indeed.com purchases.'},{n:'Hilton (via Hilton for Business)',a:'Up to $50/qtr ($200/yr)',note:'Direct Hilton purchases.'}],semiannual:[{n:'Fine Hotels + Resorts / Hotel Collection',a:'$300/half ($600/yr)',note:'H1/H2.'}],annual:[{n:'Airline incidental fees',a:'Up to $200/yr',note:''},{n:'CLEAR Plus',a:'Up to $209/yr',note:''},{n:'35% Pay with Points rebate',a:'Up to 35% back in pts',note:''}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $120/4 yrs',note:''}],static:[{n:'Centurion Lounge access',a:'Unlimited (solo)',note:''},{n:'Leaders Club Sterling Status',a:'Complimentary',note:'New 2025. Breakfast for 2 at Leading Hotels of the World.'},{n:'Points transfers',a:'1:1 to 20+ partners',note:''}]},
+  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $120',v:120},{l:'Quarterly (ann.)',a:'Up to $560',v:560},{l:'Semi-annual',a:'Up to $600',v:600},{l:'Annual credits',a:'Up to $409',v:409}],total:'~$1,689+',totalV:1689,note:''}},
+{id:'amexg',name:'Amex Gold Personal',short:'Gold Personal',issuer:'American Express',fee:325,c:'#5C3A00',cm:'#C07820',verified:'2026-03',
+  sob:{offer:'60,000 MR points',req:'$6,000 in 6 months',tags:['t']},
+  credits:{monthly:[{n:'Dining credit',a:'Up to $10/mo ($120/yr)',note:'Grubhub, Cheesecake Factory, Goldbelly, Wine.com, Milk Bar, select Shake Shack.'},{n:'Uber Cash',a:'Up to $10/mo ($120/yr)',note:'Uber rides or Eats. No rollover.'},{n:'Dunkin\'',a:'Up to $7/mo ($84/yr)',note:'U.S. locations. No rollover.'}],quarterly:[],semiannual:[],annual:[{n:'Hotel Collection credit',a:'Up to $100/stay',note:'Via AmexTravel.com. 2-night min. Once per year.'}],multiyear:[],static:[{n:'4x restaurants worldwide',a:'4x MR pts',note:'No cap.'},{n:'4x U.S. supermarkets',a:'4x MR (up to $25k/yr)',note:''},{n:'3x on flights',a:'3x MR pts',note:''}]},
+  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $324',v:324},{l:'Annual credit',a:'Up to $100',v:100}],total:'~$424+',totalV:424,note:''}},
+{id:'amexbg',name:'Amex Business Gold',short:'Biz Gold',issuer:'American Express',fee:375,c:'#6B4000',cm:'#C88820',verified:'2026-03',
+  sob:{offer:'100,000 MR points',req:'$15,000 in 3 months',tags:['t']},
+  credits:{monthly:[{n:'Dining & wireless credits',a:'Up to $20/mo ($240/yr)',note:'Eligible U.S. restaurants + wireless.'}],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'4x in top 2 categories/month',a:'4x MR per billing cycle',note:'Auto-selects highest 2 from 6 eligible.'}]},
+  summary:{rows:[{l:'Monthly credits (ann.)',a:'Up to $240',v:240}],total:'~$240+',totalV:240,note:''}},
+{id:'amexgrn',name:'Amex Green Card',short:'Green',issuer:'American Express',fee:150,c:'#0A4A1A',cm:'#207A32',verified:'2026-03',
+  sob:{offer:'40,000 MR points',req:'$3,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'CLEAR Plus',a:'Up to $189/yr',note:''},{n:'LoungeBuddy',a:'Up to $100/yr',note:'Pay-per-use lounge access.'}],multiyear:[],static:[{n:'3x travel worldwide',a:'3x MR pts',note:'Flights, hotels, transit, rideshare — very broad.'},{n:'3x dining worldwide',a:'3x MR pts',note:''},{n:'Points transfers',a:'1:1 to 20+ partners',note:''}]},
+  summary:{rows:[{l:'Annual credits',a:'Up to $289',v:289}],total:'~$289+',totalV:289,note:'Credits cover the $150 fee.'}},
+{id:'amexbcp',name:'Amex Blue Cash Preferred',short:'BCP',issuer:'American Express',fee:95,c:'#003A68',cm:'#0068A8',verified:'2026-03',
+  sob:{offer:'$250 statement credit',req:'$3,000 in 6 months',tags:['c']},
+  credits:{monthly:[{n:'Disney Bundle credit',a:'Up to $7/mo ($84/yr)',note:'Disney+ Bundle. Auto applied.'}],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'6% U.S. supermarkets',a:'6% cash (up to $6k/yr)',note:''},{n:'6% streaming',a:'6% cash',note:''},{n:'3% transit & gas',a:'3% cash',note:''}]},
+  summary:{rows:[{l:'Monthly Disney Bundle',a:'Up to $84/yr',v:84}],total:'~$84+',totalV:84,note:''}},
+{id:'amexeday',name:'Amex EveryDay Preferred',short:'EveryDay Pref',issuer:'American Express',fee:95,c:'#1A3A5A',cm:'#3A6A9A',verified:'2026-03',
+  sob:{offer:'15,000 MR points',req:'$2,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'3x U.S. supermarkets',a:'3x MR (up to $6k/yr)',note:''},{n:'2x U.S. gas stations',a:'2x MR pts',note:''},{n:'50% bonus at 30+ uses/month',a:'1.5× all pts earned',note:''}]},
+  summary:{rows:[],total:'~$0 in credits',totalV:0,note:''}},
+{id:'deltagrn',name:'Delta SkyMiles Gold',short:'Delta Gold',issuer:'American Express',fee:150,c:'#003080',cm:'#1048A0',verified:'2026-03',
+  sob:{offer:'40,000 Delta miles',req:'$2,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Delta travel credit',a:'Up to $200/yr',note:'On Delta purchases.'}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 8.'},{n:'2x Delta, dining, supermarkets',a:'2x SkyMiles',note:''}]},
+  summary:{rows:[{l:'Annual Delta credit',a:'Up to $200',v:200}],total:'~$200+',totalV:200,note:''}},
+{id:'deltag',name:'Delta SkyMiles Gold Biz',short:'Delta Gold Biz',issuer:'American Express',fee:150,c:'#002870',cm:'#0840A0',verified:'2026-03',
+  sob:{offer:'40,000 Delta miles + 5k MQMs',req:'$2,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Delta travel credit',a:'Up to $250/yr',note:''}],multiyear:[],static:[{n:'First bag free for cardholder + 8',a:'Complimentary',note:''},{n:'2x Delta, restaurants, shipping, advertising',a:'2x SkyMiles',note:''}]},
+  summary:{rows:[{l:'Annual Delta credit',a:'Up to $250',v:250}],total:'~$250+',totalV:250,note:''}},
+{id:'deltares',name:'Delta SkyMiles Reserve',short:'Delta Reserve',issuer:'American Express',fee:650,c:'#003480',cm:'#1456B0',verified:'2026-03',
+  sob:{offer:'100,000 Delta SkyMiles',req:'$6,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Domestic companion cert',a:'1 cert/yr',note:'Domestic first class or main cabin. Taxes/fees apply.'},{n:'$2,500 MQD head start',a:'Toward Medallion status',note:''}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $120/4 yrs',note:''}],static:[{n:'Delta Sky Club',a:'15 visits/year',note:'Unlimited at $75k annual spend.'},{n:'Centurion Lounge (when flying Delta)',a:'Complimentary',note:''},{n:'3x on Delta',a:'3x SkyMiles',note:''}]},
+  summary:{rows:[{l:'Companion cert',a:'Varies by route',v:400}],total:'Companion cert value',totalV:400,note:''}},
+{id:'aspire',name:'Hilton Honors Aspire',short:'Aspire',issuer:'American Express',fee:550,c:'#00377B',cm:'#1A56A6',verified:'2026-03',
+  sob:{offer:'180,000 Hilton Honors points',req:'$6,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[{n:'Airline incidental fee credit',a:'Up to $50/qtr ($200/yr)',note:'ONE qualifying airline. Bags, upgrades — NOT airfare.'}],semiannual:[{n:'Hilton resort credit',a:'$200/half ($400/yr)',note:'Participating Hilton resorts. Verify qualifying charges. H1/H2.'}],annual:[{n:'Free Night Reward (≤150k pts)',a:'1 cert/yr',note:'On anniversary. Typically $200–$800+.'}],multiyear:[],static:[{n:'Hilton Diamond status',a:'Complimentary',note:'Top-tier. Exec lounge, upgrades, breakfast at many properties.'},{n:'Priority Pass Select',a:'Unlimited visits',note:''},{n:'14x at Hilton',a:'14x Hilton pts',note:''}]},
+  summary:{rows:[{l:'Quarterly (ann.)',a:'Up to $200',v:200},{l:'Semi-annual',a:'Up to $400',v:400},{l:'Annual free night',a:'≤150k (~$300–$800)',v:500}],total:'~$900–$1,400+',totalV:1000,note:''}},
+{id:'hiltsurp',name:'Hilton Honors Surpass',short:'Hilton Surpass',issuer:'American Express',fee:150,c:'#003A6E',cm:'#1260A8',verified:'2026-03',
+  sob:{offer:'130,000 Hilton Honors points',req:'$3,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[{n:'Hilton resort credit',a:'Up to $50/qtr ($200/yr)',note:'Participating Hilton resorts.'}],semiannual:[],annual:[{n:'Free Night Reward (≤85k pts)',a:'1 cert (at $15k spend)',note:''}],multiyear:[],static:[{n:'Hilton Gold status',a:'Complimentary',note:''},{n:'Priority Pass Select',a:'10 visits/yr',note:''},{n:'12x at Hilton',a:'12x Hilton pts',note:''}]},
+  summary:{rows:[{l:'Quarterly resort (ann.)',a:'Up to $200',v:200},{l:'Annual free night (at $15k)',a:'≤85k (~$200–$500)',v:350}],total:'~$200–$550+',totalV:400,note:''}},
+{id:'brilliant',name:'Marriott Bonvoy Brilliant',short:'Brilliant',issuer:'American Express',fee:650,c:'#5C0F1A',cm:'#B31B2A',verified:'2026-03',
+  sob:{offer:'95,000 Marriott Bonvoy points',req:'$6,000 in 6 months',tags:['t']},
+  credits:{monthly:[{n:'Dining statement credit',a:'Up to $25/mo ($300/yr)',note:'Restaurants worldwide. Automatic. No rollover.'}],quarterly:[],semiannual:[],annual:[{n:'Free Night Award (≤85k pts)',a:'1 cert/yr',note:'Typically $200–$600+.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'Marriott Platinum Elite',a:'Complimentary',note:''},{n:'Priority Pass Select',a:'Up to 6 visits/yr',note:''},{n:'25 Elite Night Credits',a:'Annually',note:''}]},
+  summary:{rows:[{l:'Monthly dining (ann.)',a:'Up to $300',v:300},{l:'Annual free night',a:'≤85k (~$200–$600)',v:400}],total:'~$500–$900+',totalV:700,note:''}},
+{id:'mariottbiz',name:'Amex Bonvoy Business',short:'Bonvoy Biz',issuer:'American Express',fee:250,c:'#3A0A10',cm:'#882030',verified:'2026-03',
+  sob:{offer:'3 Free Night Awards (≤50k pts each)',req:'$6,000 in 6 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Award (≤35k pts)',a:'1 cert/yr',note:'Cat 1–5 Marriott.'}],multiyear:[],static:[{n:'6x at Marriott',a:'6x Marriott pts',note:''},{n:'4x restaurants, gas, wireless, shipping, advertising',a:'4x Marriott pts',note:''},{n:'15 Elite Night Credits',a:'Annually',note:''}]},
+  summary:{rows:[{l:'Annual free night',a:'≤35k (~$100–$250)',v:175}],total:'~$100–$250+',totalV:175,note:''}},
+{id:'hiltbiz',name:'Hilton Honors Business',short:'Hilton Biz',issuer:'American Express',fee:195,c:'#002A5C',cm:'#0A4898',verified:'2026-03',
+  sob:{offer:'130,000 Hilton Honors points',req:'$3,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[{n:'Hilton resort credit',a:'Up to $60/qtr ($240/yr)',note:'Participating Hilton resorts.'}],semiannual:[],annual:[{n:'Free Night Reward (≤130k pts)',a:'1 cert (at $15k spend)',note:''}],multiyear:[],static:[{n:'Hilton Gold status',a:'Complimentary',note:''},{n:'12x at Hilton',a:'12x Hilton pts',note:''}]},
+  summary:{rows:[{l:'Quarterly resort (ann.)',a:'Up to $240',v:240},{l:'Annual free night (at $15k)',a:'≤130k (~$500+)',v:400}],total:'~$240–$640+',totalV:500,note:''}},
+{id:'venturex',name:'Capital One Venture X',short:'Venture X',issuer:'Capital One',fee:395,c:'#004977',cm:'#0077B6',verified:'2026-03',
+  sob:{offer:'75,000 miles',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Travel credit (Cap1 Travel)',a:'$300/yr',note:'Automatic on Cap1 Travel portal bookings.'},{n:'Anniversary bonus miles',a:'10,000 miles (~$100)',note:'On each anniversary.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'Priority Pass Select',a:'Unlimited + 2 guests',note:''},{n:'Capital One Lounge',a:'Unlimited + 2 guests',note:'DFW, DEN, IAD, expanding.'},{n:'2x miles everywhere',a:'2x miles',note:''},{n:'10x hotels & car rentals',a:'10x miles',note:'Via Cap1 Travel.'},{n:'Primary auto rental CDW',a:'Included',note:''}]},
+  summary:{rows:[{l:'Annual travel credit',a:'$300',v:300},{l:'Anniversary miles',a:'10k (~$100)',v:100}],total:'~$400+',totalV:400,note:'$300+$100 essentially offsets $395 fee.'}},
+{id:'venture',name:'Capital One Venture',short:'Venture',issuer:'Capital One',fee:95,c:'#006090',cm:'#0088B8',verified:'2026-03',
+  sob:{offer:'75,000 miles',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'2x miles everywhere',a:'2x miles',note:''},{n:'5x hotels & car rentals',a:'5x miles',note:''},{n:'Transfer to 15+ partners',a:'1:1 to most',note:''}]},
+  summary:{rows:[],total:'Global Entry credit only',totalV:0,note:''}},
+{id:'sparkcash',name:'Cap1 Spark Miles',short:'Spark Miles',issuer:'Capital One',fee:95,c:'#005580',cm:'#007AAA',verified:'2026-03',
+  sob:{offer:'50,000 miles',req:'$4,500 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'2x miles everywhere',a:'2x miles',note:''},{n:'5x hotels & car rentals',a:'5x miles',note:''}]},
+  summary:{rows:[],total:'~$100 (Global Entry)',totalV:100,note:''}},
+{id:'sparkcash2',name:'Cap1 Spark Cash Plus',short:'Spark Cash+',issuer:'Capital One',fee:150,c:'#004A60',cm:'#006888',verified:'2026-03',
+  sob:{offer:'$1,200 cash bonus',req:'$5k then $50k in yr 1',tags:['c']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Annual cash bonus',a:'$200 (at $200k spend)',note:''}],multiyear:[],static:[{n:'2% cash back everywhere',a:'2% cash',note:''},{n:'5% hotels & car rentals',a:'5% cash',note:''}]},
+  summary:{rows:[{l:'Annual cash bonus',a:'$200 (at $200k)',v:200}],total:'~$200+',totalV:200,note:''}},
+{id:'savor',name:'Capital One Savor',short:'Savor',issuer:'Capital One',fee:0,c:'#3A4A00',cm:'#6A7A00',verified:'2026-03',
+  sob:{offer:'$200 cash bonus',req:'$500 in 3 months',tags:['c']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'3% dining, entertainment, groceries',a:'3% cash',note:''},{n:'8% Cap1 Entertainment',a:'8% cash',note:''},{n:'3% streaming',a:'3% cash',note:''}]},
+  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
+{id:'strata',name:'Citi Strata Premier',short:'Strata Premier',issuer:'Citi',fee:95,c:'#003B8E',cm:'#1565C0',verified:'2026-03',
+  sob:{offer:'75,000 ThankYou Points',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Hotel credit (CitiTravel.com)',a:'Up to $100/yr',note:'On hotel stays $500+ via CitiTravel.com.'}],multiyear:[],static:[{n:'3x hotels, air, travel',a:'3x ThankYou pts',note:''},{n:'3x dining & groceries',a:'3x ThankYou pts',note:''},{n:'3x gas',a:'3x ThankYou pts',note:''},{n:'Transfer to 18+ partners',a:'1:1 to most',note:'Turkish, Flying Blue, Avianca, Wyndham.'}]},
+  summary:{rows:[{l:'Annual hotel credit',a:'Up to $100',v:100}],total:'~$100+',totalV:100,note:''}},
+{id:'aaexec',name:'Citi AAdvantage Executive',short:'AA Executive',issuer:'Citi',fee:595,c:'#AA1B1B',cm:'#CC3333',verified:'2026-03',
+  sob:{offer:'100,000 AAdvantage miles',req:'$10,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Anniversary bonus miles',a:'10,000 miles/yr',note:''},{n:'Global Entry / TSA PreCheck / NEXUS',a:'Up to $120/4 yrs',note:''}],multiyear:[],static:[{n:'Admirals Club membership',a:'Compl. (~$800/yr)',note:'Full Admirals Club. Cardholder + family or 2 guests.'},{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 8.'},{n:'4x on AA',a:'4x AAdvantage miles',note:''}]},
+  summary:{rows:[{l:'Admirals Club membership',a:'~$800 standalone',v:800}],total:'~$800+ (Club value)',totalV:800,note:''}},
+{id:'aaplatpres',name:'Citi AA Platinum Select',short:'AA Platinum Select',issuer:'Citi',fee:99,c:'#8A1515',cm:'#B02828',verified:'2026-03',
+  sob:{offer:'50,000 AAdvantage miles',req:'$2,500 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Companion cert (at $30k spend)',a:'After $30k/yr',note:'Domestic economy round-trip.'}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 4.'},{n:'2x AA, restaurants, gas',a:'2x AAdvantage miles',note:''}]},
+  summary:{rows:[{l:'Companion cert (at $30k)',a:'Domestic economy',v:250}],total:'~$250+',totalV:250,note:''}},
+{id:'doublecash',name:'Citi Double Cash',short:'Double Cash',issuer:'Citi',fee:0,c:'#102060',cm:'#2244A8',verified:'2026-03',
+  sob:{offer:'$200 cash back',req:'$1,500 in 6 months',tags:['c']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'2% everywhere',a:'2% cash',note:'1% buy + 1% pay.'},{n:'ThankYou Points conversion',a:'Convertible',note:'Pair with Strata Premier.'}]},
+  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
+{id:'custcash',name:'Citi Custom Cash',short:'Custom Cash',issuer:'Citi',fee:0,c:'#082250',cm:'#1840A0',verified:'2026-03',
+  sob:{offer:'$200 cash back',req:'$1,500 in 6 months',tags:['c']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'5% top eligible category',a:'5% cash (up to $500/mo)',note:'Auto-selects highest of 10 eligible categories.'},{n:'ThankYou Points conversion',a:'Convertible',note:'Pair with Strata Premier.'}]},
+  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
+{id:'rewardsp',name:'Citi Rewards+',short:'Rewards+',issuer:'Citi',fee:0,c:'#0A1A58',cm:'#1A38A8',verified:'2026-03',
+  sob:{offer:'20,000 ThankYou Points',req:'$1,500 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'Rounds up to 10 pts every purchase',a:'Min 10 pts per purchase',note:''},{n:'2x supermarkets & gas',a:'2x TY pts (up to $6k/yr)',note:''},{n:'10% pts back on redemptions',a:'Up to 100k pts/yr',note:''}]},
+  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
+{id:'bilt',name:'Bilt Mastercard',short:'Bilt',issuer:'Wells Fargo',fee:0,c:'#1A1A1A',cm:'#666680',verified:'2026-03',
+  sob:{offer:'No traditional sign-on bonus',req:'',tags:[]},
+  credits:{monthly:[{n:'Rent Day double points (1st)',a:'2x on all categories',note:'Every 1st: 2x on dining, travel, other. ≥5 transactions/billing cycle required.'}],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'Earn on rent payments',a:'1x pts (up to 100k/yr)',note:'No transaction fees.'},{n:'3x dining',a:'3x Bilt pts',note:''},{n:'2x travel',a:'2x Bilt pts',note:''},{n:'Transfer to 15+ partners',a:'1:1 to Hyatt, United, AA, Emirates…',note:''},{n:'Primary auto rental CDW',a:'Included',note:''}]},
+  summary:{rows:[],total:'$0 annual fee',totalV:0,note:''}},
+{id:'wfauto',name:'WF Autograph Journey',short:'WF Autograph',issuer:'Wells Fargo',fee:95,c:'#1A4A2A',cm:'#2E7A48',verified:'2026-03',
+  sob:{offer:'60,000 bonus points',req:'$4,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Airline credit',a:'Up to $50/yr',note:''},{n:'Hotel credit',a:'Up to $50/yr',note:''}],multiyear:[],static:[{n:'5x hotels',a:'5x WF pts',note:''},{n:'4x airlines',a:'4x WF pts',note:''},{n:'3x dining & travel',a:'3x WF pts',note:''}]},
+  summary:{rows:[{l:'Annual credits',a:'Up to $100',v:100}],total:'~$100+',totalV:100,note:''}},
+{id:'altres',name:'U.S. Bank Altitude Reserve',short:'Altitude Reserve',issuer:'U.S. Bank',fee:400,c:'#2A1758',cm:'#5B3EA8',verified:'2026-03',
+  sob:{offer:'50,000 pts (~$750 in travel)',req:'$4,500 in 90 days',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Travel & dining credit',a:'Up to $325/yr',note:'Automatic on travel and dining. Extremely broad. Effective fee: $75.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4.5 yrs',note:''}],static:[{n:'Priority Pass Select',a:'12 visits/yr',note:''},{n:'3x mobile wallet',a:'3x Altitude pts',note:'Apple Pay, Google Pay — nearly every in-person purchase.'},{n:'3x travel & dining',a:'3x Altitude pts',note:''}]},
+  summary:{rows:[{l:'Annual travel & dining credit',a:'Up to $325',v:325}],total:'~$325+',totalV:325,note:''}},
+{id:'altconn',name:'U.S. Bank Altitude Connect',short:'Altitude Connect',issuer:'U.S. Bank',fee:95,c:'#3A2068',cm:'#6848B8',verified:'2026-03',
+  sob:{offer:'50,000 pts (~$500)',req:'$2,000 in 120 days',tags:['t']},
+  credits:{monthly:[{n:'Streaming credit',a:'Up to $15/qtr ($60/yr)',note:'Netflix, Spotify, Disney+, Hulu, and more.'}],quarterly:[],semiannual:[],annual:[],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4.5 yrs',note:''}],static:[{n:'Priority Pass Select',a:'4 visits/yr',note:''},{n:'4x travel',a:'4x Altitude pts',note:''},{n:'4x gas & EV charging',a:'4x Altitude pts',note:''}]},
+  summary:{rows:[{l:'Streaming credit (ann.)',a:'Up to $60',v:60}],total:'~$60+',totalV:60,note:''}},
+{id:'boapre',name:'BofA Premium Rewards Elite',short:'BofA PR Elite',issuer:'Bank of America',fee:550,c:'#7A1A1A',cm:'#B83030',verified:'2026-03',
+  sob:{offer:'75,000 points',req:'$5,000 in 90 days',tags:['c','t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Travel credit',a:'Up to $300/yr',note:'Broad — flights, hotels, transit, rideshare, cruises. Automatic.'},{n:'Lifestyle credit',a:'Up to $150/yr',note:'Dining, beauty, spa, fitness, streaming. Automatic.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'Priority Pass Select',a:'Unlimited + unlimited guests',note:'No guest limits.'},{n:'2x travel & dining',a:'2x BofA pts',note:'Up to 3.5x with Preferred Rewards.'}]},
+  summary:{rows:[{l:'Annual travel credit',a:'Up to $300',v:300},{l:'Annual lifestyle credit',a:'Up to $150',v:150}],total:'~$450+',totalV:450,note:''}},
+{id:'boatrav',name:'BofA Travel Rewards',short:'BofA Travel',issuer:'Bank of America',fee:0,c:'#5A1414',cm:'#902020',verified:'2026-03',
+  sob:{offer:'25,000 pts (~$250 travel)',req:'$1,000 in 90 days',tags:['c']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'1.5x everywhere (up to 2.625x)',a:'1.5x–2.625x pts',note:'With $100k+ BofA/Merrill assets.'}]},
+  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
+{id:'aadvbiz',name:'Barclays Aviator Silver',short:'Aviator Silver',issuer:'Barclays',fee:199,c:'#00274A',cm:'#1058A0',verified:'2026-03',
+  sob:{offer:'60,000 AAdvantage miles',req:'$1,000 in 3 months',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Companion cert (at $20k)',a:'After $20k/yr',note:'Domestic economy.'},{n:'3k EQMs per $10k spend (2x)',a:'Up to 6,000 EQMs',note:''}],multiyear:[],static:[{n:'Admirals Club membership',a:'Complimentary for cardholder',note:''},{n:'First & second bag free',a:'Complimentary',note:'Cardholder + up to 8.'},{n:'3x on AA',a:'3x AAdvantage miles',note:''}]},
+  summary:{rows:[{l:'Admirals Club (cardholder)',a:'~$800 standalone',v:800}],total:'~$800+ (Club value)',totalV:800,note:''}},
+{id:'jbtravel',name:'Barclays JetBlue Plus',short:'JetBlue Plus',issuer:'Barclays',fee:99,c:'#003087',cm:'#0050C0',verified:'2026-03',
+  sob:{offer:'50,000 TrueBlue points',req:'$1,000 in 90 days',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Anniversary bonus points',a:'5,000 pts/yr',note:'Worth ~$70.'},{n:'$100 JetBlue credit',a:'$100/yr',note:''}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 3.'},{n:'3x on JetBlue',a:'3x TrueBlue pts',note:''},{n:'10% pts back on redemptions',a:'Up to 10%',note:''}]},
+  summary:{rows:[{l:'Anniversary bonus',a:'5k (~$70)',v:70},{l:'JetBlue credit',a:'$100',v:100}],total:'~$170+',totalV:170,note:''}},
+{id:'aadvsel',name:'Barclays Aviator Red',short:'Aviator Red',issuer:'Barclays',fee:99,c:'#001A38',cm:'#0848A0',verified:'2026-03',
+  sob:{offer:'60,000 AAdvantage miles',req:'$0 — earn just by getting card',tags:['t']},
+  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Companion cert (at $20k)',a:'After $20k/yr',note:''}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 4.'},{n:'2x on AA',a:'2x AAdvantage miles',note:''}]},
+  summary:{rows:[{l:'Companion cert (at $20k)',a:'Domestic economy',v:250}],total:'~$250+',totalV:250,note:''}},
+];
+
+const ISSUERS=['Chase','American Express','Capital One','Citi','Wells Fargo','U.S. Bank','Bank of America','Barclays'];
+const SK='kbyli_v4';
+let myCards=new Set((()=>{try{const s=localStorage.getItem(SK);return s?JSON.parse(s):[]}catch{return[]}})());
+let browseCards=new Set(CARDS.map(c=>c.id));
+let mode=myCards.size>0?'mycards':'browse';
+let walletOpen=false;
+let section='monthly';
+let q='';
+let promoClosed=false;
+
+function saveMyCards(){try{localStorage.setItem(SK,JSON.stringify([...myCards]))}catch{}}
+
+/* ── ONBOARDING STRIP ──────────────── */
+function initOnboard(){
+  const dismissed = localStorage.getItem('ob_d');
+  const hasCards = myCards.size > 0;
+  const strip = document.getElementById('onboardStrip');
+  if(!strip) return;
+  // Show onboarding if: first visit (never dismissed) AND no wallet yet
+  if(!dismissed && !hasCards){
+    strip.style.display = 'flex';
+  } else {
+    strip.style.display = 'none';
+  }
+}
+function dismissOnboard(){
+  localStorage.setItem('ob_d','1');
+  document.getElementById('onboardStrip').style.display = 'none';
+}
+// Auto-dismiss onboarding when user adds first card
+function maybeHideOnboard(){
+  if(myCards.size > 0){
+    localStorage.setItem('ob_d','1');
+    const strip = document.getElementById('onboardStrip');
+    if(strip) strip.style.display = 'none';
+  }
+}
+
+function syncHeader(){
+  document.getElementById('hMine').textContent = myCards.size;
+  document.getElementById('mcBadge').textContent = myCards.size;
+  // Show "Save my wallet" nudge when user has cards but isn't signed in
+  const saveBtn = document.getElementById('saveWalletBtn');
+  if(saveBtn) saveBtn.style.display = (myCards.size > 0 && !currentUser) ? 'flex' : 'none';
+}
+
+/* ── EMAIL BAR ─────────────────── */
+function initEmailBar(){if(localStorage.getItem('eb_d'))document.getElementById('emailBar').style.display='none';}
+function dismissEmail(){localStorage.setItem('eb_d','1');document.getElementById('emailBar').style.display='none';}
+async function submitEmail(){
+  const inp=document.getElementById('ebInput'),email=inp.value.trim();
+  if(!email||!email.includes('@')){inp.style.borderColor='rgba(255,90,90,.4)';inp.focus();return;}
+  inp.style.borderColor='';
+  if(FORMSPREE_ID!=='YOUR_FORMSPREE_ID'){
+    try{await fetch(`https://formspree.io/f/${FORMSPREE_ID}`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({email,cards:[...myCards].join(',')})});}catch{}
+  }
+  console.log('[KBYLI] email signup:',email);
+  document.getElementById('ebForm').innerHTML='<div class="eb-ok">✓ You\'re on the list — we\'ll remind you before credits expire.</div>';
+  localStorage.setItem('eb_d','1');
+  setTimeout(()=>document.getElementById('emailBar').style.display='none',4000);
+}
+document.getElementById('ebInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitEmail();});
+
+/* ── PROMO TICKER ──────────────── */
+function daysUntil(d){const n=new Date();n.setHours(0,0,0,0);const t=new Date(d);t.setHours(0,0,0,0);return Math.round((t-n)/86400000);}
+
+function renderPromoTicker(){
+  const bar=document.getElementById('promoBar');
+  const inner=document.getElementById('promoInner');
+  if(promoClosed){bar.style.display='none';return;}
+  const active=mode==='mycards'?myCards:browseCards;
+  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0&&p.cards.some(c=>active.has(c)));
+  if(live.length===0){bar.style.display='none';return;}
+  bar.style.display='block';
+  // Build pill HTML
+  const pill=p=>{
+    const d=daysUntil(p.expires),hot=d<=7;
+    return`<div class="pp"><span class="pp-cur">${p.currency}</span><span class="pp-bonus">${p.bonus}</span><span class="pp-arr">→</span><span class="pp-partner">${p.partner}</span><span class="pp-exp${hot?' hot':''}">exp ${d}d</span></div>`;
+  };
+  const html=live.map(pill).join('');
+  // Duplicate for seamless infinite loop
+  inner.innerHTML=html+html;
+  // Adjust animation speed to content width
+  const single=inner.scrollWidth/2;
+  const speed=Math.max(30,single/8); // ~8px per second
+  inner.style.animationDuration=speed+'s';
+}
+function closePromo(){promoClosed=true;document.getElementById('promoBar').style.display='none';}
+
+/* ── MODE ─────────────────────── */
+function setMode(m){
+  mode=m;walletOpen=false;
+  document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+  document.getElementById('walletSetup').style.display='none';
+  document.getElementById('browsePicker').style.display=m==='browse'?'block':'none';
+  document.getElementById('editBtn').innerHTML=m==='mycards'
+    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet'
+    :'← My Cards';
+  promoClosed=false;renderPromoTicker();renderGrid();
+}
+function toggleWalletEdit(){
+  if(mode!=='mycards'){setMode('mycards');return;}
+  walletOpen=!walletOpen;
+  document.getElementById('walletSetup').style.display=walletOpen?'block':'none';
+  if(walletOpen)renderWalletSetup();
+  document.getElementById('editBtn').innerHTML=walletOpen
+    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2l12 12M14 2L2 14"/></svg> Done'
+    :'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet';
+}
+
+/* ── WALLET SETUP ─────────────── */
+function renderWalletSetup(){
+  const el=document.getElementById('wsRows');
+  const byI={};CARDS.forEach(c=>{if(!byI[c.issuer])byI[c.issuer]=[];byI[c.issuer].push(c);});
+  el.innerHTML=ISSUERS.filter(i=>byI[i]).map(issuer=>{
+    const chips=byI[issuer].map(card=>{
+      const on=myCards.has(card.id),fee=card.fee===0?'$0':'$'+card.fee;
+      return`<button class="wchip${on?' on':''}" style="--chip-c:${card.c}" onclick="toggleMyCard('${card.id}')"><span class="wchip-d"></span>${card.short} ${fee}</button>`;
+    }).join('');
+    return`<div class="ws-row"><span class="ws-il">${issuer==='American Express'?'Amex':issuer}</span><div class="ws-chips">${chips}</div></div>`;
+  }).join('');
+}
+function toggleMyCard(id){
+  if(myCards.has(id))myCards.delete(id);else myCards.add(id);
+  saveMyCards();syncHeader();renderWalletSetup();renderPromoTicker();renderGrid();updateTabCounts();
+  maybeHideOnboard();
+}
+
+/* ── BROWSE PICKER ────────────── */
+function renderBrowsePicker(){
+  const el=document.getElementById('browsePicker');
+  const byI={};CARDS.forEach(c=>{if(!byI[c.issuer])byI[c.issuer]=[];byI[c.issuer].push(c);});
+  const groups=ISSUERS.filter(i=>byI[i]).map(issuer=>{
+    const chips=byI[issuer].map(card=>{
+      const on=browseCards.has(card.id),fee=card.fee===0?'$0':'$'+card.fee;
+      return`<button class="chip${on?' on':''}" style="--chip-c:${card.c}" onclick="toggleBrowse('${card.id}')"><span class="chip-d"></span>${card.short} ${fee}</button>`;
+    }).join('');
+    return`<div class="bp-g"><span class="bp-il">${issuer==='American Express'?'Amex':issuer}</span>${chips}</div>`;
+  }).join('');
+  el.innerHTML=`<div class="bp-row"><span class="bp-l">Filter</span><div class="bp-div"></div><button class="bp-a" onclick="browseAll()">All ${CARDS.length}</button><button class="bp-a" onclick="browseClear()">Clear</button><span class="bp-cnt">${browseCards.size} / ${CARDS.length} shown</span></div><div class="bp-chips">${groups}</div>`;
+}
+function toggleBrowse(id){if(browseCards.has(id)){if(browseCards.size>1)browseCards.delete(id);}else browseCards.add(id);renderBrowsePicker();renderGrid();}
+function browseAll(){CARDS.forEach(c=>browseCards.add(c.id));renderBrowsePicker();renderGrid();}
+function browseClear(){browseCards.clear();browseCards.add(CARDS[0].id);renderBrowsePicker();renderGrid();}
+
+/* ── RESET BADGE ──────────────── */
+function nextReset(s){
+  const t=new Date(),y=t.getFullYear(),m=t.getMonth();
+  if(s==='monthly')return{d:daysUntil(new Date(y,m+1,1)),label:'monthly reset'};
+  if(s==='quarterly'){const qs=[0,3,6,9],nq=qs.find(q=>q>m)??(qs[0]+12);return{d:daysUntil(new Date(y+(nq>=12?1:0),nq%12,1)),label:'quarterly reset'};}
+  if(s==='semiannual')return{d:daysUntil(m<6?new Date(y,6,1):new Date(y+1,0,1)),label:'semi-annual reset'};
+  if(s==='annual')return{d:daysUntil(new Date(y+1,0,1)),label:'annual reset (Jan 1)'};
+  return null;
+}
+function renderResetBadge(){
+  const el=document.getElementById('resetBadge');
+  const r=nextReset(section);
+  if(!r||r.d<0){el.innerHTML='';el.style.display='none';return;}
+  el.style.display='flex';const hot=r.d<=7;
+  el.className='reset-b'+(hot?' urg':'');
+  el.innerHTML=`<span class="rb-t${hot?' hot':''}">⟳ <strong>${r.d} day${r.d===1?'':'s'}</strong> until ${r.label}</span>`;
+}
+
+/* ── NAV INDICATOR ────────────── */
+function updateInd(){
+  const a=document.querySelector('.nb.on'),ind=document.getElementById('navInd'),nav=document.getElementById('navEl');
+  if(!a||!ind||!nav)return;
+  const br=a.getBoundingClientRect(),nr=nav.getBoundingClientRect();
+  ind.style.width=br.width+'px';
+  ind.style.transform=`translateX(${br.left-nr.left+nav.scrollLeft}px)`;
+}
+
+/* ── SEARCH ───────────────────── */
+document.getElementById('searchInput').addEventListener('input',function(){
+  q=this.value.trim().toLowerCase();
+  document.getElementById('scX').style.display=q?'flex':'none';
+  renderGrid();
+});
+function clearSearch(){document.getElementById('searchInput').value='';q='';document.getElementById('scX').style.display='none';renderGrid();}
+
+/* ── RENDERING ────────────────── */
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function vis(){return CARDS.filter(c=>(mode==='mycards'?myCards:browseCards).has(c.id));}
+
+/* Card header — clean: name, fee, stale warning only if needed */
+function colHead(card){
+  const fee=card.fee===0?'$0':'$'+card.fee;
+  const stale=card.verified<'2026-01';
+  // Only show meta row if card is stale (otherwise it's noise)
+  const metaRow=stale
+    ?`<div class="ch-meta"><span class="ch-ver stale" title="Data may be outdated — ${esc(card.verified)}">⚠ data may be outdated</span><button class="ch-flag" onclick="flagCard('${card.id}')">flag</button></div>`
+    :'';
+  return`<div class="ch">
+    <div class="ch-top"><span class="ch-name">${esc(card.name)}</span><span class="ch-fee">${fee}/yr</span></div>
+    ${metaRow}
+  </div>`;
+}
+
+/* Apply row appears on ALL tabs at bottom of every card.
+   On credit tabs: just "Apply →" link — unobtrusive.
+   On summary tab: shows full offer via buildSummary's applyRow call.
+   This is how we make money without looking like an ad site. */
+function applyFooter(card){
+  const link=AFF[card.id];
+  if(!link||section==='summary')return''; // summary handles it internally
+  return`<div class="apply-row">
+    <a class="apply-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
+  </div>`;
+}
+
+// applyRow for summary — shows full offer
+function applyRow(card){
+  const link=AFF[card.id];
+  if(!link)return'';
+  const s=card.sob;
+  const hasOffer=s&&s.offer&&!s.offer.startsWith('No');
+  return`<div class="apply-row">
+    ${hasOffer?`<div class="apply-row-offer"><strong>${esc(s.offer)}</strong>${s.req?'<br><span style="font-size:9.5px">'+esc(s.req)+'</span>':''}</div>`:'<div class="apply-row-offer">View current offers</div>'}
+    <a class="apply-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
+  </div>`;
+}
+
+function buildCredits(card){
+  const items=card.credits[section]||[];
+  const filtered=q?items.filter(it=>it.n.toLowerCase().includes(q)||(it.note&&it.note.toLowerCase().includes(q))):items;
+  let body='';
+  if(items.length===0)body='<div class="empty">No credits this cadence</div>';
+  else if(filtered.length===0&&q)body=`<div class="nomatch">No match for "${esc(q)}"</div>`;
+  else body=filtered.map(it=>`<div class="ci"><div class="ci-top"><span class="ci-n${it.warn?' warn':''}">${esc(it.n)}</span><span class="ci-a">${esc(it.a)}</span></div>${it.note?`<div class="ci-note">${esc(it.note)}</div>`:''}</div>`).join('');
+  return`<div class="cb">${body}</div>`;
+}
+
+const SMAX=3200;
+function buildSummary(card){
+  const s=card.summary;
+  const sob=card.sob&&card.sob.offer&&!card.sob.offer.startsWith('No')
+    ?`<div class="si"><div class="si-top"><span class="si-l">Sign-on bonus</span><span class="si-v" style="color:var(--green);font-size:11px">${esc(card.sob.offer)}</span></div>${card.sob.req?`<div class="si-note">${esc(card.sob.req)}</div>`:''}</div>`:'';
+  const feeRow=`<div class="si-fee"><span class="si-fl">Annual fee</span><span class="si-fv">${card.fee===0?'$0':'$'+card.fee+'/yr'}</span></div>`;
+  const rows=s.rows.map(r=>{const p=Math.min(100,Math.round(r.v/SMAX*100));return`<div class="si"><div class="si-top"><span class="si-l">${esc(r.l)}</span><span class="si-v">${esc(r.a)}</span></div><div class="bar"><div class="bar-f" style="width:${p}%"></div></div>${r.note?`<div class="si-note">${esc(r.note)}</div>`:''}</div>`;}).join('');
+  const tp=Math.min(100,Math.round(s.totalV/SMAX*100));
+  const total=`<div class="si tot"><div class="si-top"><span class="si-l">Total potential credits</span><span class="si-v">${esc(s.total)}</span></div><div class="bar" style="height:2.5px"><div class="bar-f" style="width:${tp}%"></div></div>${s.note?`<div class="si-note">${esc(s.note)}</div>`:''}</div>`;
+  return`<div class="cb">${sob}${feeRow}${rows}${total}</div>${applyRow(card)}`;
+}
+
+/* Summary tab footer — share CTA shown once below ALL cards, not per-card */
+function renderSummaryFooter(cards){
+  if(!cards||cards.length<2)return;
+  const totalCredits=cards.reduce((a,c)=>a+(c.summary?.totalV||0),0);
+  const totalFees=cards.reduce((a,c)=>a+c.fee,0);
+  const net=totalCredits-totalFees;
+  const el=document.getElementById('summaryFooter');
+  if(!el)return;
+  el.innerHTML=`<div style="padding:20px 0 4px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="font-size:12px;color:var(--txm)">
+      <span style="color:var(--tx);font-weight:500">Your stack total:</span>
+      $${totalCredits.toLocaleString()}/yr in credits · $${totalFees.toLocaleString()}/yr in fees ·
+      <span style="color:${net>=0?'var(--green)':'var(--red)'};font-weight:500">${net>=0?'+':'-'}$${Math.abs(net).toLocaleString()} net</span>
+    </div>
+    <button class="btn btn-share" style="margin-left:auto;flex-shrink:0" onclick="openShareModal()">
+      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>
+      Share your stack
+    </button>
+  </div>`;
+}
+
+function renderGrid(){
+  const gridEl=document.getElementById('grid');
+  if(!gridEl)return;
+  const allVisible=vis();
+
+  if(allVisible.length===0&&mode==='mycards'){
+    document.getElementById('mainContent').innerHTML=`<div class="ew"><div class="ew-i">⬡</div><div class="ew-t">Your wallet is empty</div><div class="ew-s">Add the cards you carry to see what credits are expiring this month, quarter, and year.</div><button class="btn btn-p" onclick="walletOpen=true;document.getElementById('walletSetup').style.display='block';renderWalletSetup()">Add cards</button></div>`;
+    return;
+  }
+
+  // For credit tabs: sort cards with credits first, empty cards go to end
+  // For summary/always-on: show all in order
+  let sorted=allVisible;
+  if(section!=='summary'&&section!=='static'){
+    const withCredits=allVisible.filter(c=>(c.credits[section]||[]).length>0);
+    const withoutCredits=allVisible.filter(c=>(c.credits[section]||[]).length===0);
+    sorted=[...withCredits,...withoutCredits];
+    // Only show empty cards if there are no non-empty ones, or user is searching
+    if(!q&&withCredits.length>0){
+      sorted=withCredits; // Hide empty cards entirely — unclutter
+    }
+  }
+
+  const cntEl=document.getElementById('tbCnt');
+  if(cntEl)cntEl.innerHTML=`<strong>${sorted.length}</strong> card${sorted.length!==1?'s':''}`;
+  const fadeEl=document.getElementById('gFade');
+  if(fadeEl)fadeEl.style.display=sorted.length>3?'block':'none';
+
+  gridEl.innerHTML='';
+  if(sorted.length===0){
+    gridEl.innerHTML='<div style="padding:40px;text-align:center;color:var(--txd);font-size:12px">No results.</div>';
+    return;
+  }
+  sorted.forEach(card=>{
+    const col=document.createElement('div');
+    col.className='col';
+    col.style.cssText=`--cc:${card.c};--ccm:${card.cm}`;
+    col.innerHTML=colHead(card)+(section==='summary'?buildSummary(card):buildCredits(card))+applyFooter(card);
+    gridEl.appendChild(col);
+  });
+
+  // Clear/render summary footer
+  const sfEl=document.getElementById('summaryFooter');
+  if(sfEl){
+    if(section==='summary'&&sorted.length>=2) renderSummaryFooter(sorted);
+    else sfEl.innerHTML='';
+  }
+  setTimeout(()=>{
+    const g=document.getElementById('grid');
+    const thumb=document.getElementById('scrollThumb');
+    if(!g||!thumb)return;
+    const upd=()=>{
+      const r=g.scrollWidth>g.clientWidth?g.clientWidth/g.scrollWidth:1;
+      const p=g.scrollWidth>g.clientWidth?g.scrollLeft/(g.scrollWidth-g.clientWidth):0;
+      thumb.style.width=(r*100)+'%';
+      thumb.style.transform=`translateX(${p*(100/r*(1-r))}%)`;
+      if(fadeEl)fadeEl.style.opacity=p<0.97?'1':'0';
+    };
+    g.removeEventListener('scroll',g._scrollHandler);
+    g._scrollHandler=upd;
+    g.addEventListener('scroll',upd,{passive:true});
+    upd();
+  },60);
+}
+
+/* Update nav tab count badges based on visible cards */
+function updateTabCounts(){
+  const allVis=vis();
+  const sections=['monthly','quarterly','semiannual','annual','multiyear','static'];
+  document.querySelectorAll('.nb').forEach(btn=>{
+    const s=btn.dataset.s;
+    if(!sections.includes(s))return;
+    let cnt=btn.querySelector('.nb-cnt');
+    if(!cnt){cnt=document.createElement('span');cnt.className='nb-cnt';btn.appendChild(cnt);}
+    const n=allVis.filter(c=>(c.credits[s]||[]).length>0).length;
+    cnt.textContent=n;
+    cnt.style.display=n>0?'inline-block':'none';
+  });
+}
+
+function trackApply(id){
+  const card=CARDS.find(c=>c.id===id);
+  console.log('[KBYLI affiliate] click →',id,card?.name);
+  // posthog?.capture('apply_click',{card_id:id,card_name:card?.name,section});
+}
+function flagCard(id){const card=CARDS.find(c=>c.id===id);showToast(`Flagged "${card?.name}" as outdated — thanks`);}
+
+/* ── CALENDAR EXPORT ──────────── */
+function exportCalendar(){
+  const today=new Date(),y=today.getFullYear(),m=today.getMonth();
+  const pad=n=>String(n).padStart(2,'0'),id=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`,uid=()=>Math.random().toString(36).slice(2)+'@kbyli.app';
+  const visible=vis(),events=[];
+  for(let i=0;i<3;i++){const d=new Date(y,m+1+i,1);const mc=visible.filter(c=>(c.credits.monthly||[]).length>0);if(mc.length>0)events.push({date:d,title:`Monthly credits reset — ${mc.length} cards`,note:mc.map(c=>c.name).join(', ')});}
+  [0,3,6,9].forEach(q=>{const d=new Date(y+(q+1>11?1:0),(q+1)%12,1);if(daysUntil(d)>0&&daysUntil(d)<366){const qc=visible.filter(c=>(c.credits.quarterly||[]).length>0);if(qc.length>0)events.push({date:d,title:`Quarterly reset — ${qc.length} cards`,note:qc.map(c=>c.name).join(', ')});}});
+  [{mo:7,l:'Semi-annual reset H2'},{mo:1,l:'Semi-annual reset H1'}].forEach(({mo,l})=>{const d=new Date(y+(mo===1?1:0),mo-1,1);if(daysUntil(d)>0){const sc=visible.filter(c=>(c.credits.semiannual||[]).length>0);if(sc.length>0)events.push({date:d,title:l+` — ${sc.length} cards`,note:sc.map(c=>c.name).join(', ')});}});
+  const ac=visible.filter(c=>(c.credits.annual||[]).length>0);if(ac.length>0)events.push({date:new Date(y+1,0,1),title:`Annual credits reset — ${ac.length} cards`,note:ac.map(c=>c.name).join(', ')});
+  if(events.length===0){showToast('No upcoming resets to export');return;}
+  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Know Before You Lose It//EN\r\nCALSCALE:GREGORIAN\r\n';
+  events.forEach(e=>{ics+=`BEGIN:VEVENT\r\nUID:${uid()}\r\nDTSTAMP:${id(new Date())}T000000Z\r\nDTSTART;VALUE=DATE:${id(e.date)}\r\nDTEND;VALUE=DATE:${id(e.date)}\r\nSUMMARY:💳 ${e.title}\r\nDESCRIPTION:${e.note}\r\nBEGIN:VALARM\r\nTRIGGER:-P3D\r\nACTION:DISPLAY\r\nDESCRIPTION:Reminder: ${e.title}\r\nEND:VALARM\r\nEND:VEVENT\r\n`;});
+  ics+='END:VCALENDAR';
+  const b=new Blob([ics],{type:'text/calendar'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='card-resets.ics';a.click();
+  showToast(`Exported ${events.length} reset events`);
+}
+
+function showToast(msg,dur=2800){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+
+/* ── NAV ──────────────────────── */
+document.querySelectorAll('.nb').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');section=btn.dataset.s;
+    renderResetBadge();renderGrid();requestAnimationFrame(updateInd);
+  });
+});
+window.addEventListener('resize',updateInd);
+
+/* ══════════════════════════════════════════════════════
+   AUTH SYSTEM
+   Architecture:
+   - Google Identity Services (GSI) for OAuth — no backend
+   - Magic link via Formspree (or swap in Supabase later)
+   - User profile stored in localStorage keyed by user ID
+   - When user signs in: wallet auto-saves under their profile
+   - Upgrade path: swap localStorage for Supabase calls
+══════════════════════════════════════════════════════ */
+const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // console.cloud.google.com
+
+let currentUser = null; // { id, name, email, avatar, provider }
+let profilePanelOpen = false;
+
+function initAuth(){
+  // Load saved user from localStorage
+  try {
+    const saved = localStorage.getItem('kbyli_user');
+    if(saved){ currentUser = JSON.parse(saved); renderAuthBtn(); }
+  } catch {}
+
+  // Load Google Identity Services SDK
+  if(GOOGLE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID'){
+    const s = document.createElement('script');
+    s.src = 'https://accounts.google.com/gsi/client';
+    s.onload = initGSI;
+    document.head.appendChild(s);
+  }
+}
+
+function initGSI(){
+  if(!window.google) return;
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleGoogleSignIn,
+    auto_select: false,
+  });
+}
+
+async function signInGoogle(){
+  if(GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID'){
+    // Demo mode — simulate a user for UI preview
+    currentUser = {id:'demo_001',name:'Demo User',email:'demo@kbyli.app',avatar:null,provider:'google'};
+    saveUser();renderAuthBtn();closeAuthModal();
+    showToast('Signed in as Demo User');
+    return;
+  }
+  if(!window.google){ showToast('Loading Google…'); return; }
+  google.accounts.id.prompt();
+}
+
+function handleGoogleSignIn(response){
+  // Decode JWT id_token (header.payload.signature)
+  try {
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    currentUser = {
+      id: payload.sub,
+      name: payload.name,
+      email: payload.email,
+      avatar: payload.picture || null,
+      provider: 'google',
+    };
+    saveUser();
+    renderAuthBtn();
+    closeAuthModal();
+    showToast(`Signed in as ${currentUser.name}`);
+    // Migrate any anonymous wallet to this user's account
+    migrateWallet();
+  } catch(e){ console.error('GSI decode error', e); }
+}
+
+async function sendMagicLink(){
+  const email = document.getElementById('magicEmail').value.trim();
+  if(!email || !email.includes('@')){ return; }
+  const msg = document.getElementById('magicMsg');
+  if(FORMSPREE_ID !== 'YOUR_FORMSPREE_ID'){
+    try {
+      await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({type:'magic_link', email, cards:[...myCards].join(',')}),
+      });
+    } catch {}
+  }
+  // For now show success — in production Supabase auth.signInWithOtp handles the link
+  msg.style.display = 'block';
+  console.log('[KBYLI] Magic link sent to:', email);
+  setTimeout(closeAuthModal, 3500);
+}
+
+function saveUser(){
+  try { localStorage.setItem('kbyli_user', JSON.stringify(currentUser)); } catch {}
+}
+
+function signOut(){
+  currentUser = null;
+  localStorage.removeItem('kbyli_user');
+  if(window.google) google.accounts.id.disableAutoSelect();
+  renderAuthBtn();
+  closeProfilePanel();
+  showToast('Signed out');
+}
+
+function migrateWallet(){
+  // Cards are already in myCards (localStorage) — nothing to migrate in this version
+  // With Supabase: upsert the wallet to the user's remote row
+  syncHeader();
+}
+
+function renderAuthBtn(){
+  const btn = document.getElementById('authBtn');
+  const saveBtn = document.getElementById('saveWalletBtn');
+  if(!btn) return;
+  if(currentUser){
+    const initial = currentUser.name ? currentUser.name[0].toUpperCase() : '?';
+    btn.innerHTML = `<div class="auth-avatar">${currentUser.avatar ? `<img src="${currentUser.avatar}" alt="">` : initial}</div>${currentUser.name.split(' ')[0]}`;
+    btn.onclick = toggleProfilePanel;
+    if(saveBtn) saveBtn.style.display='none';
+  } else {
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg> Sign in`;
+    btn.onclick = toggleAuthModal;
+    // Show "Save my wallet" nudge only when user has cards but no account
+    if(saveBtn) saveBtn.style.display = myCards.size>0 ? 'flex' : 'none';
+  }
+}
+
+function handleAuthClick(){
+  if(currentUser) toggleProfilePanel();
+  else toggleAuthModal();
+}
+
+/* Auth modal */
+let authModalOpen = false;
+function toggleAuthModal(){
+  authModalOpen = !authModalOpen;
+  document.getElementById('authModal').style.display = authModalOpen ? 'block' : 'none';
+}
+function closeAuthModal(){
+  authModalOpen = false;
+  document.getElementById('authModal').style.display = 'none';
+}
+
+/* Profile panel */
+function toggleProfilePanel(){
+  profilePanelOpen = !profilePanelOpen;
+  if(profilePanelOpen) showProfilePanel(); else closeProfilePanel();
+}
+function closeProfilePanel(){
+  profilePanelOpen = false;
+  const pp = document.getElementById('profilePanel');
+  if(pp) pp.innerHTML = '';
+  pp.style.display = 'none';
+}
+
+function showProfilePanel(){
+  if(!currentUser) return;
+  const pp = document.getElementById('profilePanel');
+  pp.style.display = 'block';
+  const cards = CARDS.filter(c => myCards.has(c.id));
+  const totalAnnual = cards.reduce((acc, c) => acc + (c.summary?.totalV || 0), 0);
+  const totalFee = cards.reduce((acc, c) => acc + c.fee, 0);
+  const net = totalAnnual - totalFee;
+  pp.innerHTML = `<div class="profile-panel">
+    <div class="profile-name">${esc(currentUser.name)}</div>
+    <div class="profile-email">${esc(currentUser.email)}</div>
+    <div class="profile-stat"><span class="profile-stat-l">Cards in wallet</span><span class="profile-stat-v">${myCards.size}</span></div>
+    <div class="profile-stat"><span class="profile-stat-l">Total annual fees</span><span class="profile-stat-v">$${totalFee.toLocaleString()}</span></div>
+    <div class="profile-stat"><span class="profile-stat-l">Total potential credits</span><span class="profile-stat-v">$${totalAnnual.toLocaleString()}+</span></div>
+    <div class="profile-stat"><span class="profile-stat-l">Net value</span><span class="profile-stat-v" style="color:${net>=0?'var(--green)':'var(--red)'}">${net>=0?'+':'-'}$${Math.abs(net).toLocaleString()}</span></div>
+    <div class="profile-actions" style="flex-wrap:wrap;gap:6px">
+      <button class="profile-action" style="flex:0 0 calc(50% - 3px);background:rgba(61,214,140,0.07);color:var(--green);border-color:rgba(61,214,140,0.2)" onclick="closeProfilePanel();openShareModal()">
+        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>
+        Share stack
+      </button>
+      <button class="profile-action" style="flex:0 0 calc(50% - 3px)" onclick="exportCalendar();closeProfilePanel()">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
+        Sync calendar
+      </button>
+      <button class="profile-action danger" style="flex:1" onclick="signOut()">Sign out</button>
+    </div>
+  </div>`;
+  setTimeout(() => {
+    document.addEventListener('click', function outsideClick(e){
+      if(!pp.contains(e.target) && e.target.id !== 'authBtn'){
+        closeProfilePanel();
+        document.removeEventListener('click', outsideClick);
+      }
+    });
+  }, 10);
+}
+
+/* Close modal on Escape */
+/* ══════════════════════════════════════════════════════
+   SHARE STACK — Canvas image generator
+   Produces a 1200×630px card image (Twitter/OG optimal)
+   showing the user's wallet: cards, credits, fees, net.
+   No backend needed — pure Canvas API.
+══════════════════════════════════════════════════════ */
+
+let shareModalOpen = false;
+
+function openShareModal(){
+  shareModalOpen = true;
+  document.getElementById('shareModal').style.display = 'block';
+  renderShareBody();
+}
+function closeShareModal(){
+  shareModalOpen = false;
+  document.getElementById('shareModal').style.display = 'none';
+}
+
+function renderShareBody(){
+  const body = document.getElementById('shareBody');
+  const cards = CARDS.filter(c => myCards.has(c.id));
+
+  if(cards.length === 0){
+    body.innerHTML = `<div class="share-empty">
+      <strong>Your wallet is empty</strong>
+      Add cards to your wallet first, then share your stack.
+      <br><br>
+      <button class="share-act share-act-primary" onclick="closeShareModal();toggleWalletEdit()">Add cards</button>
+    </div>`;
+    return;
+  }
+
+  // Compute stats
+  const totalCredits = cards.reduce((a,c) => a + (c.summary?.totalV||0), 0);
+  const totalFees    = cards.reduce((a,c) => a + c.fee, 0);
+  const net          = totalCredits - totalFees;
+  const issuers      = [...new Set(cards.map(c => c.issuer))];
+
+  body.innerHTML = `
+    <div class="share-preview">
+      <div class="share-canvas-wrap">
+        <div class="share-generating" id="shareGenerating">Generating…</div>
+        <canvas id="shareCanvas" width="1200" height="630"></canvas>
+      </div>
+    </div>
+    <div class="share-actions">
+      <button class="share-act share-act-primary" onclick="downloadShareImage()">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 13h12"/></svg>
+        Download image
+      </button>
+      <button class="share-act share-act-secondary" onclick="copyShareImage()">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="9" height="9" rx="1.5"/><path d="M3 3V2a1 1 0 011-1h9a1 1 0 011 1v9a1 1 0 01-1 1h-1"/></svg>
+        Copy image
+      </button>
+      <a class="share-act share-act-twitter" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(cards, totalCredits, totalFees, net))}" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Post to X
+      </a>
+      <a class="share-act share-act-reddit" href="https://reddit.com/submit?title=${encodeURIComponent('My credit card stack via Card Roundup')}&url=https://cardroundup.com" target="_blank" rel="noopener">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+        Post to Reddit
+      </a>
+    </div>`;
+
+  // Generate canvas async so modal renders first
+  requestAnimationFrame(() => drawShareCanvas(cards, totalCredits, totalFees, net));
+}
+
+function buildShareText(cards, totalCredits, totalFees, net){
+  const names = cards.slice(0,4).map(c=>c.short).join(' + ');
+  const extra = cards.length > 4 ? ` +${cards.length-4} more` : '';
+  const netStr = net >= 0 ? `+$${net.toLocaleString()} net positive` : `-$${Math.abs(net).toLocaleString()} net`;
+  return `My credit card stack: ${names}${extra}\n$${totalCredits.toLocaleString()}/yr in credits · $${totalFees.toLocaleString()}/yr in fees · ${netStr}\n\nvia @CardRoundup cardroundup.com`;
+}
+
+function drawShareCanvas(cards, totalCredits, totalFees, net){
+  const canvas = document.getElementById('shareCanvas');
+  const gen    = document.getElementById('shareGenerating');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = 1200, H = 630;
+
+  /* ── BACKGROUND ───────────────────────────────── */
+  // Deep dark gradient
+  const bg = ctx.createLinearGradient(0,0,W,H);
+  bg.addColorStop(0,'#0D0D16');
+  bg.addColorStop(0.55,'#101018');
+  bg.addColorStop(1,'#0E0F1C');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0,0,W,H);
+
+  // Subtle top-left radial glow
+  const glow = ctx.createRadialGradient(W*0.75, 0, 0, W*0.75, 0, H*0.8);
+  glow.addColorStop(0,'rgba(100,100,200,0.055)');
+  glow.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle = glow;
+  ctx.fillRect(0,0,W,H);
+
+  /* ── GRID LINES (subtle) ─────────────────────── */
+  ctx.strokeStyle = 'rgba(255,255,255,0.025)';
+  ctx.lineWidth = 1;
+  for(let x = 60; x < W; x += 60){ ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke(); }
+  for(let y = 60; y < H; y += 60){ ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke(); }
+
+  /* ── BRAND ───────────────────────────────────── */
+  ctx.font = '700 28px "Figtree", system-ui, sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.fillText('Card Roundup', 56, 68);
+
+  /* ── CARD STACK DISPLAY ──────────────────────── */
+  // Show up to 8 card color bars as a visual stack
+  const maxCards = Math.min(cards.length, 8);
+  const barH = 8, barW = 320, barGap = 14;
+  const stackX = 56, stackY = 100;
+
+  for(let i = 0; i < maxCards; i++){
+    const card = cards[i];
+    const y = stackY + i * (barH + barGap);
+    // Color bar
+    ctx.fillStyle = card.c;
+    roundRect(ctx, stackX, y, barW, barH, 3);
+    ctx.fill();
+    // Mid accent line
+    ctx.fillStyle = card.cm;
+    ctx.fillRect(stackX, y, barW * 0.35, barH);
+    // Card name beside bar
+    ctx.font = '500 17px "Figtree", system-ui';
+    ctx.fillStyle = 'rgba(255,255,255,0.72)';
+    ctx.fillText(card.name, stackX + barW + 20, y + barH - 1);
+  }
+  if(cards.length > 8){
+    const y = stackY + 8 * (barH + barGap);
+    ctx.font = '400 14px "Figtree", system-ui';
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.fillText(`+ ${cards.length - 8} more`, stackX, y + 14);
+  }
+
+  /* ── DIVIDER LINE ────────────────────────────── */
+  const divX = W * 0.54;
+  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(divX, 52); ctx.lineTo(divX, H - 52); ctx.stroke();
+
+  /* ── STATS RIGHT SIDE ────────────────────────── */
+  const sx = divX + 56;
+  const statsY = H * 0.18;
+
+  // Total credits
+  drawStatBlock(ctx, sx, statsY, 'Total credits/yr',
+    '$' + totalCredits.toLocaleString(),
+    'rgba(106,174,240,0.9)', W);
+
+  // Total fees
+  drawStatBlock(ctx, sx, statsY + 155, 'Annual fees',
+    '$' + totalFees.toLocaleString(),
+    'rgba(255,255,255,0.38)', W);
+
+  // Net value — green if positive, red if not
+  const netColor = net >= 0 ? 'rgba(61,214,140,0.95)' : 'rgba(255,90,90,0.9)';
+  const netLabel = net >= 0 ? 'Net positive / year' : 'Net cost / year';
+  const netDisplay = (net >= 0 ? '+' : '-') + '$' + Math.abs(net).toLocaleString();
+  drawStatBlock(ctx, sx, statsY + 310, netLabel, netDisplay, netColor, W);
+
+  /* ── BOTTOM BADGE ────────────────────────────── */
+  // Cards count pill
+  const pillTxt = `${cards.length} card${cards.length!==1?'s':''} tracked`;
+  ctx.font = '500 15px "Figtree", system-ui';
+  const pillW = ctx.measureText(pillTxt).width + 28;
+  ctx.fillStyle = 'rgba(255,255,255,0.07)';
+  roundRect(ctx, 56, H - 72, pillW, 32, 16); ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,0.45)';
+  ctx.fillText(pillTxt, 70, H - 52);
+
+  // URL
+  ctx.font = '400 16px "Figtree", system-ui';
+  ctx.fillStyle = 'rgba(255,255,255,0.22)';
+  ctx.fillText('cardroundup.com', W - 56 - ctx.measureText('cardroundup.com').width, H - 52);
+
+  /* ── DONE ─────────────────────────────────────── */
+  if(gen) gen.style.display = 'none';
+}
+
+function drawStatBlock(ctx, x, y, label, value, valueColor, W){
+  // Label
+  ctx.font = '400 16px "Figtree", system-ui';
+  ctx.fillStyle = 'rgba(255,255,255,0.38)';
+  ctx.fillText(label, x, y);
+  // Value in large mono
+  ctx.font = '500 62px "Figtree", system-ui';
+  ctx.fillStyle = valueColor;
+  // Constrain to right portion
+  const maxW = W - x - 56;
+  ctx.fillText(value, x, y + 75, maxW);
+}
+
+function roundRect(ctx, x, y, w, h, r){
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y); ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w, y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
+  ctx.lineTo(x+r, y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
+  ctx.lineTo(x, y+r); ctx.arcTo(x,y,x+r,y,r);
+  ctx.closePath();
+}
+
+function getShareBlob(cb){
+  const canvas = document.getElementById('shareCanvas');
+  if(!canvas) return;
+  canvas.toBlob(blob => cb(blob), 'image/png');
+}
+
+function downloadShareImage(){
+  const canvas = document.getElementById('shareCanvas');
+  if(!canvas) return;
+  const a = document.createElement('a');
+  a.href = canvas.toDataURL('image/png');
+  a.download = 'my-cardroundup-stack.png';
+  a.click();
+  showToast('Image downloaded');
+}
+
+async function copyShareImage(){
+  try {
+    const canvas = document.getElementById('shareCanvas');
+    if(!canvas) return;
+    canvas.toBlob(async blob => {
+      try {
+        await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
+        showToast('Image copied to clipboard');
+      } catch {
+        // Fallback: download instead
+        downloadShareImage();
+      }
+    }, 'image/png');
+  } catch { downloadShareImage(); }
+}
+
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape'){closeAuthModal();closeProfilePanel();closeShareModal();}
+});
+
+/* ── INIT ──────────────────────── */
+if(mode==='browse'){
+  document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m==='browse'));
+  document.getElementById('browsePicker').style.display='block';
+}
+initEmailBar();
+initAuth();
+initOnboard();
+syncHeader();
+renderBrowsePicker();
+renderPromoTicker();
+renderResetBadge();
+renderGrid();
+updateTabCounts();
+requestAnimationFrame(updateInd);
+</script>
+</body>
+</html>
