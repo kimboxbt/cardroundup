@@ -265,6 +265,9 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .si-inp::placeholder{color:var(--txd)}.si-inp:focus{border-color:var(--bd3)}
 .sc-x{display:none;position:absolute;right:6px;top:50%;transform:translateY(-50%);width:13px;height:13px;align-items:center;justify-content:center;background:var(--s3);border-radius:50%;cursor:pointer;font-size:8px;color:var(--txd);border:none}
 .tb-cnt{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;color:var(--txd);margin-left:auto}
+.tb-edit{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:5px;font-family:'Figtree',sans-serif;font-size:10.5px;font-weight:500;color:var(--txm);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s;white-space:nowrap}
+.tb-edit:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.tb-edit.open{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
 .tb-cnt strong{color:var(--txm)}
 .tb-cal{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:4px;font-family:'Figtree',sans-serif;font-size:10px;font-weight:500;color:var(--txd);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s}
 .tb-cal:hover{color:var(--txm);border-color:var(--bd3)}
@@ -475,6 +478,9 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .profile-action:hover{background:var(--s2);color:var(--tx)}
 .profile-action.danger{color:var(--txd)}.profile-action.danger:hover{color:var(--red);border-color:rgba(255,90,90,.2)}
 .ew{padding:44px 40px;text-align:center;background:var(--s1);border:1px dashed var(--bd2);border-radius:10px;margin:16px 40px}
+.ew-browse{margin-top:14px;font-size:11px;color:var(--txd)}
+.ew-browse-link{background:none;border:none;color:var(--txm);font-size:11px;cursor:pointer;text-decoration:underline;padding:0}
+.ew-browse-link:hover{color:var(--tx)}
 .ew-i{font-size:26px;margin-bottom:10px;opacity:.3}
 .ew-t{font-family:'Cormorant',serif;font-size:20px;font-weight:500;margin-bottom:6px}
 .ew-s{font-size:11.5px;color:var(--txm);margin-bottom:16px;max-width:340px;margin-left:auto;margin-right:auto;line-height:1.65}
@@ -544,22 +550,9 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   <button class="mb" data-m="browse" onclick="setMode('browse')">
     <span class="mb-dot" style="background:#6AAEF0"></span>Browse All
   </button>
-  <!-- Edit wallet lives here — contextual to mode, not header-level -->
-  <button class="mb mb-edit" id="editWalletMb" onclick="toggleWalletEdit()" style="margin-left:auto;border-left:1px solid var(--bd);padding-left:14px">
-    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
-    Edit wallet
-  </button>
+
 </div>
 
-<!-- ONBOARDING STRIP — first visit only, auto-dismissed after wallet added -->
-<div class="onboard-strip" id="onboardStrip" style="display:none">
-  <div class="ob-step"><div class="ob-num">1</div><span class="ob-txt"><strong>Add your cards</strong> to My Cards</span></div>
-  <div class="ob-arr">→</div>
-  <div class="ob-step"><div class="ob-num">2</div><span class="ob-txt"><strong>Browse</strong> credits by expiry date</span></div>
-  <div class="ob-arr">→</div>
-  <div class="ob-step"><div class="ob-num">3</div><span class="ob-txt"><strong>Never miss</strong> a credit again</span></div>
-  <button class="ob-dismiss" onclick="dismissOnboard()">Got it</button>
-</div>
 <div class="ws" id="walletSetup" style="display:none">
   <div class="ws-t">Your Card Wallet</div>
   <div class="ws-s">Select the cards you carry. Your view filters to these across all tabs.</div>
@@ -605,6 +598,15 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 
 <!-- MAIN -->
 <div class="main" id="mainContent">
+  <div id="emptyState" style="display:none">
+    <div class="ew">
+      <div class="ew-i">◈</div>
+      <div class="ew-t">Which cards are in your wallet?</div>
+      <div class="ew-s">Select the cards you carry and we'll track every expiring credit across all tabs.</div>
+      <button class="btn btn-p" id="ewPickBtn"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Pick your cards</button>
+      <div class="ew-browse">or <button class="ew-browse-link" id="ewBrowseBtn">compare any of the 46 cards</button></div>
+    </div>
+  </div>
   <div class="toolbar">
     <div class="sw">
       <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
@@ -614,6 +616,10 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
     <button class="tb-cal" onclick="exportCalendar()" title="Sync reset dates to your calendar">
       <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
       Sync calendar
+    </button>
+    <button class="tb-edit" id="editBtn" onclick="toggleWalletEdit()" style="display:none">
+      <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
+      <span id="editBtnLabel">Add / remove cards</span>
     </button>
     <span class="tb-cnt" id="tbCnt"></span>
   </div>
@@ -934,8 +940,8 @@ const CARDS=[
 const ISSUERS=['Chase','American Express','Capital One','Citi','Wells Fargo','U.S. Bank','Bank of America','Barclays'];
 const SK='kbyli_v4';
 let myCards=new Set((()=>{try{const s=localStorage.getItem(SK);return s?JSON.parse(s):[]}catch{return[]}})());
-let browseCards=new Set(CARDS.map(c=>c.id));
-let mode=myCards.size>0?'mycards':'browse';
+let browseCards=new Set();
+let mode='mycards';
 let walletOpen=false;
 let section='monthly';
 let q='';
@@ -944,37 +950,16 @@ let promoClosed=false;
 function saveMyCards(){try{localStorage.setItem(SK,JSON.stringify([...myCards]))}catch{}}
 
 /* ── ONBOARDING STRIP ──────────────── */
-function initOnboard(){
-  const dismissed = localStorage.getItem('ob_d');
-  const hasCards = myCards.size > 0;
-  const strip = document.getElementById('onboardStrip');
-  if(!strip) return;
-  // Show onboarding if: first visit (never dismissed) AND no wallet yet
-  if(!dismissed && !hasCards){
-    strip.style.display = 'flex';
-  } else {
-    strip.style.display = 'none';
-  }
-}
-function dismissOnboard(){
-  localStorage.setItem('ob_d','1');
-  document.getElementById('onboardStrip').style.display = 'none';
-}
-// Auto-dismiss onboarding when user adds first card
-function maybeHideOnboard(){
-  if(myCards.size > 0){
-    localStorage.setItem('ob_d','1');
-    const strip = document.getElementById('onboardStrip');
-    if(strip) strip.style.display = 'none';
-  }
-}
+
 
 function syncHeader(){
   document.getElementById('hMine').textContent = myCards.size;
   document.getElementById('mcBadge').textContent = myCards.size;
-  // Show "Save my wallet" nudge when user has cards but isn't signed in
   const saveBtn = document.getElementById('saveWalletBtn');
   if(saveBtn) saveBtn.style.display = (myCards.size > 0 && !currentUser) ? 'flex' : 'none';
+  // Show/hide inline "Add / remove cards" button
+  const eb=document.getElementById('editBtn');
+  if(eb) eb.style.display=(myCards.size>0&&mode==='mycards')?'inline-flex':'none';
 }
 
 /* ── EMAIL BAR ─────────────────── */
@@ -983,10 +968,8 @@ function syncHeader(){
 function initEmailBar(){
   const bar = document.getElementById('emailBar');
   if(!bar) return;
-  // Hide if: already dismissed, already signed in, or already gave email
-  if(localStorage.getItem('eb_d') || currentUser || getSavedEmail()){
-    bar.style.display='none';
-  }
+  const _show = myCards.size > 0 && !currentUser && !localStorage.getItem('eb_d') && !getSavedEmail();
+  bar.style.display = _show ? 'flex' : 'none';
 }
 function dismissEmail(){localStorage.setItem('eb_d','1');document.getElementById('emailBar').style.display='none';}
 
@@ -1074,9 +1057,8 @@ function setMode(m){
   document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
   document.getElementById('walletSetup').style.display='none';
   document.getElementById('browsePicker').style.display=m==='browse'?'block':'none';
-  document.getElementById('editBtn').innerHTML=m==='mycards'
-    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet'
-    :'← My Cards';
+  const _ew=document.getElementById('editBtn');
+  if(_ew){ _ew.style.display=m==='mycards'&&myCards.size>0?'inline-flex':'none'; }
   promoClosed=false;renderPromoTicker();renderGrid();
 }
 function toggleWalletEdit(){
@@ -1084,9 +1066,10 @@ function toggleWalletEdit(){
   walletOpen=!walletOpen;
   document.getElementById('walletSetup').style.display=walletOpen?'block':'none';
   if(walletOpen)renderWalletSetup();
-  document.getElementById('editBtn').innerHTML=walletOpen
-    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2l12 12M14 2L2 14"/></svg> Done'
-    :'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet';
+  const _ebtn=document.getElementById('editBtn');
+  const _ebl=document.getElementById('editBtnLabel');
+  if(_ebtn) _ebtn.classList.toggle('open',walletOpen);
+  if(_ebl) _ebl.textContent=walletOpen?'Done':'Add / remove cards';
 }
 
 /* ── WALLET SETUP ─────────────── */
@@ -1103,8 +1086,7 @@ function renderWalletSetup(){
 }
 function toggleMyCard(id){
   if(myCards.has(id))myCards.delete(id);else myCards.add(id);
-  saveMyCards();syncHeader();renderWalletSetup();renderPromoTicker();renderGrid();updateTabCounts();
-  maybeHideOnboard();
+  saveMyCards();syncHeader();renderWalletSetup();renderPromoTicker();renderGrid();updateTabCounts();initEmailBar();
   // No Resend sync here — wallet syncs once at email capture, never automatically
 }
 
@@ -1119,11 +1101,12 @@ function renderBrowsePicker(){
     }).join('');
     return`<div class="bp-g"><span class="bp-il">${issuer==='American Express'?'Amex':issuer}</span>${chips}</div>`;
   }).join('');
-  el.innerHTML=`<div class="bp-row"><span class="bp-l">Filter</span><div class="bp-div"></div><button class="bp-a" onclick="browseAll()">All ${CARDS.length}</button><button class="bp-a" onclick="browseClear()">Clear</button><span class="bp-cnt">${browseCards.size} / ${CARDS.length} shown</span></div><div class="bp-chips">${groups}</div>`;
+  const selCount=browseCards.size;
+  el.innerHTML=`<div class="bp-row"><span class="bp-l">Compare cards</span><div class="bp-div"></div><button class="bp-a" onclick="browseAll()">All 46</button>${selCount>0?`<button class="bp-a" onclick="browseClear()">Clear (${selCount})</button>`:''}<span class="bp-cnt">${selCount===0?'Select cards to compare':selCount+' selected'}</span></div><div class="bp-chips">${groups}</div>`;
 }
 function toggleBrowse(id){if(browseCards.has(id)){if(browseCards.size>1)browseCards.delete(id);}else browseCards.add(id);renderBrowsePicker();renderGrid();}
-function browseAll(){CARDS.forEach(c=>browseCards.add(c.id));renderBrowsePicker();renderGrid();}
-function browseClear(){browseCards.clear();browseCards.add(CARDS[0].id);renderBrowsePicker();renderGrid();}
+function browseAll(){browseCards=new Set(CARDS.map(c=>c.id));renderBrowsePicker();renderGrid();}
+function browseClear(){browseCards.clear();renderBrowsePicker();renderGrid();}
 
 /* ── RESET BADGE ──────────────── */
 function nextReset(s){
@@ -1250,8 +1233,21 @@ function renderGrid(){
   if(!gridEl)return;
   const allVisible=vis();
 
-  if(allVisible.length===0&&mode==='mycards'){
-    document.getElementById('mainContent').innerHTML=`<div class="ew"><div class="ew-i">⬡</div><div class="ew-t">Your wallet is empty</div><div class="ew-s">Add the cards you carry to see what credits are expiring this month, quarter, and year.</div><button class="btn btn-p" onclick="walletOpen=true;document.getElementById('walletSetup').style.display='block';renderWalletSetup()">Add cards</button></div>`;
+  // Show/hide persistent empty state — never nuke mainContent DOM
+  const _empty = allVisible.length===0 && mode==='mycards';
+  const _es = document.getElementById('emptyState');
+  const _tb = document.querySelector('.toolbar');
+  const _gw = document.querySelector('.gw');
+  if(_es) _es.style.display = _empty ? 'block' : 'none';
+  if(_tb) _tb.style.display = _empty ? 'none' : 'flex';
+  if(_gw) _gw.style.display = _empty ? 'none' : '';
+  if(_empty){ const g=document.getElementById('grid'); if(g) g.innerHTML=''; return; }
+
+  // Browse mode with nothing selected — show prompt
+  if(allVisible.length===0&&mode==='browse'){
+    const g=document.getElementById('grid');
+    if(g) g.innerHTML='<div style="padding:48px 40px;text-align:center;color:var(--txd);font-size:12px;line-height:1.8">Select cards above to compare their credits side by side.</div>';
+    const cEl=document.getElementById('tbCnt');if(cEl)cEl.innerHTML='';
     return;
   }
 
@@ -1810,9 +1806,22 @@ if(mode==='browse'){
 }
 initEmailBar();
 initAuth();
-initOnboard();
 syncHeader();
 renderBrowsePicker();
+// Wire persistent empty state buttons
+const _ewP=document.getElementById('ewPickBtn');
+const _ewB=document.getElementById('ewBrowseBtn');
+if(_ewP) _ewP.addEventListener('click', function(){
+  walletOpen=true;
+  const ws=document.getElementById('walletSetup');
+  if(ws){ws.style.display='block';renderWalletSetup();}
+  const ebl=document.getElementById('editBtnLabel');
+  if(ebl) ebl.textContent='Done';
+  const eb=document.getElementById('editBtn');
+  if(eb){eb.style.display='inline-flex';eb.classList.add('open');}
+  ws && ws.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+if(_ewB) _ewB.addEventListener('click', function(){ setMode('browse'); });
 renderPromoTicker();
 renderResetBadge();
 renderGrid();
