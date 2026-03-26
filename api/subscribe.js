@@ -82,7 +82,8 @@ export default async function handler(req, res) {
       );
       if (existing.ok) {
         const d = await existing.json();
-        alreadyWelcomed = d.properties?.welcomed || 'false';
+        const wRaw = d.properties?.welcomed;
+        alreadyWelcomed = (wRaw && typeof wRaw === 'object') ? (wRaw.value || 'false') : (wRaw || 'false');
       }
     } catch {} // New contact — welcomed stays 'false'
 
