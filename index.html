@@ -245,6 +245,48 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .footer a{color:var(--txd);text-decoration:underline;text-underline-offset:3px}.footer a:hover{color:var(--txm)}
 @media(max-width:900px){:root{--px:32px}}
 @media(max-width:640px){:root{--px:20px}.col{flex:0 0 260px}.grid-fade{display:none!important}.toolbar{flex-wrap:wrap}.search-wrap{max-width:100%;flex:0 0 100%}.tb-cnt{margin-left:0}.email-bar{flex-wrap:wrap;gap:8px}.eb-form{min-width:100%;flex:0 0 100%}.empty-state{padding:72px var(--px) 60px;min-height:400px}.es-title{font-size:30px}.sob-grid{grid-template-columns:1fr}.tr-card{flex-direction:column}.tr-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}}
+
+/* WALLET NET VALUE BANNER */
+.wallet-banner{padding:12px var(--px);background:linear-gradient(90deg,rgba(36,184,112,0.06) 0%,transparent 60%);border-bottom:1px solid rgba(36,184,112,0.10);display:none;align-items:center;gap:16px;flex-wrap:wrap}
+.wallet-banner.show{display:flex}
+.wb-stat{display:flex;align-items:center;gap:8px}
+.wb-label{font-size:11px;color:var(--txd);letter-spacing:.04em;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
+.wb-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600}
+.wb-val.pos{color:var(--green)}.wb-val.neg{color:var(--red)}
+.wb-sep{width:1px;height:20px;background:var(--bd2);flex-shrink:0}
+.wb-sub{font-size:11px;color:var(--txd);margin-left:auto}
+
+/* RENEWAL MONTH PICKER — inline below wallet chips */
+.renewal-picker{margin-top:14px;padding:14px 16px;background:var(--s2);border:1px solid var(--bd2);border-radius:8px;display:none}
+.renewal-picker.show{display:block}
+.rp-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--txm);margin-bottom:10px}
+.rp-card-name{color:var(--tx);font-weight:600}
+.rp-months{display:flex;flex-wrap:wrap;gap:6px}
+.rp-month{padding:5px 11px;border-radius:5px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd2);color:var(--txd);background:transparent;transition:all .13s}
+.rp-month:hover{color:var(--txm);border-color:var(--bd3);background:var(--s3)}
+.rp-month.on{background:rgba(36,184,112,0.12);border-color:rgba(36,184,112,0.28);color:var(--green)}
+.rp-skip{background:none;border:none;color:var(--txd);font-size:11px;font-family:'Figtree',sans-serif;cursor:pointer;padding:8px 0 0;display:block;transition:color .13s}.rp-skip:hover{color:var(--txm)}
+
+/* RENEWAL COUNTDOWN in Summary col */
+.renewal-row{padding:9px 15px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.renewal-label{font-size:11.5px;color:var(--txm)}
+.renewal-days{font-family:'JetBrains Mono',monospace;font-size:11.5px}
+.renewal-days.urgent{color:var(--amber);font-weight:600}
+.renewal-days.critical{color:var(--red);font-weight:600}
+.renewal-days.ok{color:var(--txd)}
+.renewal-set{font-size:10px;color:var(--txd);cursor:pointer;text-decoration:underline;text-underline-offset:2px;transition:color .13s}.renewal-set:hover{color:var(--txm)}
+
+/* MONTHLY TAB URGENCY BADGE */
+.tab-urgent{display:inline-flex;align-items:center;justify-content:center;width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;margin-left:2px;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* WORTH KEEPING indicator */
+.worth-row{padding:9px 15px;border-top:1px solid var(--bd);border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+.worth-label{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--txd)}
+.worth-keep{font-size:12px;font-weight:600;color:var(--green);display:flex;align-items:center;gap:5px}
+.worth-drop{font-size:12px;font-weight:600;color:var(--red);display:flex;align-items:center;gap:5px}
+.worth-neutral{font-size:12px;color:var(--txm)}
+
 .ganim{animation:gfade .18s ease}@keyframes gfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
 </head>
@@ -295,6 +337,11 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   <div class="ws-t">Your cards</div>
   <div class="ws-s">Select every card you carry. Credits and resets track across all tabs.</div>
   <div class="ws-rows" id="ws-rows"></div>
+  <div class="renewal-picker" id="renewal-picker">
+    <div class="rp-label">When does the annual fee renew for <span id="rp-card-name" class="rp-card-name"></span>?</div>
+    <div class="rp-months" id="rp-months"></div>
+    <button class="rp-skip" id="rp-skip">Skip &mdash; I'll set this later</button>
+  </div>
 </div>
 
 <!-- BROWSE PICKER -->
@@ -323,6 +370,15 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
     <button class="st" data-s="summary"><span class="st-dot" style="background:#C0C0D8"></span>Summary</button>
   </div>
   <div class="reset-strip" id="reset-strip"></div>
+  <!-- Wallet net value banner -->
+  <div class="wallet-banner" id="wallet-banner">
+    <div class="wb-stat"><span class="wb-label">Credits</span><span class="wb-val pos" id="wb-credits">$0</span></div>
+    <div class="wb-sep"></div>
+    <div class="wb-stat"><span class="wb-label">Fees</span><span class="wb-val" id="wb-fees" style="color:var(--txm)">$0</span></div>
+    <div class="wb-sep"></div>
+    <div class="wb-stat"><span class="wb-label">Net</span><span class="wb-val" id="wb-net">$0</span></div>
+    <span class="wb-sub">across your wallet per year</span>
+  </div>
   <!-- Empty state -->
   <div class="empty-state" id="empty-state">
     <div class="es-icon">&#x25C8;</div>
@@ -441,254 +497,28 @@ const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
 const RESEND_FROM_EMAIL = 'reminders@cardroundup.com';
 const SK = 'kbyli_v4';
 
-const AFF={
-  csr:'https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve?ICID=AFFL_KBYLI_CJ',
-  csp:'https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred?ICID=AFFL_KBYLI_CJ',
-  cf:'https://creditcards.chase.com/cash-back-credit-cards/freedom/flex?ICID=AFFL_KBYLI_CJ',
-  cfu:'https://creditcards.chase.com/cash-back-credit-cards/freedom/unlimited?ICID=AFFL_KBYLI_CJ',
-  ink:'https://creditcards.chase.com/business-credit-cards/ink/preferred?ICID=AFFL_KBYLI_CJ',
-  hyatt:'https://creditcards.chase.com/travel-credit-cards/world-of-hyatt?ICID=AFFL_KBYLI_CJ',
-  unitedq:'https://creditcards.chase.com/travel-credit-cards/united/quest?ICID=AFFL_KBYLI_CJ',
-  swpri:'https://creditcards.chase.com/travel-credit-cards/southwest/priority?ICID=AFFL_KBYLI_CJ',
-  ihg:'https://creditcards.chase.com/travel-credit-cards/ihg?ICID=AFFL_KBYLI_CJ',
-  marriottbon:'https://creditcards.chase.com/travel-credit-cards/marriott-bonvoy/boundless?ICID=AFFL_KBYLI_CJ',
-  chaseaero:'https://creditcards.chase.com/travel-credit-cards/united/aeroplan?ICID=AFFL_KBYLI_CJ',
-  amexp:'https://www.americanexpress.com/us/credit-cards/card/platinum/?eep=AFFL_KBYLI_IMP',
-  amexbp:'https://www.americanexpress.com/us/credit-cards/card/business-platinum/?eep=AFFL_KBYLI_IMP',
-  amexg:'https://www.americanexpress.com/us/credit-cards/card/gold-card/?eep=AFFL_KBYLI_IMP',
-  amexbg:'https://www.americanexpress.com/us/credit-cards/card/business-gold-card/?eep=AFFL_KBYLI_IMP',
-  amexgrn:'https://www.americanexpress.com/us/credit-cards/card/green-card/?eep=AFFL_KBYLI_IMP',
-  amexbcp:'https://www.americanexpress.com/us/credit-cards/card/blue-cash-preferred/?eep=AFFL_KBYLI_IMP',
-  amexeday:'https://www.americanexpress.com/us/credit-cards/card/amex-everyday-preferred/?eep=AFFL_KBYLI_IMP',
-  deltagrn:'https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold/?eep=AFFL_KBYLI_IMP',
-  deltag:'https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-gold-business/?eep=AFFL_KBYLI_IMP',
-  deltares:'https://www.americanexpress.com/us/credit-cards/card/delta-skymiles-reserve/?eep=AFFL_KBYLI_IMP',
-  aspire:'https://www.americanexpress.com/us/credit-cards/card/hilton-honors-aspire/?eep=AFFL_KBYLI_IMP',
-  hiltsurp:'https://www.americanexpress.com/us/credit-cards/card/hilton-honors-surpass/?eep=AFFL_KBYLI_IMP',
-  brilliant:'https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-brilliant/?eep=AFFL_KBYLI_IMP',
-  mariottbiz:'https://www.americanexpress.com/us/credit-cards/card/marriott-bonvoy-business/?eep=AFFL_KBYLI_IMP',
-  hiltbiz:'https://www.americanexpress.com/us/credit-cards/card/hilton-honors-business/?eep=AFFL_KBYLI_IMP',
-  venturex:'https://creditcards.capitalone.com/venture-x-credit-card/?external_id=AFFL_KBYLI_IMP',
-  venture:'https://creditcards.capitalone.com/venture-rewards-credit-card/?external_id=AFFL_KBYLI_IMP',
-  sparkcash:'https://creditcards.capitalone.com/spark-business-credit-cards/miles/?external_id=AFFL_KBYLI_IMP',
-  sparkcash2:'https://creditcards.capitalone.com/spark-business-credit-cards/cash-plus/?external_id=AFFL_KBYLI_IMP',
-  savor:'https://creditcards.capitalone.com/savor-cash-rewards-credit-card/?external_id=AFFL_KBYLI_IMP',
-  strata:'https://www.citi.com/credit-cards/citi-strata-premier-credit-card/?ICID=AFFL_KBYLI_CJ',
-  aaexec:'https://www.citi.com/credit-cards/american-airlines/aadvantage-executive/?ICID=AFFL_KBYLI_CJ',
-  aaplatpres:'https://www.citi.com/credit-cards/american-airlines/aadvantage-platinum-select/?ICID=AFFL_KBYLI_CJ',
-  doublecash:'https://www.citi.com/credit-cards/citi-double-cash-credit-card/?ICID=AFFL_KBYLI_CJ',
-  custcash:'https://www.citi.com/credit-cards/citi-custom-cash-card/?ICID=AFFL_KBYLI_CJ',
-  rewardsp:'https://www.citi.com/credit-cards/citi-rewards-plus-credit-card/?ICID=AFFL_KBYLI_CJ',
-  bilt:'https://www.biltrewards.com/card?ref=KBYLI',
-  wfauto:'https://creditcards.wellsfargo.com/autograph-journey-visa-credit-card/?product_code=AFFL_KBYLI',
-  altres:'https://www.usbank.com/credit-cards/altitude-reserve-visa-infinite-credit-card.html?pid=KBYLI',
-  altconn:'https://www.usbank.com/credit-cards/altitude-connect-visa-signature-credit-card.html?pid=KBYLI',
-  boapre:'https://www.bankofamerica.com/credit-cards/products/premium-rewards-elite-credit-card/?ref=KBYLI',
-  boatrav:'https://www.bankofamerica.com/credit-cards/products/travel-rewards-credit-card/?ref=KBYLI',
-  aadvbiz:'https://cards.barclay.com/aviator/silver?ref=KBYLI',
-  jbtravel:'https://cards.barclay.com/jetblue-plus?ref=KBYLI',
-  aadvsel:'https://cards.barclay.com/aviator-red?ref=KBYLI',
-};
+// Card data loaded from API — keeps affiliate links off the frontend
+let CARDS = [];
+let AFF = {};
+let PROMOS = [];
+let ISSUERS = [];
+let dataLoaded = false;
 
-const PROMOS=[
-  {currency:'Amex MR',partner:'Air France/Flying Blue',bonus:'+30%',expires:'2026-04-15',cards:['amexp','amexbp','amexg','amexbg','amexgrn','amexeday','deltares','aspire','brilliant','mariottbiz','deltagrn','deltag']},
-  {currency:'Amex MR',partner:'Avianca LifeMiles',bonus:'+20%',expires:'2026-03-31',cards:['amexp','amexbp','amexg','amexbg','amexgrn']},
-  {currency:'Chase UR',partner:'United MileagePlus',bonus:'+25%',expires:'2026-05-01',cards:['csr','csp','cf','cfu','ink']},
-  {currency:'Citi TY',partner:'Turkish Miles&Smiles',bonus:'+20%',expires:'2026-04-30',cards:['strata','aaexec','aaplatpres','doublecash','custcash','rewardsp']},
-  {currency:'Capital One',partner:'Air Canada Aeroplan',bonus:'+10%',expires:'2026-03-28',cards:['venturex','venture','sparkcash','sparkcash2','savor']},
-  {currency:'Bilt Points',partner:'World of Hyatt',bonus:'+25%',expires:'2026-04-01',cards:['bilt']},
-];
-
-const CARDS=[
-{id:'csr',name:'Chase Sapphire Reserve',short:'CSR',issuer:'Chase',fee:795,c:'#0A2463',cm:'#3A6BC7',verified:'2026-03',
-  sob:{offer:'125,000 Ultimate Rewards points',req:'$6,000 in 3 months',tags:['t']},
-  credits:{monthly:[{n:'Lyft rides',a:'$10/mo',note:'Link card. Valid through Sept 2027. Excludes Wait & Save, bike/scooter.'},{n:'DoorDash promos',a:'$25/mo',note:'2×$10 non-restaurant + 1×$5 restaurant. Requires DashPass. Unused balance forfeited if order doesn\'t exhaust credit.'},{n:'Peloton membership',a:'Up to $10/mo',note:'Through Dec 2027. Pay Peloton directly. Activation required.'}],quarterly:[],semiannual:[{n:'The Edit hotel credit',a:'$250/half ($500/yr)',note:'Prepaid 2-night min via Chase Travel "The Edit." H1/H2.'},{n:'Exclusive Tables dining',a:'$150/half ($300/yr)',note:'At Sapphire Reserve Exclusive Tables / OpenTable Visa Dining.'},{n:'StubHub / Viagogo',a:'$150/half ($300/yr)',note:'Activation required.'}],annual:[{n:'Travel credit ⚠ Anniversary-based',a:'$300/yr',warn:true,note:'Resets on cardmember anniversary — NOT Jan 1. Covers flights, hotels, transit, rideshare. Auto-applied.'},{n:'Select Chase Travel hotels',a:'Up to $250 (thru 12/31/26)',note:'IHG, Montage, Pendry, Omni, Virgin Hotels, Minor Hotels, Pan Pacific. Prepaid via Chase Travel. 2-night min.'},{n:'The Shops at Chase',a:'Up to $250',note:'Dyson, Sony, Tumi, Therabody. Resets Jan 1.'},{n:'Apple TV+ & Apple Music',a:'Compl. (~$250)',note:'Through June 22, 2027.'},{n:'DashPass membership',a:'Compl. (~$120)',note:'Activate by Dec 31, 2027.'}],multiyear:[{n:'Global Entry / TSA PreCheck / NEXUS',a:'Up to $120/4 yrs',note:''}],static:[{n:'Points Boost',a:'Up to 2x pts value',note:'Points worth up to 2x on top-booked hotels & select premium flights via Chase Travel.'},{n:'IHG Platinum Elite status',a:'Compl. thru 12/31/27',note:'Activate in Benefits section on chase.com or Chase Mobile app.'},{n:'Lounge access',a:'Unlimited + 2 guests',note:'Chase Sapphire Lounges + Priority Pass Select (1,300+) + Air Canada Maple Leaf Lounges.'},{n:'8x Chase Travel',a:'8x UR pts',note:'Flights, hotels, rentals, cruises, activities via Chase Travel incl. The Edit.'},{n:'4x direct bookings',a:'4x UR pts',note:'Flights & hotels booked directly with airline or hotel.'},{n:'Trip cancellation/interruption',a:'$10k/traveler, $20k/trip',note:''},{n:'Trip delay reimbursement',a:'Up to $500/ticket',note:'6+ hour delay.'},{n:'Primary auto rental CDW',a:'Included',note:''},{n:'Points transfers',a:'1:1 to 14 partners',note:'United, Hyatt, SW, BA, Singapore, AF/KLM, Marriott.'}]},
-  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $540',v:540},{l:'Semi-annual',a:'Up to $1,100',v:1100},{l:'Annual credits',a:'Up to $800',v:800}],total:'~$2,440+',totalV:2440,note:'Plus Points Boost, IHG Platinum Elite, Select Hotels credit, Apple TV/Music, DashPass, lounge access.'}},
-
-{id:'csp',name:'Chase Sapphire Preferred',short:'CSP',issuer:'Chase',fee:95,c:'#0E3A7A',cm:'#2E7AC8',verified:'2026-03',
-  sob:{offer:'75,000 UR points',req:'$5,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Hotel credit via Chase Travel',a:'Up to $50/yr',note:'Resets on cardmember anniversary.'},{n:'DashPass membership',a:'Complimentary',note:'Must activate.'}],multiyear:[],static:[{n:'3x dining & streaming',a:'3x UR pts',note:''},{n:'5x Chase Travel',a:'5x UR pts',note:''},{n:'Points transfers',a:'1:1 to 14 partners',note:''}]},
-  summary:{rows:[{l:'Annual hotel credit',a:'Up to $50',v:50}],total:'~$50+',totalV:50,note:'Value is in 1:1 transfers to Hyatt/United/SW at $95 fee.'}},
-{id:'cf',name:'Chase Freedom Flex',short:'Freedom Flex',issuer:'Chase',fee:0,c:'#1A4A8A',cm:'#3070C8',verified:'2026-03',
-  sob:{offer:'$200 cash + 5% gas/grocery yr 1',req:'$500 in 3 months',tags:['c']},
-  credits:{monthly:[],quarterly:[{n:'5% rotating categories',a:'5% (up to $1,500/qtr)',note:'Must activate quarterly.'}],semiannual:[],annual:[],multiyear:[],static:[{n:'3x dining & drugstores',a:'3x UR pts',note:''},{n:'Cell phone protection',a:'Up to $800/claim',note:'$50 deductible.'}]},
-  summary:{rows:[{l:'Quarterly 5% categories',a:'Up to $300/yr',v:300}],total:'~$300+',totalV:300,note:'Pairs with CSR/CSP to unlock travel transfers.'}},
-{id:'cfu',name:'Chase Freedom Unlimited',short:'Freedom Unlimited',issuer:'Chase',fee:0,c:'#153A70',cm:'#2860B0',verified:'2026-03',
-  sob:{offer:'Extra 1.5% all purchases yr 1',req:'None',tags:['c']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'1.5x everywhere',a:'1.5x UR pts',note:''},{n:'3x dining & drugstores',a:'3x UR pts',note:''},{n:'5x Chase Travel',a:'5x UR pts',note:''}]},
-  summary:{rows:[],total:'$0 fee',totalV:0,note:'Value is 1.5x UR on everything.'}},
-{id:'ink',name:'Ink Business Preferred',short:'Ink Preferred',issuer:'Chase',fee:95,c:'#0A3060',cm:'#1858A8',verified:'2026-03',
-  sob:{offer:'90,000 UR points',req:'$8,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'3x on first $150k (travel, shipping, ads, internet)',a:'3x UR pts',note:'$150k cap then 1x.'},{n:'Cell phone protection',a:'Up to $1,000/claim',note:'$100 deductible.'},{n:'Points transfers',a:'1:1 to 14 partners',note:''}]},
-  summary:{rows:[],total:'~$0 in credits',totalV:0,note:'Value: 90k sign-on + best 3x business earning.'}},
-{id:'hyatt',name:'Chase World of Hyatt',short:'Hyatt',issuer:'Chase',fee:95,c:'#1A2F4A',cm:'#2E6CA8',verified:'2026-03',
-  sob:{offer:'30,000 Hyatt pts + up to 30k more',req:'$3,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Cert (Cat 1–4)',a:'1 cert/yr',note:'On anniversary. Typically $100–$350+.'},{n:'2nd Free Night at $15k spend',a:'Cat 1–4 cert',note:''}],multiyear:[],static:[{n:'Hyatt Discoverist status',a:'Complimentary',note:''},{n:'5 Elite Night Credits',a:'Annually',note:'Plus 2 per $5k spend.'},{n:'4x at Hyatt',a:'4x WoH pts',note:''}]},
-  summary:{rows:[{l:'Annual cert (Cat 1–4)',a:'~$100–$350',v:200}],total:'~$150–$700+',totalV:200,note:'Two certs at $15k spend = $500–$700 value.'}},
-{id:'unitedq',name:'Chase United Quest',short:'United Quest',issuer:'Chase',fee:250,c:'#002244',cm:'#1456B0',verified:'2026-03',
-  sob:{offer:'60,000 United miles',req:'$4,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'United travel credit',a:'$125/yr',note:'On United purchases.'},{n:'Anniversary bonus miles',a:'5,000 miles/yr',note:'Worth ~$70.'},{n:'2 United Club 1-day passes',a:'2 passes/yr',note:'~$59 each.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'3x on United',a:'3x United miles',note:''},{n:'First & second bag free',a:'Complimentary',note:'Cardholder + companion.'}]},
-  summary:{rows:[{l:'Annual travel credit',a:'$125',v:125},{l:'Anniversary miles',a:'5k (~$70)',v:70},{l:'Club passes (2)',a:'~$118',v:118}],total:'~$313+',totalV:313,note:''}},
-{id:'swpri',name:'Chase Southwest Priority',short:'SW Priority',issuer:'Chase',fee:149,c:'#304CB2',cm:'#5574CC',verified:'2026-03',
-  sob:{offer:'50,000 Rapid Rewards points',req:'$1,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Southwest travel credit',a:'$75/yr',note:''},{n:'Anniversary bonus points',a:'7,500 pts/yr',note:'Worth ~$112.'},{n:'Upgraded boardings',a:'4/year',note:'Each ~$30–$50.'}],multiyear:[],static:[{n:'3x on Southwest',a:'3x Rapid Rewards',note:''},{n:'1,500 TQPs/yr',a:'Tier qualifying pts',note:''}]},
-  summary:{rows:[{l:'Travel credit',a:'$75',v:75},{l:'Anniversary pts',a:'7.5k (~$112)',v:112},{l:'Upgraded boardings',a:'4 (~$140)',v:140}],total:'~$327+',totalV:327,note:''}},
-{id:'ihg',name:'IHG One Rewards Premier',short:'IHG Premier',issuer:'Chase',fee:99,c:'#003E6B',cm:'#0066A1',verified:'2026-03',
-  sob:{offer:'140,000 IHG points',req:'$3,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Cert (≤40k pts)',a:'1 cert/yr',note:'Holiday Inn to select InterContinental.'},{n:'4th Night Free on award stays',a:'Complimentary',note:'25% discount on 4+ night awards.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'IHG Platinum Elite status',a:'Complimentary',note:''},{n:'26x at IHG properties',a:'26x IHG pts',note:''}]},
-  summary:{rows:[{l:'Annual free night',a:'≤40k pts (~$100–$300)',v:200}],total:'~$100–$300+',totalV:200,note:'4th night free is a hidden gem.'}},
-{id:'marriottbon',name:'Chase Bonvoy Boundless',short:'Bonvoy Boundless',issuer:'Chase',fee:95,c:'#4A0E16',cm:'#9A2030',verified:'2026-03',
-  sob:{offer:'3 Free Night Awards (≤50k pts each)',req:'$3,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Award (≤35k pts)',a:'1 cert/yr',note:'Cat 1–5 Marriott.'}],multiyear:[],static:[{n:'Marriott Silver Elite',a:'Complimentary',note:''},{n:'15 Elite Night Credits',a:'Annually',note:''},{n:'6x at Marriott',a:'6x Marriott pts',note:''}]},
-  summary:{rows:[{l:'Annual free night',a:'≤35k pts (~$100–$250)',v:175}],total:'~$100–$250+',totalV:175,note:''}},
-{id:'chaseaero',name:'Chase Aeroplan',short:'Chase Aeroplan',issuer:'Chase',fee:95,c:'#8B0000',cm:'#C02020',verified:'2026-03',
-  sob:{offer:'100,000 Aeroplan pts',req:'$4,000 in 3 months',tags:['t']},
-  credits:{monthly:[{n:'DoorDash credit',a:'Up to $5/mo ($60/yr)',note:'Requires DashPass.'}],quarterly:[],semiannual:[],annual:[{n:'250 Status Qualifying Dollars',a:'Toward Air Canada status',note:''}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'3x Air Canada & Aeroplan partners',a:'3x Aeroplan pts',note:''},{n:'3x dining & grocery',a:'3x Aeroplan pts',note:''},{n:'Free first bag',a:'Complimentary',note:'On Air Canada.'}]},
-  summary:{rows:[{l:'Monthly DoorDash (ann.)',a:'Up to $60',v:60}],total:'~$60+',totalV:60,note:'Best card for Aeroplan loyalists.'}},
-{id:'amexp',name:'Amex Platinum Personal',short:'Plat Personal',issuer:'American Express',fee:895,c:'#2D1B69',cm:'#7B5EA7',verified:'2026-03',
-  sob:{offer:'Up to 175,000 MR points (personalized)',req:'$12,000 in 6 months',tags:['t']},
-  credits:{monthly:[{n:'Uber Cash',a:'$15/mo (Jan–Nov), $35 Dec',warn:true,note:'⚠ Expires end of month — no rollover. U.S. only.'},{n:'Digital entertainment',a:'Up to $25/mo',note:'Disney+, Hulu, ESPN+, Peacock, Paramount+, YouTube Premium, YouTube TV, NYT, WSJ.'},{n:'Walmart+ membership',a:'Up to $12.95/mo',note:'Covers monthly cost.'}],quarterly:[{n:'Resy dining',a:'Up to $100/qtr ($400/yr)',note:'Any U.S. Resy-affiliated restaurant. No rollover. New Sept 2025.'},{n:'Lululemon',a:'Up to $75/qtr ($300/yr)',note:'U.S. stores (excl. outlets). No rollover.'}],semiannual:[{n:'Fine Hotels + Resorts / Hotel Collection',a:'$300/half ($600/yr)',note:'Prepaid AmexTravel.com. H1/H2.'}],annual:[{n:'Airline incidental fees',a:'Up to $200/yr',note:'ONE qualifying airline. Bags, upgrades — NOT airfare.'},{n:'CLEAR Plus',a:'Up to $209/yr',note:''},{n:'Saks Fifth Avenue',a:'$50/half ($100/yr)',note:'Two $50 credits per year. No min purchase.'},{n:'OURA Ring',a:'Up to $200/yr',note:'OURAring.com only.'},{n:'Equinox membership',a:'Up to $300/yr',note:''},{n:'Uber One membership',a:'Up to $120/yr',note:'Separate from monthly Uber Cash.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $120/4 yrs',note:''}],static:[{n:'Centurion Lounge access',a:'Unlimited (solo)',note:'Guest access requires $75k annual spend.'},{n:'Priority Pass Select',a:'Unlimited visits',note:''},{n:'Delta Sky Club',a:'10 visits/year',note:''},{n:'Marriott Bonvoy Gold',a:'Complimentary',note:''},{n:'Hilton Honors Gold',a:'Complimentary',note:''},{n:'Points transfers',a:'1:1 to 20+ partners',note:''}]},
-  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $575',v:575},{l:'Quarterly (ann.)',a:'Up to $700',v:700},{l:'Semi-annual',a:'Up to $600',v:600},{l:'Annual credits',a:'Up to $1,129',v:1129}],total:'~$3,004+',totalV:3004,note:'Plus Centurion Lounge, hotel/car status, transfer partners.'}},
-{id:'amexbp',name:'Amex Biz Platinum',short:'Biz Platinum',issuer:'American Express',fee:895,c:'#0A4A3A',cm:'#2E8B6E',verified:'2026-03',
-  sob:{offer:'200,000 MR points',req:'$20,000 in 3 months',tags:['t']},
-  credits:{monthly:[{n:'Wireless phone service',a:'Up to $10/mo ($120/yr)',note:'U.S. wireless providers only.'}],quarterly:[{n:'Indeed',a:'Up to $90/qtr ($360/yr)',note:'Indeed.com purchases.'},{n:'Hilton (via Hilton for Business)',a:'Up to $50/qtr ($200/yr)',note:'Direct Hilton purchases.'}],semiannual:[{n:'Fine Hotels + Resorts / Hotel Collection',a:'$300/half ($600/yr)',note:'H1/H2.'}],annual:[{n:'Airline incidental fees',a:'Up to $200/yr',note:''},{n:'CLEAR Plus',a:'Up to $209/yr',note:''},{n:'35% Pay with Points rebate',a:'Up to 35% back in pts',note:''}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $120/4 yrs',note:''}],static:[{n:'Centurion Lounge access',a:'Unlimited (solo)',note:''},{n:'Leaders Club Sterling Status',a:'Complimentary',note:'New 2025. Breakfast for 2 at Leading Hotels of the World.'},{n:'Points transfers',a:'1:1 to 20+ partners',note:''}]},
-  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $120',v:120},{l:'Quarterly (ann.)',a:'Up to $560',v:560},{l:'Semi-annual',a:'Up to $600',v:600},{l:'Annual credits',a:'Up to $409',v:409}],total:'~$1,689+',totalV:1689,note:''}},
-{id:'amexg',name:'Amex Gold Personal',short:'Gold Personal',issuer:'American Express',fee:325,c:'#5C3A00',cm:'#C07820',verified:'2026-03',
-  sob:{offer:'Up to 100,000 MR points',req:'$6,000 in 6 months',tags:['t']},
-  credits:{monthly:[{n:'Dining credit',a:'Up to $10/mo ($120/yr)',note:'Grubhub, Cheesecake Factory, Goldbelly, Wine.com, Milk Bar, select Shake Shack.'},{n:'Uber Cash',a:'Up to $10/mo ($120/yr)',note:'Uber rides or Eats. No rollover.'},{n:'Dunkin\'',a:'Up to $7/mo ($84/yr)',note:'U.S. locations. No rollover.'}],quarterly:[],semiannual:[],annual:[{n:'Hotel Collection credit',a:'Up to $100/stay',note:'Via AmexTravel.com. 2-night min. Once per year.'}],multiyear:[],static:[{n:'4x restaurants worldwide',a:'4x MR pts',note:'No cap.'},{n:'4x U.S. supermarkets',a:'4x MR (up to $25k/yr)',note:''},{n:'3x on flights',a:'3x MR pts',note:''}]},
-  summary:{rows:[{l:'Monthly (ann.)',a:'Up to $324',v:324},{l:'Annual credit',a:'Up to $100',v:100}],total:'~$424+',totalV:424,note:''}},
-{id:'amexbg',name:'Amex Business Gold',short:'Biz Gold',issuer:'American Express',fee:375,c:'#6B4000',cm:'#C88820',verified:'2026-03',
-  sob:{offer:'100,000 MR points',req:'$15,000 in 3 months',tags:['t']},
-  credits:{monthly:[{n:'Dining & wireless credits',a:'Up to $20/mo ($240/yr)',note:'Eligible U.S. restaurants + wireless.'}],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'4x in top 2 categories/month',a:'4x MR per billing cycle',note:'Auto-selects highest 2 from 6 eligible.'}]},
-  summary:{rows:[{l:'Monthly credits (ann.)',a:'Up to $240',v:240}],total:'~$240+',totalV:240,note:''}},
-{id:'amexgrn',name:'Amex Green Card',short:'Green',issuer:'American Express',fee:150,c:'#0A4A1A',cm:'#207A32',verified:'2026-03',
-  sob:{offer:'40,000 MR points',req:'$3,000 in 6 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'CLEAR Plus',a:'Up to $189/yr',note:''},{n:'LoungeBuddy',a:'Up to $100/yr',note:'Pay-per-use lounge access.'}],multiyear:[],static:[{n:'3x travel worldwide',a:'3x MR pts',note:'Flights, hotels, transit, rideshare — very broad.'},{n:'3x dining worldwide',a:'3x MR pts',note:''},{n:'Points transfers',a:'1:1 to 20+ partners',note:''}]},
-  summary:{rows:[{l:'Annual credits',a:'Up to $289',v:289}],total:'~$289+',totalV:289,note:'Credits cover the $150 fee.'}},
-{id:'amexbcp',name:'Amex Blue Cash Preferred',short:'BCP',issuer:'American Express',fee:95,c:'#003A68',cm:'#0068A8',verified:'2026-03',
-  sob:{offer:'$250 statement credit',req:'$3,000 in 6 months',tags:['c']},
-  credits:{monthly:[{n:'Disney Bundle credit',a:'Up to $7/mo ($84/yr)',note:'Disney+ Bundle. Auto applied.'}],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'6% U.S. supermarkets',a:'6% cash (up to $6k/yr)',note:''},{n:'6% streaming',a:'6% cash',note:''},{n:'3% transit & gas',a:'3% cash',note:''}]},
-  summary:{rows:[{l:'Monthly Disney Bundle',a:'Up to $84/yr',v:84}],total:'~$84+',totalV:84,note:''}},
-{id:'amexeday',name:'Amex EveryDay Preferred',short:'EveryDay Pref',issuer:'American Express',fee:95,c:'#1A3A5A',cm:'#3A6A9A',verified:'2026-03',
-  sob:{offer:'15,000 MR points',req:'$2,000 in 6 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'3x U.S. supermarkets',a:'3x MR (up to $6k/yr)',note:''},{n:'2x U.S. gas stations',a:'2x MR pts',note:''},{n:'50% bonus at 30+ uses/month',a:'1.5× all pts earned',note:''}]},
-  summary:{rows:[],total:'~$0 in credits',totalV:0,note:''}},
-{id:'deltagrn',name:'Delta SkyMiles Gold',short:'Delta Gold',issuer:'American Express',fee:150,c:'#003080',cm:'#1048A0',verified:'2026-03',
-  sob:{offer:'70k + 20k Delta miles (elevated)',req:'$3,000 + $2,000 in 6 months',tags:['t']},
-  credits:{monthly:[{n:'Uber One credit',a:'Up to $9.99/mo',note:'Thru June 25, 2026 only.'}],quarterly:[],semiannual:[],annual:[{n:'Delta Flight Credit',a:'Up to $200/yr',note:'After $10k spend in calendar year on Delta purchases.'}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 8.'},{n:'2x Delta, dining, supermarkets',a:'2x SkyMiles',note:''}]},
-  summary:{rows:[{l:'Annual Delta credit',a:'Up to $200',v:200}],total:'~$200+',totalV:200,note:''}},
-{id:'deltag',name:'Delta SkyMiles Gold Biz',short:'Delta Gold Biz',issuer:'American Express',fee:150,c:'#002870',cm:'#0840A0',verified:'2026-03',
-  sob:{offer:'90,000 Delta miles (elevated)',req:'$6,000 in 6 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Delta travel credit',a:'Up to $250/yr',note:''}],multiyear:[],static:[{n:'First bag free for cardholder + 8',a:'Complimentary',note:''},{n:'2x Delta, restaurants, shipping, advertising',a:'2x SkyMiles',note:''}]},
-  summary:{rows:[{l:'Annual Delta credit',a:'Up to $250',v:250}],total:'~$250+',totalV:250,note:''}},
-{id:'deltares',name:'Delta SkyMiles Reserve',short:'Delta Reserve',issuer:'American Express',fee:650,c:'#003480',cm:'#1456B0',verified:'2026-03',
-  sob:{offer:'100k + 25k Delta SkyMiles (elevated)',req:'$6,000 + $3,000 in 6 months',tags:['t']},
-  credits:{monthly:[{n:'Uber One credit',a:'Up to $9.99/mo',note:'Thru June 25, 2026. Pay for Uber One monthly membership.'}],quarterly:[],semiannual:[],annual:[{n:'Domestic companion cert',a:'1 cert/yr',note:'Domestic first class or main cabin. Taxes/fees apply.'},{n:'$2,500 MQD head start',a:'Toward Medallion status',note:''}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $120/4 yrs',note:''}],static:[{n:'Delta Sky Club',a:'15 visits/year',note:'Unlimited at $75k annual spend.'},{n:'Centurion Lounge (when flying Delta)',a:'Complimentary',note:''},{n:'3x on Delta',a:'3x SkyMiles',note:''}]},
-  summary:{rows:[{l:'Companion cert',a:'Varies by route',v:400}],total:'Companion cert value',totalV:400,note:''}},
-{id:'aspire',name:'Hilton Honors Aspire',short:'Aspire',issuer:'American Express',fee:550,c:'#00377B',cm:'#1A56A6',verified:'2026-03',
-  sob:{offer:'175,000 Hilton Honors points',req:'$6,000 in 6 months',tags:['t']},
-  credits:{monthly:[],quarterly:[{n:'Airline & flight credit',a:'Up to $50/qtr ($200/yr)',note:'Eligible flight purchases directly with any airline or AmexTravel.com.'}],semiannual:[{n:'Hilton resort credit',a:'$200/half ($400/yr)',note:'Participating Hilton resorts. Verify qualifying charges. H1/H2.'}],annual:[{n:'CLEAR Plus',a:'Up to $209/yr',note:'After enrollment. Effective July 1, 2025.'},{n:'Free Night Reward (≤150k pts)',a:'1 cert/yr',note:'On anniversary. Typically $200–$800+.'}],multiyear:[],static:[{n:'Hilton Diamond status',a:'Complimentary',note:'Top-tier. Exec lounge, upgrades, breakfast at many properties.'},{n:'Priority Pass Select',a:'Unlimited visits',note:''},{n:'14x at Hilton',a:'14x Hilton pts',note:''}]},
-  summary:{rows:[{l:'Quarterly (ann.)',a:'Up to $200',v:200},{l:'Semi-annual',a:'Up to $400',v:400},{l:'Annual free night',a:'≤150k (~$300–$800)',v:500}],total:'~$900–$1,400+',totalV:1000,note:''}},
-{id:'hiltsurp',name:'Hilton Honors Surpass',short:'Hilton Surpass',issuer:'American Express',fee:150,c:'#003A6E',cm:'#1260A8',verified:'2026-03',
-  sob:{offer:'130,000 pts + Free Night Reward',req:'$3,000 in 6 months',tags:['t']},
-  credits:{monthly:[],quarterly:[{n:'Hilton resort credit',a:'Up to $50/qtr ($200/yr)',note:'Participating Hilton resorts.'}],semiannual:[],annual:[{n:'Free Night Reward (≤85k pts)',a:'1 cert (at $15k spend)',note:''}],multiyear:[],static:[{n:'Hilton Gold status',a:'Complimentary',note:''},{n:'Priority Pass Select',a:'10 visits/yr',note:''},{n:'12x at Hilton',a:'12x Hilton pts',note:''},{n:'4x online retail',a:'4x Hilton pts',note:'U.S. online purchases.'}]},
-  summary:{rows:[{l:'Quarterly resort (ann.)',a:'Up to $200',v:200},{l:'Annual free night (at $15k)',a:'≤85k (~$200–$500)',v:350}],total:'~$200–$550+',totalV:400,note:''}},
-{id:'brilliant',name:'Marriott Bonvoy Brilliant',short:'Brilliant',issuer:'American Express',fee:650,c:'#5C0F1A',cm:'#B31B2A',verified:'2026-03',
-  sob:{offer:'95,000 Marriott Bonvoy points',req:'$6,000 in 6 months',tags:['t']},
-  credits:{monthly:[{n:'Dining statement credit',a:'Up to $25/mo ($300/yr)',note:'Restaurants worldwide. Automatic. No rollover.'}],quarterly:[],semiannual:[],annual:[{n:'Free Night Award (≤85k pts)',a:'1 cert/yr',note:'Typically $200–$600+.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'Marriott Platinum Elite',a:'Complimentary',note:''},{n:'Priority Pass Select',a:'Up to 6 visits/yr',note:''},{n:'25 Elite Night Credits',a:'Annually',note:''}]},
-  summary:{rows:[{l:'Monthly dining (ann.)',a:'Up to $300',v:300},{l:'Annual free night',a:'≤85k (~$200–$600)',v:400}],total:'~$500–$900+',totalV:700,note:''}},
-{id:'mariottbiz',name:'Amex Bonvoy Business',short:'Bonvoy Biz',issuer:'American Express',fee:250,c:'#3A0A10',cm:'#882030',verified:'2026-03',
-  sob:{offer:'3 Free Night Awards (≤50k pts each)',req:'$6,000 in 6 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Free Night Award (≤35k pts)',a:'1 cert/yr',note:'Cat 1–5 Marriott.'}],multiyear:[],static:[{n:'6x at Marriott',a:'6x Marriott pts',note:''},{n:'4x restaurants, gas, wireless, shipping, advertising',a:'4x Marriott pts',note:''},{n:'15 Elite Night Credits',a:'Annually',note:''}]},
-  summary:{rows:[{l:'Annual free night',a:'≤35k (~$100–$250)',v:175}],total:'~$100–$250+',totalV:175,note:''}},
-{id:'hiltbiz',name:'Hilton Honors Business',short:'Hilton Biz',issuer:'American Express',fee:195,c:'#002A5C',cm:'#0A4898',verified:'2026-03',
-  sob:{offer:'130,000 Hilton Honors points',req:'$3,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[{n:'Hilton resort credit',a:'Up to $60/qtr ($240/yr)',note:'Participating Hilton resorts.'}],semiannual:[],annual:[{n:'Free Night Reward (≤130k pts)',a:'1 cert (at $15k spend)',note:''}],multiyear:[],static:[{n:'Hilton Gold status',a:'Complimentary',note:''},{n:'12x at Hilton',a:'12x Hilton pts',note:''}]},
-  summary:{rows:[{l:'Quarterly resort (ann.)',a:'Up to $240',v:240},{l:'Annual free night (at $15k)',a:'≤130k (~$500+)',v:400}],total:'~$240–$640+',totalV:500,note:''}},
-{id:'venturex',name:'Capital One Venture X',short:'Venture X',issuer:'Capital One',fee:395,c:'#004977',cm:'#0077B6',verified:'2026-03',
-  sob:{offer:'75,000 miles',req:'$4,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Travel credit (Cap1 Travel)',a:'$300/yr',note:'Automatic on Cap1 Travel portal bookings.'},{n:'Anniversary bonus miles',a:'10,000 miles (~$100)',note:'On each anniversary.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'Priority Pass Select',a:'Unlimited + 2 guests',note:''},{n:'Capital One Lounge',a:'Unlimited + 2 guests',note:'DFW, DEN, IAD, expanding. Authorized users $125/yr for lounge access (as of Feb 1, 2026).'},{n:'2x miles everywhere',a:'2x miles',note:''},{n:'10x hotels & car rentals',a:'10x miles',note:'Via Cap1 Travel.'},{n:'Primary auto rental CDW',a:'Included',note:''}]},
-  summary:{rows:[{l:'Annual travel credit',a:'$300',v:300},{l:'Anniversary miles',a:'10k (~$100)',v:100}],total:'~$400+',totalV:400,note:'$300+$100 essentially offsets $395 fee.'}},
-{id:'venture',name:'Capital One Venture',short:'Venture',issuer:'Capital One',fee:95,c:'#006090',cm:'#0088B8',verified:'2026-03',
-  sob:{offer:'75,000 miles',req:'$4,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'2x miles everywhere',a:'2x miles',note:''},{n:'5x hotels & car rentals',a:'5x miles',note:''},{n:'Transfer to 15+ partners',a:'1:1 to most',note:''}]},
-  summary:{rows:[],total:'Global Entry credit only',totalV:0,note:''}},
-{id:'sparkcash',name:'Cap1 Spark Miles',short:'Spark Miles',issuer:'Capital One',fee:95,c:'#005580',cm:'#007AAA',verified:'2026-03',
-  sob:{offer:'50,000 miles',req:'$4,500 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'2x miles everywhere',a:'2x miles',note:''},{n:'5x hotels & car rentals',a:'5x miles',note:''}]},
-  summary:{rows:[],total:'~$100 (Global Entry)',totalV:100,note:''}},
-{id:'sparkcash2',name:'Cap1 Spark Cash Plus',short:'Spark Cash+',issuer:'Capital One',fee:150,c:'#004A60',cm:'#006888',verified:'2026-03',
-  sob:{offer:'$1,200 cash bonus',req:'$5k then $50k in yr 1',tags:['c']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Annual cash bonus',a:'$200 (at $200k spend)',note:''}],multiyear:[],static:[{n:'2% cash back everywhere',a:'2% cash',note:''},{n:'5% hotels & car rentals',a:'5% cash',note:''}]},
-  summary:{rows:[{l:'Annual cash bonus',a:'$200 (at $200k)',v:200}],total:'~$200+',totalV:200,note:''}},
-{id:'savor',name:'Capital One Savor',short:'Savor',issuer:'Capital One',fee:0,c:'#3A4A00',cm:'#6A7A00',verified:'2026-03',
-  sob:{offer:'$200 cash bonus',req:'$500 in 3 months',tags:['c']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'3% dining, entertainment, groceries',a:'3% cash',note:''},{n:'8% Cap1 Entertainment',a:'8% cash',note:''},{n:'3% streaming',a:'3% cash',note:''}]},
-  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
-{id:'strata',name:'Citi Strata Premier',short:'Strata Premier',issuer:'Citi',fee:95,c:'#003B8E',cm:'#1565C0',verified:'2026-03',
-  sob:{offer:'75,000 ThankYou Points',req:'$4,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Hotel credit (CitiTravel.com)',a:'Up to $100/yr',note:'On hotel stays $500+ via CitiTravel.com.'}],multiyear:[],static:[{n:'10x Citi Travel',a:'10x TY pts',note:'Hotels, car rentals, attractions via cititravel.com.'},{n:'3x hotels, air, travel',a:'3x ThankYou pts',note:''},{n:'3x dining & groceries',a:'3x ThankYou pts',note:''},{n:'3x gas & EV charging',a:'3x ThankYou pts',note:''},{n:'Transfer to 18+ partners',a:'1:1 to most',note:'Turkish, Flying Blue, Avianca, Wyndham.'}]},
-  summary:{rows:[{l:'Annual hotel credit',a:'Up to $100',v:100}],total:'~$100+',totalV:100,note:''}},
-{id:'aaexec',name:'Citi AAdvantage Executive',short:'AA Executive',issuer:'Citi',fee:595,c:'#AA1B1B',cm:'#CC3333',verified:'2026-03',
-  sob:{offer:'70,000 AAdvantage miles',req:'$7,000 in 3 months',tags:['t']},
-  credits:{monthly:[{n:'Lyft credit',a:'Up to $10/mo ($120/yr)',note:'Must take 3+ eligible rides/month.'},{n:'Grubhub credit',a:'Up to $10/mo ($120/yr)',note:''}],quarterly:[],semiannual:[],annual:[{n:'Anniversary bonus miles',a:'10,000 miles/yr',note:''},{n:'Global Entry / TSA PreCheck / NEXUS',a:'Up to $120/4 yrs',note:''}],multiyear:[],static:[{n:'Admirals Club membership',a:'Compl. (~$800/yr)',note:'Full Admirals Club. Cardholder + family or 2 guests.'},{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 8.'},{n:'4x on AA',a:'4x AAdvantage miles',note:''}]},
-  summary:{rows:[{l:'Monthly credits (ann.)',a:'Up to $240',v:240},{l:'Admirals Club membership',a:'~$800 standalone',v:800}],total:'~$1,040+ (Club value)',totalV:1040,note:''}},
-
-{id:'aaplatpres',name:'Citi AA Platinum Select',short:'AA Platinum Select',issuer:'Citi',fee:99,c:'#8A1515',cm:'#B02828',verified:'2026-03',
-  sob:{offer:'50,000 AAdvantage miles',req:'$2,500 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Companion cert (at $30k spend)',a:'After $30k/yr',note:'Domestic economy round-trip.'}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 4.'},{n:'2x AA, restaurants, gas',a:'2x AAdvantage miles',note:''}]},
-  summary:{rows:[{l:'Companion cert (at $30k)',a:'Domestic economy',v:250}],total:'~$250+',totalV:250,note:''}},
-{id:'doublecash',name:'Citi Double Cash',short:'Double Cash',issuer:'Citi',fee:0,c:'#102060',cm:'#2244A8',verified:'2026-03',
-  sob:{offer:'$200 cash back',req:'$1,500 in 6 months',tags:['c']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'2% everywhere',a:'2% cash',note:'1% buy + 1% pay.'},{n:'ThankYou Points conversion',a:'Convertible',note:'Pair with Strata Premier.'}]},
-  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
-{id:'custcash',name:'Citi Custom Cash',short:'Custom Cash',issuer:'Citi',fee:0,c:'#082250',cm:'#1840A0',verified:'2026-03',
-  sob:{offer:'$200 cash back',req:'$1,500 in 6 months',tags:['c']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'5% top eligible category',a:'5% cash (up to $500/mo)',note:'Auto-selects highest of 10 eligible categories.'},{n:'ThankYou Points conversion',a:'Convertible',note:'Pair with Strata Premier.'}]},
-  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
-{id:'rewardsp',name:'Citi Rewards+',short:'Rewards+',issuer:'Citi',fee:0,c:'#0A1A58',cm:'#1A38A8',verified:'2026-03',
-  sob:{offer:'20,000 ThankYou Points',req:'$1,500 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'Rounds up to 10 pts every purchase',a:'Min 10 pts per purchase',note:''},{n:'2x supermarkets & gas',a:'2x TY pts (up to $6k/yr)',note:''},{n:'10% pts back on redemptions',a:'Up to 100k pts/yr',note:''}]},
-  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
-{id:'bilt',name:'Bilt Mastercard',short:'Bilt',issuer:'Wells Fargo',fee:0,c:'#1A1A1A',cm:'#666680',verified:'2026-03',
-  sob:{offer:'No traditional sign-on bonus',req:'',tags:[]},
-  credits:{monthly:[{n:'Rent Day double points (1st)',a:'2x on all categories',note:'Every 1st: 2x on dining, travel, other. ≥5 transactions/billing cycle required.'}],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'Earn on rent payments',a:'1x pts (up to 100k/yr)',note:'No transaction fees.'},{n:'3x dining',a:'3x Bilt pts',note:''},{n:'2x travel',a:'2x Bilt pts',note:''},{n:'Transfer to 15+ partners',a:'1:1 to Hyatt, United, AA, Emirates…',note:''},{n:'Primary auto rental CDW',a:'Included',note:''}]},
-  summary:{rows:[],total:'$0 annual fee',totalV:0,note:''}},
-{id:'wfauto',name:'WF Autograph Journey',short:'WF Autograph',issuer:'Wells Fargo',fee:95,c:'#1A4A2A',cm:'#2E7A48',verified:'2026-03',
-  sob:{offer:'60,000 bonus points',req:'$4,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Airline credit',a:'Up to $50/yr',note:''},{n:'Hotel credit',a:'Up to $50/yr',note:''}],multiyear:[],static:[{n:'5x hotels',a:'5x WF pts',note:''},{n:'4x airlines',a:'4x WF pts',note:''},{n:'3x dining & travel',a:'3x WF pts',note:''}]},
-  summary:{rows:[{l:'Annual credits',a:'Up to $100',v:100}],total:'~$100+',totalV:100,note:''}},
-{id:'altres',name:'U.S. Bank Altitude Reserve',short:'Altitude Reserve',issuer:'U.S. Bank',fee:400,c:'#2A1758',cm:'#5B3EA8',verified:'2026-03',
-  sob:{offer:'50,000 pts (~$750 in travel)',req:'$4,500 in 90 days',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Travel & dining credit',a:'Up to $325/yr',note:'Automatic on travel and dining. Extremely broad. Effective fee: $75.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4.5 yrs',note:''}],static:[{n:'Priority Pass Select',a:'12 visits/yr',note:''},{n:'3x mobile wallet',a:'3x Altitude pts',note:'Apple Pay, Google Pay — nearly every in-person purchase.'},{n:'3x travel & dining',a:'3x Altitude pts',note:''}]},
-  summary:{rows:[{l:'Annual travel & dining credit',a:'Up to $325',v:325}],total:'~$325+',totalV:325,note:''}},
-{id:'altconn',name:'U.S. Bank Altitude Connect',short:'Altitude Connect',issuer:'U.S. Bank',fee:95,c:'#3A2068',cm:'#6848B8',verified:'2026-03',
-  sob:{offer:'50,000 pts (~$500)',req:'$2,000 in 120 days',tags:['t']},
-  credits:{monthly:[{n:'Streaming credit',a:'Up to $15/qtr ($60/yr)',note:'Netflix, Spotify, Disney+, Hulu, and more.'}],quarterly:[],semiannual:[],annual:[],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4.5 yrs',note:''}],static:[{n:'Priority Pass Select',a:'4 visits/yr',note:''},{n:'4x travel',a:'4x Altitude pts',note:''},{n:'4x gas & EV charging',a:'4x Altitude pts',note:''}]},
-  summary:{rows:[{l:'Streaming credit (ann.)',a:'Up to $60',v:60}],total:'~$60+',totalV:60,note:''}},
-{id:'boapre',name:'BofA Premium Rewards Elite',short:'BofA PR Elite',issuer:'Bank of America',fee:550,c:'#7A1A1A',cm:'#B83030',verified:'2026-03',
-  sob:{offer:'75,000 points',req:'$5,000 in 90 days',tags:['c','t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Travel credit',a:'Up to $300/yr',note:'Broad — flights, hotels, transit, rideshare, cruises. Automatic.'},{n:'Lifestyle credit',a:'Up to $150/yr',note:'Dining, beauty, spa, fitness, streaming. Automatic.'}],multiyear:[{n:'Global Entry / TSA PreCheck',a:'Up to $100/4 yrs',note:''}],static:[{n:'Priority Pass Select',a:'Unlimited + unlimited guests',note:'No guest limits.'},{n:'2x travel & dining',a:'2x BofA pts',note:'Up to 3.5x with Preferred Rewards.'}]},
-  summary:{rows:[{l:'Annual travel credit',a:'Up to $300',v:300},{l:'Annual lifestyle credit',a:'Up to $150',v:150}],total:'~$450+',totalV:450,note:''}},
-{id:'boatrav',name:'BofA Travel Rewards',short:'BofA Travel',issuer:'Bank of America',fee:0,c:'#5A1414',cm:'#902020',verified:'2026-03',
-  sob:{offer:'25,000 pts (~$250 travel)',req:'$1,000 in 90 days',tags:['c']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[],multiyear:[],static:[{n:'1.5x everywhere (up to 2.625x)',a:'1.5x–2.625x pts',note:'With $100k+ BofA/Merrill assets.'}]},
-  summary:{rows:[],total:'$0 fee',totalV:0,note:''}},
-{id:'aadvbiz',name:'Barclays Aviator Silver',short:'Aviator Silver',issuer:'Barclays',fee:199,c:'#00274A',cm:'#1058A0',verified:'2026-03',
-  sob:{offer:'60,000 AAdvantage miles',req:'$1,000 in 3 months',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Companion cert (at $20k)',a:'After $20k/yr',note:'Domestic economy.'},{n:'3k EQMs per $10k spend (2x)',a:'Up to 6,000 EQMs',note:''}],multiyear:[],static:[{n:'Admirals Club membership',a:'Complimentary for cardholder',note:''},{n:'First & second bag free',a:'Complimentary',note:'Cardholder + up to 8.'},{n:'3x on AA',a:'3x AAdvantage miles',note:''}]},
-  summary:{rows:[{l:'Admirals Club (cardholder)',a:'~$800 standalone',v:800}],total:'~$800+ (Club value)',totalV:800,note:''}},
-{id:'jbtravel',name:'Barclays JetBlue Plus',short:'JetBlue Plus',issuer:'Barclays',fee:99,c:'#003087',cm:'#0050C0',verified:'2026-03',
-  sob:{offer:'50,000 TrueBlue points',req:'$1,000 in 90 days',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Anniversary bonus points',a:'5,000 pts/yr',note:'Worth ~$70.'},{n:'$100 JetBlue credit',a:'$100/yr',note:''}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 3.'},{n:'3x on JetBlue',a:'3x TrueBlue pts',note:''},{n:'10% pts back on redemptions',a:'Up to 10%',note:''}]},
-  summary:{rows:[{l:'Anniversary bonus',a:'5k (~$70)',v:70},{l:'JetBlue credit',a:'$100',v:100}],total:'~$170+',totalV:170,note:''}},
-{id:'aadvsel',name:'Barclays Aviator Red',short:'Aviator Red',issuer:'Barclays',fee:99,c:'#001A38',cm:'#0848A0',verified:'2026-03',
-  sob:{offer:'60,000 AAdvantage miles',req:'$0 — earn just by getting card',tags:['t']},
-  credits:{monthly:[],quarterly:[],semiannual:[],annual:[{n:'Companion cert (at $20k)',a:'After $20k/yr',note:''}],multiyear:[],static:[{n:'First bag free',a:'Complimentary',note:'Cardholder + up to 4.'},{n:'2x on AA',a:'2x AAdvantage miles',note:''}]},
-  summary:{rows:[{l:'Companion cert (at $20k)',a:'Domestic economy',v:250}],total:'~$250+',totalV:250,note:''}},
-];
-
-const ISSUERS=['Chase','American Express','Capital One','Citi','Wells Fargo','U.S. Bank','Bank of America','Barclays'];
+async function loadCardData() {
+  try {
+    const res = await fetch('/api/cards');
+    const data = await res.json();
+    CARDS = data.cards || [];
+    AFF = data.aff || {};
+    PROMOS = data.promos || [];
+    ISSUERS = data.issuers || [];
+    dataLoaded = true;
+  } catch(e) {
+    console.error('Failed to load card data:', e);
+    const grid = document.getElementById('mc-grid');
+    if (grid) grid.innerHTML = '<div style="padding:40px;text-align:center;color:var(--red);font-size:13px">Failed to load card data. Please refresh the page.</div>';
+  }
+}
 
 let myCards = new Set((function(){
   try { var s = localStorage.getItem(SK); return s ? JSON.parse(s) : []; }
@@ -702,6 +532,8 @@ let brSection = 'monthly';
 let mcQuery = '';
 let brQuery = '';
 let currentUser = null;
+let renewals = (function(){ try { return JSON.parse(localStorage.getItem('cr_renewals') || '{}'); } catch(e) { return {}; } })();
+let pendingRenewalCard = null;
 let profilePanelOpen = false;
 let authModalOpen = false;
 let shareModalOpen = false;
@@ -853,6 +685,14 @@ function toggleCard(id) {
   renderWalletSetup();
   renderMycards();
   updateTabCounts();
+  // If user just ADDED a card with an annual fee and no renewal month set, prompt
+  var addedCard = CARDS.find(function(c){ return c.id === id; });
+  if (myCards.has(id) && addedCard && addedCard.fee > 0 && !renewals[id]) {
+    showRenewalPicker(addedCard);
+  } else {
+    var picker = document.getElementById('renewal-picker');
+    if (picker) picker.classList.remove('show');
+  }
 }
 
 // ═══════════════════════════════════════════════════════
@@ -941,6 +781,7 @@ function makeSummary(card) {
   var total = '<div class="sum-row total"><div class="sum-top"><span class="sum-l">Total potential credits</span><span class="sum-v">' + esc(s.total) + '</span></div>'
     + '<div class="sum-bar"><div class="sum-bar-fill" style="width:' + tp + '%"></div></div>'
     + (s.note ? '<div class="sum-note">' + esc(s.note) + '</div>' : '') + '</div>';
+  var renewalRow = makeRenewalRow(card);
   var applyRow = '';
   var link = AFF[card.id];
   if (link) {
@@ -950,7 +791,7 @@ function makeSummary(card) {
       + '<a class="apply-btn" href="' + esc(link) + '" target="_blank" rel="noopener" onclick="trackApply(\'' + card.id + '\')">'
       + 'Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>';
   }
-  return '<div class="col-body">' + sob + feeRow + rows + total + '</div>' + applyRow;
+  return '<div class="col-body">' + sob + feeRow + rows + total + '</div>' + renewalRow + applyRow;
 }
 function buildCol(card, sec, q) {
   var div = document.createElement('div');
@@ -994,9 +835,12 @@ function renderMycards() {
   if (contentEl) contentEl.style.display = isEmpty ? 'none' : 'block';
   if (tabsEl) tabsEl.style.display = isEmpty ? 'none' : 'flex';
   if (resetEl && isEmpty) { resetEl.className = 'reset-strip'; resetEl.innerHTML = ''; }
+  updateWalletBanner();
   if (isEmpty) return;
   // Reset badge
   renderResetBadge();
+  updateWalletBanner();
+  checkMonthlyUrgency();
   // Build grid
   var cards = CARDS.filter(function(c){ return myCards.has(c.id); });
   var sorted = cards;
@@ -1038,9 +882,9 @@ function renderBrowse() {
   var grid = document.getElementById('br-grid');
   if (!grid) return;
   if (browseCards.size === 0) {
-    grid.innerHTML = '<div style="padding:60px 40px;text-align:center">'
+    grid.innerHTML = '<div style="padding:80px 40px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center">'
       + '<p style="font-size:16px;font-weight:500;color:var(--txm);margin-bottom:8px">Select cards to compare</p>'
-      + '<p style="font-size:13px;color:var(--txd);line-height:1.7">Click any chip above to add a card. Pick multiple to compare side by side.</p></div>';
+      + '<p style="font-size:13px;color:var(--txd);line-height:1.7;max-width:320px">Click any chip above to add a card. Pick multiple to compare side by side.</p></div>';
     var cntEl = document.getElementById('br-cnt'); if (cntEl) cntEl.innerHTML = '';
     return;
   }
@@ -1100,7 +944,15 @@ function renderPromos() {
     : 'Add your cards to My Cards to see which promos you qualify for.';
   var transferHtml = live.map(function(p) {
     var d = daysUntil(p.expires), hot = d <= 7, warm = d <= 14;
-    var link = 'https://www.google.com/search?q=' + encodeURIComponent(p.currency + ' ' + p.partner + ' transfer bonus');
+    var TRANSFER_URLS = {
+      'Amex MR:Air France/Flying Blue': 'https://www.airfranceklm.com/en/flying-blue/earn-and-spend/earn/transfer-points',
+      'Amex MR:Avianca LifeMiles': 'https://www.avianca.com/lifemiles/buy/transfer-miles/',
+      'Chase UR:United MileagePlus': 'https://www.united.com/en/us/fly/mileageplus/miles/buy-transfer.html',
+      'Citi TY:Turkish Miles&Smiles': 'https://www.turkishairlines.com/en-int/miles-smiles/convert-your-points-to-miles/',
+      'Capital One:Air Canada Aeroplan': 'https://www.aircanada.com/ca/en/aco/home/aeroplan/earn/credit-card-points-transfers.html',
+      'Bilt Points:World of Hyatt': 'https://www.hyatt.com/en-US/member/joinworldofhyatt/biltrewards'
+    };
+    var link = TRANSFER_URLS[p.currency + ':' + p.partner] || ('https://www.google.com/search?q=' + encodeURIComponent(p.currency + ' ' + p.partner + ' transfer bonus'));
     var chips = CARDS.filter(function(cd){ return p.cards.indexOf(cd.id) >= 0; })
       .map(function(cd){ return '<span class="tr-chip' + (myCards.has(cd.id) ? ' owned' : '') + '">' + esc(cd.short) + '</span>'; }).join('');
     return '<div class="tr-card' + (hot ? ' hot' : warm ? ' warm' : '') + '">'
@@ -1259,6 +1111,114 @@ function sendMagicLink() {
   if (msg) { msg.style.display = 'block'; msg.textContent = '\u2713 Check your email for a sign-in link.'; }
 }
 
+
+// ═══════════════════════════════════════════════════════
+// RENEWAL DATE FEATURES
+// ═══════════════════════════════════════════════════════
+function saveRenewals() {
+  try { localStorage.setItem('cr_renewals', JSON.stringify(renewals)); } catch(e) {}
+}
+
+function showRenewalPicker(card) {
+  pendingRenewalCard = card;
+  var picker = document.getElementById('renewal-picker');
+  var nameEl = document.getElementById('rp-card-name');
+  var monthsEl = document.getElementById('rp-months');
+  if (!picker || !nameEl || !monthsEl) return;
+  nameEl.textContent = card.name;
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var current = renewals[card.id];
+  monthsEl.innerHTML = months.map(function(m, i) {
+    return '<button class="rp-month' + (current === i+1 ? ' on' : '') + '" data-month="' + (i+1) + '">' + m + '</button>';
+  }).join('');
+  monthsEl.querySelectorAll('.rp-month').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      renewals[pendingRenewalCard.id] = parseInt(btn.dataset.month);
+      saveRenewals();
+      monthsEl.querySelectorAll('.rp-month').forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+      showToast('Renewal date saved for ' + pendingRenewalCard.short);
+      setTimeout(function(){
+        picker.classList.remove('show');
+        pendingRenewalCard = null;
+      }, 800);
+    });
+  });
+  picker.classList.add('show');
+  picker.scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+function getRenewalDays(cardId) {
+  var month = renewals[cardId];
+  if (!month) return null;
+  var now = new Date();
+  var y = now.getFullYear();
+  var next = new Date(y, month - 1, 1);
+  if (next <= now) next = new Date(y + 1, month - 1, 1);
+  return Math.round((next - now) / 86400000);
+}
+
+function makeRenewalRow(card) {
+  if (card.fee === 0) return ''; // no annual fee
+  var days = getRenewalDays(card.id);
+  if (days === null) {
+    return '<div class="renewal-row"><span class="renewal-label">Annual fee renewal</span>'
+      + '<span class="renewal-set" onclick="showRenewalPicker(CARDS.find(function(c){return c.id==='' + card.id + '';}))">Set renewal month</span></div>';
+  }
+  var cls = days <= 30 ? 'critical' : days <= 60 ? 'urgent' : 'ok';
+  var label = days <= 30 ? 'Due in ' + days + ' days' : days <= 60 ? 'Due in ' + days + ' days' : 'Due in ~' + Math.round(days/30) + ' months';
+  var net = (card.summary ? card.summary.totalV || 0 : 0) - card.fee;
+  var verdict = net > 0
+    ? '<span class="worth-keep">&#x2714; Worth keeping (+$' + Math.abs(net).toLocaleString() + ' net)</span>'
+    : net < -50
+      ? '<span class="worth-drop">&#x26A0; Consider canceling (-$' + Math.abs(net).toLocaleString() + ' net)</span>'
+      : '<span class="worth-neutral">Roughly break-even</span>';
+  return '<div class="renewal-row"><span class="renewal-label">Annual fee renewal</span>'
+    + '<span class="renewal-days ' + cls + '">' + label + '</span></div>'
+    + '<div class="worth-row"><span class="worth-label">Keep or cancel?</span>' + verdict + '</div>';
+}
+
+function updateWalletBanner() {
+  var banner = document.getElementById('wallet-banner');
+  if (!banner) return;
+  var cards = CARDS.filter(function(c){ return myCards.has(c.id); });
+  if (cards.length === 0) { banner.classList.remove('show'); return; }
+  var totalCredits = cards.reduce(function(a,c){ return a + (c.summary ? c.summary.totalV || 0 : 0); }, 0);
+  var totalFees = cards.reduce(function(a,c){ return a + c.fee; }, 0);
+  var net = totalCredits - totalFees;
+  var credEl = document.getElementById('wb-credits');
+  var feesEl = document.getElementById('wb-fees');
+  var netEl = document.getElementById('wb-net');
+  if (credEl) credEl.textContent = '$' + totalCredits.toLocaleString();
+  if (feesEl) feesEl.textContent = '$' + totalFees.toLocaleString();
+  if (netEl) {
+    netEl.textContent = (net >= 0 ? '+' : '-') + '$' + Math.abs(net).toLocaleString();
+    netEl.className = 'wb-val ' + (net >= 0 ? 'pos' : 'neg');
+  }
+  banner.classList.add('show');
+}
+
+function checkMonthlyUrgency() {
+  // Add pulsing red dot to Monthly tab if any credits expire this month
+  var myCardsList = CARDS.filter(function(c){ return myCards.has(c.id); });
+  var now = new Date();
+  var endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+  var daysLeft = Math.round((endOfMonth - now) / 86400000);
+  var hasMonthly = myCardsList.some(function(c){ return (c.credits.monthly || []).length > 0; });
+  var monthlyTab = document.querySelector('#sect-tabs .st[data-s="monthly"]');
+  if (!monthlyTab) return;
+  var existing = monthlyTab.querySelector('.tab-urgent');
+  if (hasMonthly && daysLeft <= 7) {
+    if (!existing) {
+      var dot = document.createElement('span');
+      dot.className = 'tab-urgent';
+      monthlyTab.appendChild(dot);
+    }
+  } else {
+    if (existing) existing.remove();
+  }
+}
+
 // ═══════════════════════════════════════════════════════
 // INIT — runs after all HTML is parsed, all vars declared
 // ═══════════════════════════════════════════════════════
@@ -1347,6 +1307,13 @@ function sendMagicLink() {
   if (ebInput) ebInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitEmail(); });
   var ebDismiss = document.getElementById('eb-dismiss');
   if (ebDismiss) ebDismiss.addEventListener('click', dismissEmail);
+  // Renewal picker skip
+  var rpSkip = document.getElementById('rp-skip');
+  if (rpSkip) rpSkip.addEventListener('click', function() {
+    var picker = document.getElementById('renewal-picker');
+    if (picker) picker.classList.remove('show');
+    pendingRenewalCard = null;
+  });
   // Calendar button
   var calBtn = document.getElementById('cal-btn');
   if (calBtn) calBtn.addEventListener('click', exportCalendar);
@@ -1357,12 +1324,14 @@ function sendMagicLink() {
   // Resize
   window.addEventListener('resize', function() { updateTabInd(); updateBrowseTabInd(); });
 
-  // BOOT
-  syncHeader();
-  syncEmailBar();
-  renderMycards();
-  updateTabCounts();
-  requestAnimationFrame(updateTabInd);
+  // BOOT — load card data from API first, then render
+  loadCardData().then(function() {
+    syncHeader();
+    syncEmailBar();
+    renderMycards();
+    updateTabCounts();
+    requestAnimationFrame(updateTabInd);
+  });
 })();
 </script>
 </body>
