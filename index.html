@@ -12,7 +12,7 @@ posthog.init('YOUR_POSTHOG_KEY',{api_host:'https://us.i.posthog.com',loaded:func
 </script>
 <style>
 :root {
-  --bg: #080810; --s0: #0D0D16; --s1: #121220; --s2: #18182A; --s3: #202030;
+  --bg: #070710; --s0: #0C0C18; --s1: #11111E; --s2: #17172A; --s3: #1E1E2E;
   --bd: rgba(255,255,255,0.055); --bd2: rgba(255,255,255,0.10); --bd3: rgba(255,255,255,0.20);
   --tx: #EAEAF5; --txm: #7878A0; --txd: #404058;
   --amber: #E8A020; --red: #EE5050; --green: #28BE78; --blue: #5090E0;
@@ -28,30 +28,56 @@ body {
 
 /* ═══ HEADER ══════════════════════════════════════ */
 .ph {
-  padding: 40px var(--px) 32px;
-  background: linear-gradient(160deg, #0A0A15 0%, #0C0C1C 100%);
-  border-bottom: 1px solid var(--bd2); flex-shrink: 0; position: relative; overflow: hidden;
+  padding: 36px var(--px) 0;
+  background: #07070F;
+  border-bottom: 1px solid var(--bd2);
+  flex-shrink: 0; position: relative; overflow: hidden;
 }
+/* Ambient glows */
 .ph::before {
-  content: ''; position: absolute; top: -100px; right: -60px;
-  width: 500px; height: 400px; border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(80,90,200,0.07) 0%, transparent 70%);
+  content: ''; position: absolute; top: -120px; right: -80px;
+  width: 600px; height: 500px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(80,90,220,0.08) 0%, transparent 65%);
   pointer-events: none;
 }
-.ph-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-.ph-logo {
-  font-family: 'Cormorant', serif; font-size: clamp(40px, 5vw, 56px);
-  font-weight: 600; letter-spacing: -.03em; line-height: 1;
-  background: linear-gradient(135deg, #F0F0FF 0%, #AAAACE 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  margin-bottom: 8px;
+.ph::after {
+  content: ''; position: absolute; bottom: -40px; left: 20%;
+  width: 400px; height: 200px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(40,190,120,0.04) 0%, transparent 70%);
+  pointer-events: none;
 }
-.ph-sub { font-size: 15px; color: var(--txm); line-height: 1.5; }
-.ph-acts { display: flex; gap: 8px; align-items: center; flex-shrink: 0; padding-top: 6px; }
-.ph-meta { display: flex; align-items: center; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--bd); }
-.phm { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--txd); letter-spacing: .04em; padding-right: 20px; margin-right: 20px; border-right: 1px solid var(--bd2); }
-.phm:last-child { border-right: none; }
+.ph-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; position: relative; z-index: 1; }
+.ph-logo {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(38px, 4.8vw, 54px);
+  font-weight: 600; letter-spacing: -.03em; line-height: 1;
+  background: linear-gradient(135deg, #FFFFFF 0%, #C8C8EE 50%, #9090CC 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 7px;
+}
+.ph-sub { font-size: 14.5px; color: var(--txm); line-height: 1.5; }
+.ph-acts { display: flex; gap: 8px; align-items: center; flex-shrink: 0; padding-top: 4px; }
+/* Stat pills row */
+.ph-meta {
+  display: flex; align-items: center; gap: 6px;
+  margin-top: 24px; position: relative; z-index: 1;
+}
+.phm {
+  display: flex; align-items: center; gap: 5px;
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--txd); letter-spacing: .04em;
+  padding: 5px 12px; border-radius: 20px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--bd);
+}
 .phm strong { color: var(--txm); font-weight: 500; }
+/* Bottom border built into the nav, not the header */
+.ph { border-bottom: none; }
+/* Thin separator line that fades out */
+.ph-line {
+  position: relative; z-index: 1;
+  height: 1px; margin-top: 24px;
+  background: linear-gradient(90deg, var(--bd2) 0%, var(--bd) 60%, transparent 100%);
+}
 
 /* ═══ BUTTONS ══════════════════════════════════════ */
 .btn {
@@ -81,32 +107,52 @@ body {
 
 /* ═══ PRIMARY NAV ══════════════════════════════════ */
 .pnav {
-  background: var(--s0); border-bottom: 1px solid var(--bd2);
+  background: #07070F;
+  border-bottom: 1px solid var(--bd2);
   position: sticky; top: 0; z-index: 200;
   display: flex; align-items: stretch; padding: 0 var(--px);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
 }
 .pn-tab {
   display: flex; align-items: center; gap: 8px;
-  padding: 0 22px; height: 50px;
+  padding: 0 20px; height: 48px;
   border: none; background: transparent;
-  font-family: 'Figtree', sans-serif; font-size: 13.5px; font-weight: 500;
+  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 500;
   color: var(--txd); cursor: pointer;
-  border-bottom: 2px solid transparent; transition: all .15s; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap; position: relative;
 }
 .pn-tab:hover { color: var(--txm); }
-.pn-tab.on { color: var(--tx); border-bottom-color: var(--tx); }
-.pn-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; opacity: .4; transition: opacity .15s; }
+.pn-tab.on { color: var(--tx); border-bottom-color: rgba(255,255,255,0.6); }
+.pn-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: .35; transition: opacity .15s; }
 .pn-tab.on .pn-dot { opacity: 1; }
-.pn-badge { font-family: 'JetBrains Mono', monospace; font-size: 9px; background: var(--s3); color: var(--txm); padding: 2px 7px; border-radius: 10px; }
-.pn-tab.on .pn-badge { background: rgba(255,255,255,0.10); }
+.pn-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  background: rgba(255,255,255,0.08); color: var(--txm);
+  padding: 2px 7px; border-radius: 10px;
+  border: 1px solid var(--bd);
+}
+.pn-tab.on .pn-badge { background: rgba(255,255,255,0.12); color: var(--tx); }
 
 /* ═══ WALLET SETUP ════════════════════════════════ */
-.ws { padding: 28px var(--px) 32px; border-bottom: 1px solid var(--bd2); background: var(--s0); }
-.ws-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
-.ws-title-block .ws-t { font-family: 'Cormorant', serif; font-size: 24px; font-weight: 500; color: var(--tx); margin-bottom: 4px; }
-.ws-title-block .ws-s { font-size: 13px; color: var(--txm); line-height: 1.5; }
-.ws-close { background: none; border: none; color: var(--txd); cursor: pointer; font-size: 20px; padding: 4px 8px; transition: color .15s; line-height: 1; margin-top: -2px; }
-.ws-close:hover { color: var(--txm); }
+.ws {
+  padding: 28px var(--px) 32px;
+  border-bottom: 1px solid var(--bd2);
+  background: linear-gradient(180deg, var(--s0) 0%, #0A0A14 100%);
+  position: relative;
+}
+.ws::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(40,190,120,0.02) 0%, transparent 60%);
+  pointer-events: none;
+}
+.ws-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; position: relative; z-index: 1; }
+.ws-title-block .ws-t { font-family: 'Cormorant', serif; font-size: 22px; font-weight: 500; color: var(--tx); margin-bottom: 4px; }
+.ws-title-block .ws-s { font-size: 12.5px; color: var(--txm); line-height: 1.5; }
+.ws-close { background: none; border: none; color: var(--txd); cursor: pointer; font-size: 18px; padding: 6px 8px; transition: color .15s; line-height: 1; border-radius: 6px; }
+.ws-close:hover { color: var(--txm); background: var(--s2); }
+.ws-rows { position: relative; z-index: 1; }
 .ws-rows { display: flex; flex-direction: column; gap: 14px; }
 .ws-row { display: flex; align-items: flex-start; gap: 14px; }
 .ws-il { font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--txd); width: 80px; flex-shrink: 0; padding-top: 8px; }
@@ -124,8 +170,8 @@ body {
 .wchip.on .wchip-d { opacity: 1; background: rgba(255,255,255,.45); }
 
 /* ═══ BROWSE PICKER ════════════════════════════════ */
-.bpicker { background: var(--s0); border-bottom: 1px solid var(--bd2); padding: 16px var(--px) 18px; }
-.bp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+.bpicker { background: var(--bg); border-bottom: 1px solid var(--bd); padding: 16px var(--px) 18px; }
+.bp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
 .bp-title { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--txd); }
 .bp-actions { display: flex; align-items: center; gap: 14px; }
 .bp-a { font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 500; color: var(--txd); background: none; border: none; cursor: pointer; padding: 3px 0; transition: color .15s; }
@@ -160,47 +206,39 @@ body {
 .eb-x:hover { color: var(--txm); }
 .eb-ok { font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 6px; }
 
-/* ═══ PROMO TICKER ═════════════════════════════════ */
-.promo-bar { background: rgba(232,160,32,0.025); border-bottom: 1px solid rgba(232,160,32,0.08); display: flex; align-items: stretch; overflow: hidden; }
-.promo-bar-label { flex-shrink: 0; display: flex; align-items: center; gap: 7px; padding: 0 18px; background: rgba(232,160,32,0.07); border-right: 1px solid rgba(232,160,32,0.12); font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); white-space: nowrap; }
-.promo-scroll-wrap { flex: 1; overflow: hidden; -webkit-mask-image: linear-gradient(to right, black calc(100% - 64px), transparent 100%); mask-image: linear-gradient(to right, black calc(100% - 64px), transparent 100%); }
-.promo-bar-inner { display: flex; width: max-content; }
-.promo-bar-inner:hover { animation-play-state: paused; }
-@keyframes pticker { from { transform: translateX(0); } to { transform: translateX(-33.333%); } }
-.pb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber); animation: pbpulse 2.5s ease-in-out infinite; flex-shrink: 0; }
-@keyframes pbpulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.2;transform:scale(.7)} }
-.pp { display: flex; align-items: center; gap: 10px; padding: 9px 24px; border-right: 1px solid rgba(232,160,32,0.06); flex-shrink: 0; white-space: nowrap; }
-.pp-cur { font-size: 10.5px; font-weight: 500; color: var(--txm); }
-.pp-bonus { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 600; color: var(--amber); }
-.pp-arr { color: var(--txd); font-size: 11px; }
-.pp-partner { font-size: 11.5px; font-weight: 600; color: var(--tx); }
-.pp-cards { font-size: 9.5px; color: var(--txd); max-width: 160px; overflow: hidden; text-overflow: ellipsis; }
-.pp-exp { font-family: 'JetBrains Mono', monospace; font-size: 9px; padding: 2px 7px; border-radius: 4px; background: rgba(232,160,32,0.09); color: var(--amber); }
-.pp-exp.hot { background: rgba(238,80,80,0.12); color: var(--red); }
-.promo-close { flex-shrink: 0; display: flex; align-items: center; padding: 0 14px; border: none; cursor: pointer; color: var(--txd); font-size: 15px; background: var(--bg); border-left: 1px solid rgba(232,160,32,0.08); transition: color .15s; }
-.promo-close:hover { color: var(--txm); }
+
 
 /* ═══ SECTION TABS (inside views) ════════════════ */
-.section-bar { display: flex; align-items: stretch; background: var(--s0); border-bottom: 1px solid var(--bd2); overflow-x: auto; scrollbar-width: none; position: relative; flex-shrink: 0; }
+.section-bar {
+  display: flex; align-items: stretch;
+  background: var(--bg); border-bottom: 1px solid var(--bd);
+  overflow-x: auto; scrollbar-width: none; position: relative; flex-shrink: 0;
+  padding: 0 var(--px);
+}
 .section-bar::-webkit-scrollbar { display: none; }
 .stab {
   display: flex; align-items: center; gap: 6px;
-  padding: 0 16px; height: 44px;
+  padding: 0 14px; height: 42px;
   border: none; background: transparent;
-  font-family: 'Figtree', sans-serif; font-size: 12.5px; font-weight: 500;
+  font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 500;
   color: var(--txd); cursor: pointer; white-space: nowrap;
   border-bottom: 2px solid transparent; transition: all .15s; flex-shrink: 0;
 }
 .stab:hover { color: var(--txm); }
-.stab.on { color: var(--tx); border-bottom-color: var(--tx); }
-.stab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: .5; }
+.stab.on { color: var(--tx); border-bottom-color: rgba(255,255,255,0.5); }
+.stab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: .4; transition: opacity .15s; }
 .stab.on .stab-dot { opacity: 1; }
-.stab-cnt { font-family: 'JetBrains Mono', monospace; font-size: 8px; background: var(--s3); color: var(--txd); padding: 1px 5px; border-radius: 8px; min-width: 16px; text-align: center; }
-.stab.on .stab-cnt { background: rgba(255,255,255,.10); color: var(--txm); }
-.sbar-ind { position: absolute; bottom: 0; left: 0; height: 2px; background: var(--tx); border-radius: 2px 2px 0 0; transition: transform .22s cubic-bezier(.4,0,.2,1), width .22s cubic-bezier(.4,0,.2,1); pointer-events: none; }
+.stab-cnt {
+  font-family: 'JetBrains Mono', monospace; font-size: 8px;
+  background: rgba(255,255,255,0.06); color: var(--txd);
+  padding: 1px 5px; border-radius: 8px; min-width: 16px; text-align: center;
+  border: 1px solid var(--bd);
+}
+.stab.on .stab-cnt { background: rgba(255,255,255,.10); color: var(--txm); border-color: var(--bd2); }
+.sbar-ind { position: absolute; bottom: 0; left: 0; height: 1.5px; background: rgba(255,255,255,0.55); border-radius: 2px 2px 0 0; transition: transform .22s cubic-bezier(.4,0,.2,1), width .22s cubic-bezier(.4,0,.2,1); pointer-events: none; }
 
 /* Reset countdown strip */
-.reset-strip { display: none; align-items: center; gap: 8px; padding: 5px var(--px); background: var(--s0); border-bottom: 1px solid var(--bd); flex-shrink: 0; }
+.reset-strip { display: none; align-items: center; gap: 8px; padding: 6px var(--px); background: rgba(255,255,255,0.02); border-bottom: 1px solid var(--bd); flex-shrink: 0; }
 .reset-strip.show { display: flex; }
 .reset-strip.hot { background: rgba(240,80,80,0.03); border-bottom-color: rgba(240,80,80,0.08); }
 .reset-txt { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .05em; color: var(--txd); }
@@ -209,6 +247,7 @@ body {
 
 /* ═══ MAIN CONTENT ═════════════════════════════════ */
 .content-pad { padding: 20px var(--px) 72px; flex: 1; }
+.toolbar { border-bottom: none; margin-bottom: 16px; }
 
 /* Toolbar */
 .toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
@@ -227,12 +266,39 @@ body {
 .tb-cal:hover { color: var(--txm); border-color: var(--bd3); }
 
 /* ═══ EMPTY STATE ══════════════════════════════════ */
-.ew { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 40px 80px; min-height: 460px; flex: 1; position: relative; }
-.ew::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.016) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.016) 1px, transparent 1px); background-size: 52px 52px; -webkit-mask-image: radial-gradient(ellipse 65% 75% at 50% 50%, black, transparent); mask-image: radial-gradient(ellipse 65% 75% at 50% 50%, black, transparent); pointer-events: none; }
-.ew-i { font-size: 32px; margin-bottom: 20px; opacity: .12; position: relative; z-index: 1; }
-.ew-t { font-family: 'Cormorant', serif; font-size: clamp(30px, 4vw, 44px); font-weight: 500; margin-bottom: 14px; color: var(--tx); line-height: 1.15; max-width: 540px; position: relative; z-index: 1; }
-.ew-s { font-size: 14.5px; color: var(--txm); margin-bottom: 34px; max-width: 420px; line-height: 1.75; position: relative; z-index: 1; }
-.ew-browse { margin-top: 22px; font-size: 12.5px; color: var(--txd); position: relative; z-index: 1; }
+.ew {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; padding: 80px 40px 80px; min-height: 480px; flex: 1; position: relative;
+}
+/* Dot grid bg */
+.ew::before {
+  content: ''; position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 20%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 80% at 50% 50%, black 20%, transparent 100%);
+  pointer-events: none;
+}
+/* Ambient glow behind CTA */
+.ew::after {
+  content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 400px; height: 200px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(80,90,220,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ew-i { font-size: 28px; margin-bottom: 18px; opacity: .15; position: relative; z-index: 1; }
+.ew-t {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 500; margin-bottom: 14px; color: var(--tx);
+  line-height: 1.1; max-width: 560px; position: relative; z-index: 1;
+  letter-spacing: -.01em;
+}
+.ew-s {
+  font-size: 15px; color: var(--txm); margin-bottom: 36px;
+  max-width: 400px; line-height: 1.75; position: relative; z-index: 1;
+}
+.ew-browse { margin-top: 20px; font-size: 12.5px; color: var(--txd); position: relative; z-index: 1; }
 .ew-browse-link { background: none; border: none; color: var(--txm); font-size: 12.5px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; padding: 0; transition: color .13s; }
 .ew-browse-link:hover { color: var(--tx); }
 
@@ -252,9 +318,28 @@ body {
 .scroll-thumb-el { height: 100%; background: rgba(255,255,255,0.16); border-radius: 1px; transition: width .08s, transform .08s; }
 
 /* ═══ CARD COLUMN ══════════════════════════════════ */
-.col { background: var(--s1); border: 1px solid var(--bd); border-top: 2px solid var(--cc,#333); border-radius: 0 0 10px 10px; flex: 1 1 282px; min-width: 264px; max-width: 320px; scroll-snap-align: start; display: flex; flex-direction: column; transition: border-color .18s, box-shadow .2s; }
-.col:hover { border-color: var(--bd2); border-top-color: var(--cc,#333); box-shadow: 0 8px 32px rgba(0,0,0,.28); }
-.ch { padding: 12px 15px 10px; background: rgba(0,0,0,.16); border-bottom: 1px solid var(--bd); flex-shrink: 0; }
+.col {
+  background: var(--s1); border: 1px solid var(--bd);
+  border-top: 2px solid var(--cc,#444);
+  border-radius: 0 0 10px 10px;
+  flex: 1 1 284px; min-width: 268px; max-width: 322px;
+  scroll-snap-align: start; display: flex; flex-direction: column;
+  transition: border-color .2s, box-shadow .2s, transform .2s;
+  position: relative;
+}
+.col:hover {
+  border-color: rgba(255,255,255,0.14);
+  border-top-color: var(--cc,#444);
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  transform: translateY(-2px);
+}
+/* Colored top glow on hover */
+.col::before {
+  content: ''; position: absolute; top: -1px; left: 0; right: 0; height: 60px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--cc,#444) 8%, transparent) 0%, transparent 100%);
+  border-radius: 0 0 4px 4px; pointer-events: none; transition: opacity .2s;
+}
+.ch { padding: 13px 16px 11px; background: rgba(0,0,0,.14); border-bottom: 1px solid var(--bd); flex-shrink: 0; }
 .ch-top { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
 .ch-name { font-size: 12px; font-weight: 600; letter-spacing: .02em; color: var(--ccm,var(--txm)); line-height: 1.3; flex: 1; }
 .ch-fee { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--txd); white-space: nowrap; flex-shrink: 0; }
@@ -264,12 +349,12 @@ body {
 .ch-flag { font-size: 8px; color: var(--txd); cursor: pointer; border: none; background: none; font-family: 'Figtree', sans-serif; padding: 0; text-decoration: underline; text-decoration-color: transparent; transition: all .15s; }
 .ch-flag:hover { color: var(--txm); text-decoration-color: currentColor; }
 .cb { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.ci { padding: 10px 15px; border-bottom: 1px solid var(--bd); }
+.ci { padding: 11px 16px; border-bottom: 1px solid var(--bd); }
 .ci:last-child { border-bottom: none; }
 .ci-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-.ci-n { font-size: 12.5px; font-weight: 400; color: var(--txm); flex: 1; line-height: 1.4; }
+.ci-n { font-size: 12.5px; font-weight: 400; color: var(--txm); flex: 1; line-height: 1.4; letter-spacing: .005em; }
 .ci-n.warn { color: #F07040; font-weight: 500; }
-.ci-a { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; font-weight: 500; color: var(--ccm,var(--txm)); white-space: nowrap; flex-shrink: 0; letter-spacing: -.01em; }
+.ci-a { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; font-weight: 600; color: var(--ccm,var(--txm)); white-space: nowrap; flex-shrink: 0; letter-spacing: -.02em; }
 .ci-note { font-size: 10.5px; color: var(--txd); margin-top: 4px; line-height: 1.5; }
 .empty { padding: 32px 15px; font-size: 12.5px; color: var(--txd); font-style: italic; text-align: center; flex: 1; display: flex; align-items: center; justify-content: center; }
 .nomatch { padding: 10px 15px; font-size: 11.5px; color: var(--txd); font-style: italic; text-align: center; }
@@ -290,10 +375,20 @@ body {
 .apply-row { margin-top: auto; padding: 9px 15px 10px; border-top: 1px solid var(--bd); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-shrink: 0; }
 .apply-row-offer { font-size: 11px; color: var(--txd); flex: 1; line-height: 1.45; min-width: 0; }
 .apply-row-offer strong { color: var(--txm); font-weight: 500; }
-.apply-link { display: inline-flex; align-items: center; gap: 4px; font-family: 'Figtree', sans-serif; font-size: 11.5px; font-weight: 500; color: var(--txd); text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: color .14s; }
-.apply-link:hover { color: var(--ccm,var(--txm)); }
-.apply-link svg { transition: transform .14s; opacity: .5; }
-.apply-link:hover svg { transform: translateX(2px); opacity: 1; }
+.apply-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 600;
+  color: var(--ccm, var(--txm)); text-decoration: none; white-space: nowrap; flex-shrink: 0;
+  transition: all .15s; padding: 5px 10px; border-radius: 5px;
+  background: color-mix(in srgb, var(--cc,#444) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--cc,#444) 25%, transparent);
+}
+.apply-link:hover {
+  background: color-mix(in srgb, var(--cc,#444) 20%, transparent);
+  border-color: color-mix(in srgb, var(--cc,#444) 40%, transparent);
+}
+.apply-link svg { transition: transform .14s; }
+.apply-link:hover svg { transform: translateX(2px); }
 
 /* ═══ LIVE PROMOS PAGE ═════════════════════════════ */
 .promos-wrap { padding: 0 var(--px) 72px; flex: 1; }
@@ -320,6 +415,46 @@ body {
 .promo-apply { display: inline-flex; align-items: center; gap: 7px; padding: 10px 22px; border-radius: 7px; font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 600; color: var(--bg); background: var(--tx); text-decoration: none; border: none; cursor: pointer; transition: all .15s; white-space: nowrap; }
 .promo-apply:hover { background: #E0E0FF; box-shadow: 0 4px 16px rgba(180,180,255,0.15); }
 .promos-empty { padding: 80px 0; text-align: center; color: var(--txd); font-size: 13px; }
+/* Sign-on bonus cards grid */
+.sob-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.sob-card {
+  background: var(--s1); border: 1px solid var(--bd); border-radius: 12px;
+  border-top: 3px solid var(--cc, #333);
+  display: flex; flex-direction: column;
+  transition: border-color .18s, box-shadow .2s;
+  overflow: hidden;
+}
+.sob-card:hover { border-color: var(--bd2); box-shadow: 0 6px 28px rgba(0,0,0,.25); }
+.sob-card-head { padding: 16px 18px 12px; background: rgba(0,0,0,.14); border-bottom: 1px solid var(--bd); }
+.sob-card-name { font-size: 13px; font-weight: 600; color: var(--ccm, var(--txm)); margin-bottom: 2px; letter-spacing: .01em; }
+.sob-card-fee { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--txd); }
+.sob-card-body { padding: 16px 18px; flex: 1; }
+.sob-offer { font-size: 17px; font-weight: 600; color: var(--tx); line-height: 1.3; margin-bottom: 6px; }
+.sob-req { font-size: 11.5px; color: var(--txm); line-height: 1.5; }
+.sob-card-foot { padding: 12px 18px; border-top: 1px solid var(--bd); }
+.sob-apply {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; padding: 10px 16px; border-radius: 7px;
+  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--bg); background: var(--tx);
+  text-decoration: none; border: none; cursor: pointer;
+  transition: all .15s;
+}
+.sob-apply:hover { background: #E0E0FF; box-shadow: 0 4px 16px rgba(180,180,255,0.15); }
+.sob-no-link {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  width: 100%; padding: 10px 16px; border-radius: 7px;
+  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 500;
+  color: var(--txd); background: transparent; border: 1px solid var(--bd2);
+  text-decoration: none; cursor: default;
+}
+/* Section divider inside promos page */
+.promos-section { margin-bottom: 48px; }
+.promos-section-title {
+  font-family: 'Cormorant', serif; font-size: 22px; font-weight: 500;
+  color: var(--tx); margin-bottom: 6px;
+}
+.promos-section-sub { font-size: 12.5px; color: var(--txd); margin-bottom: 18px; line-height: 1.5; }
 
 /* ═══ MODALS ════════════════════════════════════════ */
 .modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.80); display: flex; align-items: center; justify-content: center; padding: 20px; animation: mfade .18s ease; }
@@ -419,6 +554,7 @@ body {
     <span class="phm"><strong>46</strong> cards tracked</span>
     <span class="phm"><strong>8</strong> issuers</span>
   </div>
+  <div class="ph-line"></div>
 </div>
 
 <!-- PRIMARY NAV -->
@@ -460,12 +596,7 @@ body {
   <button class="eb-x" onclick="dismissEmail()">&#x2715;</button>
 </div>
 
-<!-- PROMO TICKER -->
-<div class="promo-bar" id="promoBar" style="display:none">
-  <div class="promo-bar-label"><span class="pb-dot"></span>Live promos</div>
-  <div class="promo-scroll-wrap"><div class="promo-bar-inner" id="promoInner"></div></div>
-  <button class="promo-close" onclick="closePromo()" title="Dismiss">&#x2715;</button>
-</div>
+
 
 <!-- MY CARDS VIEW -->
 <div id="viewMycards">
@@ -901,31 +1032,6 @@ async function submitEmail(){
   setTimeout(()=>{ const b=document.getElementById('emailBar'); if(b)b.style.display='none'; }, 4000);
 }
 
-/* ── PROMO TICKER ────────────── */
-function renderPromoTicker(){
-  const bar=document.getElementById('promoBar');
-  const inner=document.getElementById('promoInner');
-  if(!bar||!inner) return;
-  if(promoClosed){ bar.style.display='none'; return; }
-  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0);
-  if(live.length===0){ bar.style.display='none'; return; }
-  bar.style.display='flex';
-  const pill=p=>{
-    const d=daysUntil(p.expires), hot=d<=7;
-    const eligible=CARDS.filter(cd=>p.cards.includes(cd.id));
-    const cardStr=eligible.slice(0,3).map(cd=>cd.short).join(', ')+(eligible.length>3?' +more':'');
-    return '<div class="pp"><span class="pp-cur">'+esc(p.currency)+'</span><span class="pp-bonus">'+esc(p.bonus)+'</span><span class="pp-arr">&#x2192;</span><span class="pp-partner">'+esc(p.partner)+'</span><span class="pp-cards">'+esc(cardStr)+'</span><span class="pp-exp'+(hot?' hot':'')+'">exp '+d+'d</span></div>';
-  };
-  const single=live.map(pill).join('');
-  inner.innerHTML=single+single+single;
-  inner.style.animation='none';
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    const w=inner.scrollWidth/3;
-    const speed=Math.max(15,w/80);
-    inner.style.cssText='animation:pticker '+speed+'s linear infinite';
-  }));
-}
-function closePromo(){ promoClosed=true; const b=document.getElementById('promoBar'); if(b)b.style.display='none'; }
 
 /* ── MODE SWITCHING ──────────── */
 function setMode(m){
@@ -950,8 +1056,7 @@ function setMode(m){
   if(m==='mycards'){ renderGrid(); updateTabCounts(); requestAnimationFrame(updateInd); }
   if(m==='browse'){ renderBrowsePicker(); renderBrowseGrid(); requestAnimationFrame(updateBInd); }
   if(m==='promos'){ renderPromosPage(); }
-  // Promo ticker always visible (except promos page)
-  renderPromoTicker();
+
 }
 
 /* ── WALLET EDIT ─────────────── */
@@ -1139,25 +1244,74 @@ function renderBrowseGrid(){
 /* ── LIVE PROMOS PAGE ────────── */
 function renderPromosPage(){
   const el=document.getElementById('promosContent'); if(!el) return;
-  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0).sort((a,b)=>daysUntil(a.expires)-daysUntil(b.expires));
-  if(live.length===0){
-    el.innerHTML='<div class="promos-hdr"><div class="promos-hdr-t">Live Transfer Bonuses</div><div class="promos-hdr-s">Active point transfer promotions from major loyalty programs.</div></div><div class="promos-empty">No active promos right now. Check back soon.</div>';
-    return;
-  }
-  const ownedCount=live.filter(p=>p.cards.some(id=>myCards.has(id))).length;
-  const hdrSub=myCards.size>0
-    ?'Active promotions &#x2014; <strong style="color:var(--green)">'+ownedCount+' of '+live.length+' match cards in your wallet</strong>. Green chips = your cards.'
-    :'Active point transfer promotions. <a href="#" onclick="setMode(\'mycards\');return false;" style="color:var(--blue)">Add your cards</a> to see which promos you qualify for.';
-  const cards=p=>{
-    const eligible=CARDS.filter(cd=>p.cards.includes(cd.id));
-    return eligible.map(cd=>'<span class="pc'+(myCards.has(cd.id)?' owned':'')+'">'+esc(cd.short)+'</span>').join('');
-  };
-  const rows=live.map(p=>{
-    const d=daysUntil(p.expires), hot=d<=7, warm=d<=14;
-    const link='https://www.google.com/search?q='+encodeURIComponent(p.currency+' '+p.partner+' transfer bonus point');
-    return '<div class="promo-card'+(hot?' hot':warm?' warm':'')+'"><div class="promo-left"><div class="promo-meta">'+esc(p.currency)+'</div><div><span class="promo-bonus">'+esc(p.bonus)+'</span><span class="promo-bonus-label">transfer bonus</span></div><div class="promo-partner">'+esc(p.partner)+'</div><div class="promo-chips-label">Eligible cards</div><div class="promo-chips">'+ cards(p) +'</div></div><div class="promo-right"><span class="promo-exp'+(hot?' hot':'')+'">'+(hot?'&#x26A0; ':'')+(d===0?'Expires today':'Expires in '+d+' day'+(d!==1?'s':''))+'</span><a class="promo-apply" href="'+link+'" target="_blank" rel="noopener">Transfer points <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div></div>';
+
+  // ── SECTION 1: Sign-on Bonuses (primary revenue driver) ──
+  // Cards with affiliate links sorted by bonus value (estimated points)
+  const sobCards=CARDS.filter(c=>AFF[c.id]&&c.sob&&c.sob.offer&&!c.sob.offer.startsWith('No'));
+  const sobRows=sobCards.map(card=>{
+    const link=AFF[card.id];
+    const owned=myCards.has(card.id);
+    return `<div class="sob-card" style="--cc:${card.c};--ccm:${card.cm}">
+      <div class="sob-card-head">
+        <div class="sob-card-name">${esc(card.name)}</div>
+        <div class="sob-card-fee">${card.fee===0?'No annual fee':'$'+card.fee+'/yr'}${owned?' &middot; <span style=\"color:var(--green)\">In your wallet</span>':''}</div>
+      </div>
+      <div class="sob-card-body">
+        <div class="sob-offer">${esc(card.sob.offer)}</div>
+        ${card.sob.req?`<div class="sob-req">Spend requirement: ${esc(card.sob.req)}</div>`:''}
+      </div>
+      <div class="sob-card-foot">
+        <a class="sob-apply" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">
+          Apply now <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg>
+        </a>
+      </div>
+    </div>`;
   }).join('');
-  el.innerHTML='<div class="promos-hdr"><div class="promos-hdr-t">Live Transfer Bonuses</div><div class="promos-hdr-s">'+hdrSub+'</div></div><div class="promos-grid">'+ rows +'</div>';
+
+  // ── SECTION 2: Transfer Bonuses ──
+  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0).sort((a,b)=>daysUntil(a.expires)-daysUntil(b.expires));
+  const ownedCount=live.filter(p=>p.cards.some(id=>myCards.has(id))).length;
+  const eligibleNote=myCards.size>0
+    ?`<strong style="color:var(--green)">${ownedCount} of ${live.length} match your wallet.</strong> Green chips = your cards.`
+    :'<a href="#" onclick="setMode('mycards');return false;" style="color:var(--blue)">Add your cards</a> to see which promos you qualify for.';
+  const promoChips=p=>{
+    return CARDS.filter(cd=>p.cards.includes(cd.id))
+      .map(cd=>`<span class="pc${myCards.has(cd.id)?' owned':''}">${esc(cd.short)}</span>`).join('');
+  };
+  const promoRows=live.map(p=>{
+    const d=daysUntil(p.expires),hot=d<=7,warm=d<=14;
+    const link='https://www.google.com/search?q='+encodeURIComponent(p.currency+' '+p.partner+' transfer bonus');
+    return `<div class="promo-card${hot?' hot':warm?' warm':''}">
+      <div class="promo-left">
+        <div class="promo-meta">${esc(p.currency)}</div>
+        <div><span class="promo-bonus">${esc(p.bonus)}</span><span class="promo-bonus-label">transfer bonus</span></div>
+        <div class="promo-partner">${esc(p.partner)}</div>
+        <div class="promo-chips-label">Eligible cards</div>
+        <div class="promo-chips">${promoChips(p)}</div>
+      </div>
+      <div class="promo-right">
+        <span class="promo-exp${hot?' hot':''}">${hot?'&#x26A0; ':''}${d===0?'Expires today':'Expires in '+d+' day'+(d!==1?'s':'')}</span>
+        <a class="promo-apply" href="${esc(link)}" target="_blank" rel="noopener">Transfer points <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
+      </div>
+    </div>`;
+  }).join('');
+
+  el.innerHTML=`
+    <div class="promos-hdr">
+      <div class="promos-hdr-t">Live Promos &amp; Offers</div>
+      <div class="promos-hdr-s">Current sign-on bonuses and transfer promotions. Apply through our links at no cost to you.</div>
+    </div>
+    <div class="promos-section">
+      <div class="promos-section-title">&#x1F4B3; Sign-on Bonuses</div>
+      <div class="promos-section-sub">Current welcome offers on premium cards. These are often elevated — apply before they drop.</div>
+      <div class="sob-grid">${sobRows}</div>
+    </div>
+    ${live.length>0?`<div class="promos-section">
+      <div class="promos-section-title">&#x1F501; Live Transfer Bonuses</div>
+      <div class="promos-section-sub">Active point transfer promotions. ${eligibleNote}</div>
+      <div class="promos-grid">${promoRows}</div>
+    </div>`:''}
+  `;
 }
 
 /* ── SUMMARY FOOTER ──────────── */
@@ -1694,7 +1848,6 @@ document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeAuthModal()
   initAuth();
   syncHeader();
   renderGrid();
-  renderPromoTicker();
   updateTabCounts();
   requestAnimationFrame(updateInd);
 })();
