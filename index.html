@@ -221,6 +221,52 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   .email-bar{flex-wrap:wrap;gap:8px}.eb-form{min-width:100%;flex:0 0 100%}
   .ew{padding:72px var(--px) 60px;min-height:400px}.ew-t{font-size:30px}
 }
+
+/* ── LIVE PROMOS PAGE ──────────────────────────── */
+.promos-wrap{padding:0 var(--px) 80px}
+.promos-hdr{padding:28px 0 22px;border-bottom:1px solid var(--bd);margin-bottom:28px}
+.promos-hdr-t{font-family:'Cormorant',serif;font-size:32px;font-weight:500;margin-bottom:6px;letter-spacing:-.02em}
+.promos-hdr-s{font-size:13.5px;color:var(--txm);line-height:1.5}
+.promos-section{margin-bottom:52px}
+.promos-section-t{font-family:'Cormorant',serif;font-size:22px;font-weight:500;color:var(--tx);margin-bottom:5px;letter-spacing:-.01em}
+.promos-section-s{font-size:12.5px;color:var(--txd);margin-bottom:20px;line-height:1.5}
+/* SOB card grid */
+.sob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:10px}
+.sob-card{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--cc,#333);border-radius:0 0 10px 10px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .22s,transform .2s;position:relative}
+.sob-card:hover{border-color:rgba(255,255,255,0.13);box-shadow:0 16px 48px rgba(0,0,0,.4);transform:translateY(-2px)}
+.sob-card::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(180deg,color-mix(in srgb,var(--cc,#333) 10%,transparent) 0%,transparent 100%);pointer-events:none;opacity:0;transition:opacity .2s}.sob-card:hover::before{opacity:1}
+.sob-head{padding:13px 16px 11px;background:rgba(0,0,0,.14);border-bottom:1px solid var(--bd);position:relative;z-index:1}
+.sob-name{font-size:12px;font-weight:600;color:var(--ccm,var(--txm));letter-spacing:.025em;margin-bottom:3px}
+.sob-meta{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--txd)}
+.sob-owned{color:var(--green);font-size:9.5px;font-weight:600;letter-spacing:.04em}
+.sob-body{padding:14px 16px 12px;flex:1;position:relative;z-index:1}
+.sob-offer{font-size:17px;font-weight:600;color:var(--tx);line-height:1.3;margin-bottom:6px}
+.sob-req{font-size:11.5px;color:var(--txm);line-height:1.5}
+.sob-foot{padding:10px 16px 12px;border-top:1px solid var(--bd);position:relative;z-index:1}
+.sob-apply{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:10px 16px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:600;color:var(--bg);background:var(--tx);text-decoration:none;border:none;cursor:pointer;transition:all .15s}
+.sob-apply:hover{background:#E8E8FF;box-shadow:0 4px 20px rgba(160,160,255,0.20)}
+/* Transfer bonus rows */
+.transfer-grid{display:flex;flex-direction:column;gap:10px}
+.tr-card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:20px 24px;display:flex;align-items:flex-start;gap:20px;transition:border-color .18s,box-shadow .2s;flex-wrap:wrap}
+.tr-card:hover{border-color:var(--bd2);box-shadow:0 6px 28px rgba(0,0,0,.25)}
+.tr-card.hot{border-left:3px solid var(--red)}.tr-card.warm{border-left:3px solid var(--amber)}
+.tr-left{flex:1;min-width:0}
+.tr-currency{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txd);margin-bottom:6px}
+.tr-bonus{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--amber);line-height:1;margin-bottom:4px}
+.tr-bonus-label{font-size:13px;color:var(--txm);font-family:'Figtree',sans-serif;font-weight:400;margin-left:8px}
+.tr-partner{font-size:18px;font-weight:600;color:var(--tx);margin-bottom:14px}
+.tr-chips-label{font-size:9.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--txd);margin-bottom:7px}
+.tr-chips{display:flex;flex-wrap:wrap;gap:5px}
+.tr-chip{font-size:11px;font-weight:500;color:var(--txm);background:var(--s2);border:1px solid var(--bd2);padding:3px 9px;border-radius:4px;white-space:nowrap}
+.tr-chip.owned{color:var(--green);border-color:rgba(36,184,112,0.28);background:rgba(36,184,112,0.07)}
+.tr-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0;padding-top:4px}
+.tr-exp{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:6px;background:rgba(232,152,32,0.08);color:var(--amber);border:1px solid rgba(232,152,32,0.14)}
+.tr-exp.hot{background:rgba(232,72,72,0.08);color:var(--red);border-color:rgba(232,72,72,0.18)}
+.tr-apply{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:600;color:var(--bg);background:var(--tx);text-decoration:none;border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.tr-apply:hover{background:#E8E8FF;box-shadow:0 4px 16px rgba(160,160,255,0.18)}
+.promos-empty{padding:80px 0;text-align:center;color:var(--txd);font-size:13px}
+@media(max-width:640px){.sob-grid{grid-template-columns:1fr}.tr-card{flex-direction:column}.tr-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}}
+
 .ganim{animation:gfade .18s ease}
 @keyframes gfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
@@ -264,6 +310,9 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   </button>
   <button class="mb" data-m="browse" onclick="setMode('browse')">
     <span class="mb-dot" style="background:#6AAEF0"></span>Browse All
+  </button>
+  <button class="mb" data-m="promos" onclick="setMode('promos')">
+    <span class="mb-dot" style="background:#E89820"></span>Live Promos
   </button>
   <!-- Edit wallet lives here — contextual to mode, not header-level -->
   <button class="mb mb-edit" id="editBtn" onclick="toggleWalletEdit()" style="margin-left:auto;border-left:1px solid var(--bd);padding-left:14px">
@@ -338,6 +387,11 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   <div class="scroll-track"><div class="scroll-thumb-el" id="scrollThumb" style="width:100%"></div></div>
   <!-- Summary tab: aggregate share CTA shown below all cards -->
   <div id="summaryFooter"></div>
+</div>
+
+<!-- LIVE PROMOS VIEW -->
+<div id="promosView" style="display:none">
+  <div class="promos-wrap"><div id="promosContent"></div></div>
 </div>
 
 <!-- FOOTER: one FTC line only -->
@@ -787,9 +841,16 @@ function setMode(m){
   document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
   document.getElementById('walletSetup').style.display='none';
   document.getElementById('browsePicker').style.display=m==='browse'?'block':'none';
-  document.getElementById('editBtn').innerHTML=m==='mycards'
-    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet'
-    :'← My Cards';
+  // Show/hide nav tabs (hidden on promos page)
+  var nw=document.getElementById('navEl');var rw=document.querySelector('.nav-wrap');
+  if(nw)nw.closest('.nav-wrap').style.display=m==='promos'?'none':'block';
+  // Show/hide promos view
+  var pv=document.getElementById('promosView');
+  if(pv)pv.style.display=m==='promos'?'block':'none';
+  // Show/hide main content
+  var mc=document.getElementById('mainContent');
+  if(mc)mc.style.display=m==='promos'?'none':'block';
+  if(m==='promos'){renderPromosPage();return;}
   renderGrid();
 }
 function toggleWalletEdit(){
@@ -1518,6 +1579,65 @@ async function copyShareImage(){
 document.addEventListener('keydown', e => {
   if(e.key==='Escape'){closeAuthModal();closeProfilePanel();closeShareModal();}
 });
+
+
+/* ── LIVE PROMOS PAGE ─────────────────────────── */
+function daysUntil(d){var n=new Date();n.setHours(0,0,0,0);var t=new Date(d+'T00:00:00');return Math.round((t-n)/86400000);}
+
+function renderPromosPage(){
+  var el=document.getElementById('promosContent');if(!el)return;
+
+  // SECTION 1: Sign-on Bonuses — primary revenue (affiliate links)
+  var sobCards=CARDS.filter(function(c){return AFF[c.id]&&c.sob&&c.sob.offer&&!c.sob.offer.startsWith('No');});
+  var sobHtml=sobCards.map(function(card){
+    var link=AFF[card.id];
+    var owned=myCards.has(card.id);
+    var fee=card.fee===0?'No annual fee':'$'+card.fee+'/yr';
+    return '<div class="sob-card" style="--cc:'+card.c+';--ccm:'+card.cm+'">'
+      +'<div class="sob-head"><div class="sob-name">'+esc(card.name)+'</div>'
+      +'<div class="sob-meta">'+esc(fee)+(owned?' &nbsp;&#x2022;&nbsp; <span class="sob-owned">&#x2713; In your wallet</span>':'')+'</div></div>'
+      +'<div class="sob-body"><div class="sob-offer">'+esc(card.sob.offer)+'</div>'
+      +(card.sob.req?'<div class="sob-req">Spend '+esc(card.sob.req)+'</div>':'')+'</div>'
+      +'<div class="sob-foot"><a class="sob-apply" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer" onclick="trackApply(''+card.id+'')">Apply now '
+      +'<svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>'
+      +'</div>';
+  }).join('');
+
+  // SECTION 2: Transfer Bonuses
+  var live=PROMOS.filter(function(p){return daysUntil(p.expires)>=0;})
+    .sort(function(a,b){return daysUntil(a.expires)-daysUntil(b.expires);});
+  var ownedCount=live.filter(function(p){return p.cards.some(function(id){return myCards.has(id);});}).length;
+  var hdrNote=myCards.size>0
+    ?'<strong style="color:var(--green)">'+ownedCount+' of '+live.length+' match your wallet.</strong> Green chips = your cards.'
+    :'<a href="#" onclick="setMode('mycards');return false;" style="color:var(--blue)">Add your cards</a> to see which promos apply.';
+
+  var transferHtml=live.map(function(p){
+    var d=daysUntil(p.expires),hot=d<=7,warm=d<=14;
+    var link='https://www.google.com/search?q='+encodeURIComponent(p.currency+' '+p.partner+' transfer bonus');
+    var chips=CARDS.filter(function(cd){return p.cards.indexOf(cd.id)>=0;})
+      .map(function(cd){return '<span class="tr-chip'+(myCards.has(cd.id)?' owned':'')+'" title="'+esc(cd.name)+'">'+esc(cd.short)+'</span>';}).join('');
+    return '<div class="tr-card'+(hot?' hot':warm?' warm':'')+'">'
+      +'<div class="tr-left"><div class="tr-currency">'+esc(p.currency)+'</div>'
+      +'<div><span class="tr-bonus">'+esc(p.bonus)+'</span><span class="tr-bonus-label">transfer bonus</span></div>'
+      +'<div class="tr-partner">'+esc(p.partner)+'</div>'
+      +'<div class="tr-chips-label">Eligible cards</div><div class="tr-chips">'+chips+'</div></div>'
+      +'<div class="tr-right"><span class="tr-exp'+(hot?' hot':'')+'">'+(d===0?'Expires today':'Expires in '+d+' day'+(d!==1?'s':''))+'</span>'
+      +'<a class="tr-apply" href="'+esc(link)+'" target="_blank" rel="noopener">Transfer points '
+      +'<svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div></div>';
+  }).join('');
+
+  el.innerHTML='<div class="promos-hdr">'
+    +'<div class="promos-hdr-t">Live Promos &amp; Sign-on Offers</div>'
+    +'<div class="promos-hdr-s">Current welcome bonuses and transfer promotions. Apply through our links at no cost to you.</div></div>'
+    +'<div class="promos-section">'
+    +'<div class="promos-section-t">&#x1F4B3; Sign-on Bonuses</div>'
+    +'<div class="promos-section-s">Current welcome offers. These change frequently &#x2014; apply before they drop.</div>'
+    +'<div class="sob-grid">'+sobHtml+'</div></div>'
+    +(live.length>0?'<div class="promos-section">'
+    +'<div class="promos-section-t">&#x1F501; Live Transfer Bonuses</div>'
+    +'<div class="promos-section-s">'+hdrNote+'</div>'
+    +'<div class="transfer-grid">'+transferHtml+'</div></div>':'');
+}
 
 /* ── INIT ──────────────────────── */
 if(mode==='browse'){
