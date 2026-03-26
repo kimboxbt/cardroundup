@@ -940,7 +940,7 @@ async function submitEmail(){
   localStorage.setItem('eb_d','1');
   setTimeout(()=>document.getElementById('emailBar').style.display='none',4000);
 }
-document.getElementById('ebInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitEmail();});
+const _ebi=document.getElementById('ebInput');if(_ebi)_ebi.addEventListener('keydown',e=>{if(e.key==='Enter')submitEmail();});
 
 /* ── MODE SWITCHING ─────────────── */
 function setMode(m){
@@ -1009,7 +1009,7 @@ function toggleBrowse(id){if(browseCards.has(id))browseCards.delete(id);else bro
 function browseAll(){browseCards=new Set(CARDS.map(c=>c.id));renderBrowsePicker();renderBrowseGrid();}
 function browseClear(){browseCards.clear();renderBrowsePicker();renderBrowseGrid();}
 function clearBrowseSearch(){document.getElementById('browseSearchInput').value='';browseQ='';document.getElementById('browseScX').style.display='none';renderBrowseGrid();}
-document.getElementById('browseSearchInput').addEventListener('input',function(){browseQ=this.value.trim().toLowerCase();document.getElementById('browseScX').style.display=browseQ?'flex':'none';renderBrowseGrid();});
+const _bsi=document.getElementById('browseSearchInput');if(_bsi)_bsi.addEventListener('input',function(){browseQ=this.value.trim().toLowerCase();const bsx=document.getElementById('browseScX');if(bsx)bsx.style.display=browseQ?'flex':'none';renderBrowseGrid();});
 
 /* ── RESET COUNTDOWN ───────────── */
 function nextReset(s){
@@ -1051,11 +1051,7 @@ function updateBrowseInd(){
 window.addEventListener('resize',()=>{updateInd();updateBrowseInd();});
 
 /* ── SEARCH ────────────────────── */
-document.getElementById('searchInput').addEventListener('input',function(){
-  q=this.value.trim().toLowerCase();
-  document.getElementById('scX').style.display=q?'flex':'none';
-  renderGrid();
-});
+const _si=document.getElementById('searchInput');if(_si)_si.addEventListener('input',function(){q=this.value.trim().toLowerCase();const sx=document.getElementById('scX');if(sx)sx.style.display=q?'flex':'none';renderGrid();});
 function clearSearch(){document.getElementById('searchInput').value='';q='';document.getElementById('scX').style.display='none';renderGrid();}
 
 /* ── RENDERING HELPERS ─────────── */
@@ -1101,10 +1097,10 @@ function buildSummary(card){
 function renderGrid(){
   // Sync empty state visibility
   const empty=myCards.size===0;
-  document.getElementById('emptyState').style.display=empty?'block':'none';
-  document.getElementById('cardArea').style.display=empty?'none':'block';
-  document.getElementById('sectionBar').style.display=empty?'none':'flex';
-  document.getElementById('resetBadge').style.display=empty?'none':'';
+  const _es=document.getElementById('emptyState');if(_es)_es.style.display=empty?'block':'none';
+  const _ca=document.getElementById('cardArea');if(_ca)_ca.style.display=empty?'none':'block';
+  const _sb=document.getElementById('sectionBar');if(_sb)_sb.style.display=empty?'none':'flex';
+  const _rb=document.getElementById('resetBadge');if(_rb)_rb.style.display=empty?'none':'';
   if(empty)return;
   renderResetBadge();
   const gridEl=document.getElementById('grid');
@@ -1245,20 +1241,8 @@ function updateTabCounts(){
 }
 
 /* ── SECTION TAB WIRING ─────────── */
-document.querySelectorAll('#sectionBar .stab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('#sectionBar .stab').forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');section=btn.dataset.s;
-    renderGrid();renderResetBadge();requestAnimationFrame(updateInd);
-  });
-});
-document.querySelectorAll('#browseSectionBar .stab').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('#browseSectionBar .stab').forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');browseSection=btn.dataset.s;
-    renderBrowseGrid();requestAnimationFrame(updateBrowseInd);
-  });
-});
+document.querySelectorAll('#sectionBar .stab').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('#sectionBar .stab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');section=btn.dataset.s;renderGrid();renderResetBadge();requestAnimationFrame(updateInd);});});
+document.querySelectorAll('#browseSectionBar .stab').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('#browseSectionBar .stab').forEach(b=>b.classList.remove('on'));btn.classList.add('on');browseSection=btn.dataset.s;renderBrowseGrid();requestAnimationFrame(updateBrowseInd);});});
 
 /* ── MISC ───────────────────────── */
 function trackApply(id){
@@ -1747,7 +1731,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAuthModal();cl
 
 /* ── INIT ─────────────────────────── */
 // Wire empty state buttons
-document.getElementById('ewPickBtn').addEventListener('click',function(){
+const _ewP2=document.getElementById('ewPickBtn');if(_ewP2)_ewP2.addEventListener('click',function(){
   walletOpen=true;
   document.getElementById('walletSetup').style.display='block';
   renderWalletSetup();
@@ -1755,7 +1739,7 @@ document.getElementById('ewPickBtn').addEventListener('click',function(){
   const ebl=document.getElementById('editBtnLabel');if(ebl)ebl.textContent='Done';
   document.getElementById('walletSetup').scrollIntoView({behavior:'smooth',block:'nearest'});
 });
-document.getElementById('ewBrowseBtn').addEventListener('click',function(){setMode('browse');});
+const _ewB2=document.getElementById('ewBrowseBtn');if(_ewB2)_ewB2.addEventListener('click',function(){setMode('browse');});
 
 initEmailBar();
 initAuth();
