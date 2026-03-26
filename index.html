@@ -2,22 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Card Roundup — Never lose a credit card benefit again</title>
-<meta name="description" content="Track every credit card benefit before it expires. 46 premium cards, organized by reset cadence. Free.">
+<meta name="description" content="Track every credit card benefit before it expires. 46 premium cards, free.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<!-- PostHog Analytics — tracks affiliate clicks and page views -->
-<script>
-!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString()+" (stub)"},o="capture identify alias people.set people.set_once set register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
-// Replace YOUR_POSTHOG_KEY below with key from posthog.com after creating account
-posthog.init('YOUR_POSTHOG_KEY',{api_host:'https://us.i.posthog.com',loaded:function(ph){if('YOUR_POSTHOG_KEY'==='YOUR_POSTHOG_KEY')ph.opt_out_capturing();}});
-</script>
 <style>
 :root{
   --bg:#06060E;--s0:#0B0B16;--s1:#10101C;--s2:#161624;--s3:#1E1E2C;
-  --bd:rgba(255,255,255,0.06);--bd2:rgba(255,255,255,0.10);--bd3:rgba(255,255,255,0.18);
+  --bd:rgba(255,255,255,0.06);--bd2:rgba(255,255,255,0.11);--bd3:rgba(255,255,255,0.20);
   --tx:#E8E8F4;--txm:#6868A0;--txd:#363654;
-  --amber:#E89820;--red:#E84848;--green:#24B870;--blue:#4888D8;
+  --green:#24B870;--amber:#E89820;--red:#E84848;--blue:#4888D8;
   --px:52px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -27,7 +21,6 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 /* HEADER */
 .ph{padding:40px var(--px) 28px;background:var(--bg);border-bottom:1px solid var(--bd2);flex-shrink:0;position:relative;overflow:hidden}
 .ph::before{content:'';position:absolute;top:-120px;right:-80px;width:600px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(88,68,200,0.10) 0%,transparent 60%);pointer-events:none}
-.ph::after{content:'';position:absolute;bottom:-60px;left:15%;width:500px;height:200px;background:radial-gradient(ellipse,rgba(36,184,112,0.06) 0%,transparent 70%);pointer-events:none}
 .ph-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
 .ph-logo{font-family:'Cormorant',serif;font-size:clamp(40px,5vw,58px);font-weight:600;letter-spacing:-.03em;line-height:1;background:linear-gradient(135deg,#FFF 0%,#D0D0F0 45%,#9898C8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
 .ph-sub{font-size:15px;color:var(--txm);line-height:1.5}
@@ -39,33 +32,24 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .16s;border:1px solid var(--bd2);white-space:nowrap;text-decoration:none;line-height:1}
 .btn-g{background:transparent;color:var(--txm)}.btn-g:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
-.btn-p{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}.btn-p:hover{background:#E8E8FF;box-shadow:0 0 24px rgba(160,160,255,0.20);transform:translateY(-1px)}.btn-p:active{transform:none;box-shadow:none}
+.btn-p{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}.btn-p:hover{background:#E8E8FF;box-shadow:0 0 24px rgba(160,160,255,0.20);transform:translateY(-1px)}.btn-p:active{transform:none}
 .btn-lg{padding:13px 32px;font-size:15px;border-radius:8px}
-.btn-save{background:rgba(255,255,255,0.04);color:var(--txm);border-color:var(--bd)}.btn-save:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
-.btn-share{background:rgba(36,184,112,0.07);color:var(--green);border-color:rgba(36,184,112,0.18)}.btn-share:hover{background:rgba(36,184,112,0.13);border-color:rgba(36,184,112,0.30)}
-.auth-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txm);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .16s}.auth-btn:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.btn-share{background:rgba(36,184,112,0.07);color:var(--green);border-color:rgba(36,184,112,0.18)}.btn-share:hover{background:rgba(36,184,112,0.13)}
+.auth-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txm);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .16s}.auth-btn:hover{background:var(--s2);color:var(--tx)}
 .auth-avatar{width:22px;height:22px;border-radius:50%;background:var(--s3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--txm);overflow:hidden;flex-shrink:0}.auth-avatar img{width:100%;height:100%;object-fit:cover}
 
-/* MODE BAR — sticky nav */
-.mode-bar{background:rgba(6,6,14,0.95);border-bottom:1px solid var(--bd2);padding:0 var(--px);display:flex;align-items:stretch;position:sticky;top:0;z-index:200;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
-.mb{padding:0 20px;height:48px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:7px}
-.mb:hover{color:var(--txm)}.mb.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.45)}
-.mb-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0;opacity:.35;transition:opacity .15s}.mb.on .mb-dot{opacity:1}
-.mcb{font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--s3);color:var(--txm);padding:2px 7px;border-radius:10px;border:1px solid var(--bd)}.mb.on .mcb{background:rgba(255,255,255,0.08);color:var(--tx)}
-.mb-edit{color:var(--txd);font-size:11px;border-bottom:none!important;margin-left:auto;padding-left:16px;border-left:1px solid var(--bd)}.mb-edit:hover{color:var(--txm);background:transparent}
-
-/* ONBOARDING STRIP */
-.onboard-strip{background:linear-gradient(90deg,rgba(36,184,112,0.04),rgba(72,136,216,0.04));border-bottom:1px solid rgba(255,255,255,0.06);padding:14px var(--px);display:flex;align-items:center;gap:32px;flex-wrap:wrap}
-.ob-step{display:flex;align-items:center;gap:8px}
-.ob-num{width:20px;height:20px;border-radius:50%;background:var(--s3);border:1px solid var(--bd2);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--txm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ob-txt{font-size:11.5px;color:var(--txm)}.ob-txt strong{color:var(--tx);font-weight:500}
-.ob-arr{color:var(--txd);font-size:14px}
-.ob-dismiss{margin-left:auto;background:none;border:none;color:var(--txd);cursor:pointer;font-size:11px;font-family:'Figtree',sans-serif;transition:color .15s}.ob-dismiss:hover{color:var(--txm)}
+/* STICKY NAV */
+.topnav{background:rgba(6,6,14,0.95);border-bottom:1px solid var(--bd2);position:sticky;top:0;z-index:200;display:flex;align-items:stretch;padding:0 var(--px);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.tn{display:flex;align-items:center;gap:7px;padding:0 20px;height:48px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.tn:hover{color:var(--txm)}.tn.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.45)}
+.tn-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;opacity:.35;transition:opacity .15s}.tn.on .tn-dot{opacity:1}
+.tn-badge{font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--s3);color:var(--txm);padding:2px 7px;border-radius:10px;border:1px solid var(--bd)}.tn.on .tn-badge{background:rgba(255,255,255,0.08);color:var(--tx)}
+.tn-edit{margin-left:auto;border-left:1px solid var(--bd);padding-left:16px;color:var(--txd);font-size:12px;border-bottom:none!important}.tn-edit:hover{color:var(--txm)}
 
 /* WALLET SETUP */
-.ws{padding:28px var(--px) 32px;border-bottom:1px solid var(--bd2);background:var(--s0);position:relative}
+.ws{padding:28px var(--px) 32px;border-bottom:1px solid var(--bd2);background:var(--s0);display:none;position:relative}
 .ws::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(36,184,112,0.025) 0%,transparent 50%);pointer-events:none}
-.ws-t{font-family:'Cormorant',serif;font-size:22px;font-weight:500;margin-bottom:4px;color:var(--tx);position:relative;z-index:1}
+.ws-t{font-family:'Cormorant',serif;font-size:22px;font-weight:500;margin-bottom:4px;position:relative;z-index:1}
 .ws-s{font-size:12.5px;color:var(--txm);margin-bottom:18px;line-height:1.5;position:relative;z-index:1}
 .ws-rows{display:flex;flex-direction:column;gap:14px;position:relative;z-index:1}
 .ws-row{display:flex;align-items:flex-start;gap:14px}
@@ -77,11 +61,11 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .wchip.on{color:#fff;background:color-mix(in srgb,var(--chip-c) 16%,transparent);border-color:var(--chip-c)}.wchip.on .wchip-d{opacity:1;background:rgba(255,255,255,.45)}
 
 /* BROWSE PICKER */
-.bpicker{background:var(--s0);border-bottom:1px solid var(--bd);padding:14px var(--px) 16px}
+.bpicker{padding:14px var(--px) 16px;background:var(--s0);border-bottom:1px solid var(--bd);display:none}
 .bp-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
-.bp-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--txd);flex-shrink:0}
-.bp-div{width:1px;height:12px;background:var(--bd2);flex-shrink:0}
-.bp-a{font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);background:none;border:none;cursor:pointer;padding:2px 0;transition:color .15s}.bp-a:hover{color:var(--txm)}
+.bp-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--txd)}
+.bp-sep{width:1px;height:12px;background:var(--bd2)}
+.bp-a{font-family:'Figtree',sans-serif;font-size:12px;color:var(--txd);background:none;border:none;cursor:pointer;padding:2px 0;transition:color .15s}.bp-a:hover{color:var(--txm)}
 .bp-cnt{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--txd);margin-left:auto;font-style:italic}
 .bp-chips{display:flex;flex-wrap:wrap;gap:5px 16px}
 .bp-g{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
@@ -92,366 +76,371 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .chip:not(.on):hover{color:var(--txm);border-color:var(--bd3);background:var(--s2)}
 
 /* EMAIL BAR */
-.email-bar{background:rgba(36,184,112,0.03);border-bottom:1px solid rgba(36,184,112,0.08);padding:12px var(--px);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.eb-text{font-size:13px;color:var(--txm);display:flex;align-items:center;gap:8px;flex-shrink:0}.eb-text strong{color:var(--tx);font-weight:600}
+.email-bar{background:rgba(36,184,112,0.03);border-bottom:1px solid rgba(36,184,112,0.08);padding:12px var(--px);display:none;align-items:center;gap:16px;flex-wrap:wrap}
+.eb-text{font-size:13px;color:var(--txm);flex-shrink:0}.eb-text strong{color:var(--tx);font-weight:600}
 .eb-form{display:flex;align-items:center;gap:8px;flex:1;min-width:240px;max-width:420px}
-.eb-input{flex:1;padding:8px 13px;background:var(--s2);border:1px solid var(--bd2);border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;color:var(--tx);outline:none;transition:all .15s}.eb-input::placeholder{color:var(--txd)}.eb-input:focus{border-color:rgba(36,184,112,.35);background:var(--s1)}
-.eb-sub{padding:8px 16px;border-radius:6px;border:1px solid rgba(36,184,112,0.24);cursor:pointer;background:rgba(36,184,112,0.12);color:var(--green);font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:600;transition:all .15s;white-space:nowrap;flex-shrink:0}.eb-sub:hover{background:rgba(36,184,112,0.20)}
-.eb-x{margin-left:auto;background:none;border:none;color:var(--txd);cursor:pointer;font-size:16px;line-height:1;padding:4px;transition:color .15s;flex-shrink:0}.eb-x:hover{color:var(--txm)}
-.eb-ok{font-size:13px;color:var(--green);display:flex;align-items:center;gap:6px}
+.eb-input{flex:1;padding:8px 13px;background:var(--s2);border:1px solid var(--bd2);border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;color:var(--tx);outline:none;transition:all .15s}.eb-input::placeholder{color:var(--txd)}.eb-input:focus{border-color:rgba(36,184,112,.35)}
+.eb-sub{padding:8px 16px;border-radius:6px;border:1px solid rgba(36,184,112,0.24);background:rgba(36,184,112,0.12);color:var(--green);font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}.eb-sub:hover{background:rgba(36,184,112,0.20)}
+.eb-x{margin-left:auto;background:none;border:none;color:var(--txd);cursor:pointer;font-size:16px;padding:4px;transition:color .15s}.eb-x:hover{color:var(--txm)}
+.eb-ok{font-size:13px;color:var(--green)}
 
-/* NAV TABS */
-.nav-wrap{background:var(--s0);border-bottom:1px solid var(--bd2);position:sticky;top:48px;z-index:100}
-.nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 var(--px);position:relative}
-.nav::-webkit-scrollbar{display:none}
-.nb{padding:0 14px;height:42px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:color .15s;flex-shrink:0;border-bottom:2px solid transparent}
-.nb:hover{color:var(--txm)}.nb.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.35)}
-.nd{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0;opacity:.4;transition:opacity .15s}.nb.on .nd{opacity:1}
-.nb-cnt{font-family:'JetBrains Mono',monospace;font-size:8px;background:var(--s3);color:var(--txd);padding:1px 5px;border-radius:8px;min-width:16px;text-align:center;border:1px solid var(--bd)}.nb.on .nb-cnt{background:rgba(255,255,255,.08);color:var(--txm);border-color:var(--bd2)}
-.nav-ind{position:absolute;bottom:0;left:0;height:1.5px;background:rgba(255,255,255,0.4);border-radius:2px 2px 0 0;transition:transform .22s cubic-bezier(.4,0,.2,1),width .22s cubic-bezier(.4,0,.2,1)}
-.reset-b{display:flex;align-items:center;gap:8px;padding:5px var(--px);background:var(--s0);border-bottom:1px solid var(--bd)}
-.reset-b.urg{background:rgba(232,72,72,0.03);border-bottom-color:rgba(232,72,72,0.08)}
-.rb-t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:var(--txd)}.rb-t strong{color:var(--txm)}.rb-t.hot strong{color:#F06040}
+/* SECTION TABS */
+.sectabs{background:var(--s0);border-bottom:1px solid var(--bd);display:none;overflow-x:auto;scrollbar-width:none;position:relative;padding:0 var(--px)}
+.sectabs::-webkit-scrollbar{display:none}
+.st{display:inline-flex;align-items:center;gap:6px;padding:0 14px;height:42px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.st:hover{color:var(--txm)}.st.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.35)}
+.st-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;opacity:.4;transition:opacity .15s}.st.on .st-dot{opacity:1}
+.st-cnt{font-family:'JetBrains Mono',monospace;font-size:8px;background:var(--s3);color:var(--txd);padding:1px 5px;border-radius:8px;border:1px solid var(--bd)}.st.on .st-cnt{background:rgba(255,255,255,.08);color:var(--txm)}
+.st-ind{position:absolute;bottom:0;left:0;height:1.5px;background:rgba(255,255,255,0.4);border-radius:2px 2px 0 0;transition:transform .22s cubic-bezier(.4,0,.2,1),width .22s cubic-bezier(.4,0,.2,1);pointer-events:none}
 
-/* MAIN CONTENT */
-.main{padding:20px var(--px) 72px;flex:1}
-.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.sw{position:relative;width:240px;flex-shrink:0}
-.sw svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--txd);pointer-events:none}
-.si-inp{width:100%;padding:8px 28px 8px 28px;background:var(--s1);border:1px solid var(--bd2);border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;color:var(--tx);outline:none;transition:all .15s}.si-inp::placeholder{color:var(--txd)}.si-inp:focus{border-color:var(--bd3);background:var(--s2)}
-.sc-x{display:none;position:absolute;right:7px;top:50%;transform:translateY(-50%);width:15px;height:15px;align-items:center;justify-content:center;background:var(--s3);border-radius:50%;cursor:pointer;font-size:8px;color:var(--txd);border:none}
-.tb-cnt{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;color:var(--txd);margin-left:auto}.tb-cnt strong{color:var(--txm)}
-.tb-edit{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:500;color:var(--txm);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s;white-space:nowrap}.tb-edit:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}.tb-edit.open{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
-.tb-cal{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s}.tb-cal:hover{color:var(--txm);border-color:var(--bd3)}
+/* RESET STRIP */
+.reset-strip{display:none;align-items:center;gap:8px;padding:5px var(--px);background:var(--s0);border-bottom:1px solid var(--bd);font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:var(--txd)}
+.reset-strip.show{display:flex}.reset-strip strong{color:var(--txm)}
+.reset-strip.hot{background:rgba(232,72,72,0.03)}.reset-strip.hot strong{color:#F06040}
+
+/* MAIN CONTENT AREA */
+.content{padding:22px var(--px) 80px;flex:1}
 
 /* EMPTY STATE */
-.ew{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 40px 80px;min-height:460px;flex:1;position:relative}
-.ew::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1px,transparent 1px);background-size:38px 38px;-webkit-mask-image:radial-gradient(ellipse 80% 85% at 50% 50%,black 30%,transparent 100%);mask-image:radial-gradient(ellipse 80% 85% at 50% 50%,black 30%,transparent 100%);pointer-events:none}
-.ew::after{content:'';position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:480px;height:240px;border-radius:50%;background:radial-gradient(ellipse,rgba(88,68,200,0.08) 0%,transparent 65%);pointer-events:none}
-.ew-i{font-size:26px;margin-bottom:20px;opacity:.12;position:relative;z-index:1}
-.ew-t{font-family:'Cormorant',serif;font-size:clamp(32px,4.5vw,50px);font-weight:500;margin-bottom:14px;color:var(--tx);line-height:1.1;max-width:560px;position:relative;z-index:1;letter-spacing:-.02em}
-.ew-s{font-size:15px;color:var(--txm);margin-bottom:36px;max-width:400px;line-height:1.75;position:relative;z-index:1}
-.ew-browse{margin-top:20px;font-size:12.5px;color:var(--txd);position:relative;z-index:1}
-.ew-browse-link{background:none;border:none;color:var(--txm);font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;transition:color .13s}.ew-browse-link:hover{color:var(--tx)}
+.empty-state{display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 40px 80px;min-height:460px;position:relative}
+.empty-state::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1px,transparent 1px);background-size:38px 38px;-webkit-mask-image:radial-gradient(ellipse 80% 85% at 50% 50%,black 30%,transparent 100%);mask-image:radial-gradient(ellipse 80% 85% at 50% 50%,black 30%,transparent 100%);pointer-events:none}
+.empty-state::after{content:'';position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:480px;height:240px;border-radius:50%;background:radial-gradient(ellipse,rgba(88,68,200,0.08) 0%,transparent 65%);pointer-events:none}
+.es-icon{font-size:26px;margin-bottom:20px;opacity:.12;position:relative;z-index:1}
+.es-title{font-family:'Cormorant',serif;font-size:clamp(32px,4.5vw,50px);font-weight:500;margin-bottom:14px;line-height:1.1;max-width:560px;position:relative;z-index:1;letter-spacing:-.02em}
+.es-sub{font-size:15px;color:var(--txm);margin-bottom:36px;max-width:400px;line-height:1.75;position:relative;z-index:1}
+.es-browse{margin-top:20px;font-size:12.5px;color:var(--txd);position:relative;z-index:1}
+.es-browse-btn{background:none;border:none;color:var(--txm);font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;transition:color .13s}.es-browse-btn:hover{color:var(--tx)}
+
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.search-wrap{position:relative;width:240px;flex-shrink:0}
+.search-wrap svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--txd);pointer-events:none}
+.search-inp{width:100%;padding:8px 28px;background:var(--s1);border:1px solid var(--bd2);border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;color:var(--tx);outline:none;transition:all .15s}.search-inp::placeholder{color:var(--txd)}.search-inp:focus{border-color:var(--bd3);background:var(--s2)}
+.search-clear{display:none;position:absolute;right:7px;top:50%;transform:translateY(-50%);width:15px;height:15px;align-items:center;justify-content:center;background:var(--s3);border-radius:50%;cursor:pointer;font-size:8px;color:var(--txd);border:none}
+.tb-cnt{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--txd);margin-left:auto}.tb-cnt strong{color:var(--txm)}
+.tb-cal{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s}.tb-cal:hover{color:var(--txm);border-color:var(--bd3)}
 
 /* GRID */
-.gw{position:relative}
-.gfade{position:absolute;right:0;top:0;bottom:0;width:100px;background:linear-gradient(to right,transparent,var(--bg) 90%);pointer-events:none;z-index:2}
+.grid-wrap{position:relative}
+.grid-fade{position:absolute;right:0;top:0;bottom:0;width:100px;background:linear-gradient(to right,transparent,var(--bg) 90%);pointer-events:none;z-index:2;display:none}
 .grid{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.07) transparent;padding-right:80px;padding-bottom:4px}
-.grid::-webkit-scrollbar{height:3px}.grid::-webkit-scrollbar-track{background:transparent}.grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
+.grid::-webkit-scrollbar{height:3px}.grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
 .scroll-track{height:1.5px;background:var(--bd);border-radius:1px;margin-top:8px;overflow:hidden}
-.scroll-thumb-el{height:100%;background:rgba(255,255,255,0.14);border-radius:1px;transition:width .08s,transform .08s}
+.scroll-thumb{height:100%;background:rgba(255,255,255,0.14);border-radius:1px;transition:width .08s,transform .08s}
 
 /* CARD COLUMN */
 .col{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--cc,#333);border-radius:0 0 10px 10px;flex:1 1 280px;min-width:264px;max-width:318px;scroll-snap-align:start;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .22s,transform .2s;position:relative}
 .col:hover{border-color:rgba(255,255,255,0.13);border-top-color:var(--cc,#333);box-shadow:0 16px 48px rgba(0,0,0,.4);transform:translateY(-2px)}
 .col::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(180deg,color-mix(in srgb,var(--cc,#333) 10%,transparent) 0%,transparent 100%);pointer-events:none;opacity:0;transition:opacity .2s}.col:hover::before{opacity:1}
-.ch{padding:12px 15px 10px;background:rgba(0,0,0,.14);border-bottom:1px solid var(--bd);flex-shrink:0}
-.ch-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
-.ch-name{font-size:12px;font-weight:600;letter-spacing:.025em;color:var(--ccm,var(--txm));line-height:1.3;flex:1}
-.ch-fee{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--txd);white-space:nowrap;flex-shrink:0}
-.ch-meta{display:flex;align-items:center;gap:5px;margin-top:3px}
-.ch-ver{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--txd)}.ch-ver.stale{color:var(--amber)}
-.ch-flag{font-size:8px;color:var(--txd);cursor:pointer;border:none;background:none;font-family:'Figtree',sans-serif;padding:0;text-decoration:underline;text-decoration-color:transparent;transition:all .15s}.ch-flag:hover{color:var(--txm);text-decoration-color:currentColor}
-.cb{flex:1;display:flex;flex-direction:column;min-height:0}
-.ci{padding:10px 15px;border-bottom:1px solid var(--bd)}.ci:last-child{border-bottom:none}
-.ci-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-.ci-n{font-size:12.5px;font-weight:400;color:var(--txm);flex:1;line-height:1.4}.ci-n.warn{color:#F06840;font-weight:500}
-.ci-a{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:600;color:var(--ccm,var(--txm));white-space:nowrap;flex-shrink:0;letter-spacing:-.02em}
-.ci-note{font-size:10px;color:var(--txd);margin-top:3px;line-height:1.5}
-.empty{padding:32px 15px;font-size:12.5px;color:var(--txd);font-style:italic;text-align:center;flex:1;display:flex;align-items:center;justify-content:center}
-.nomatch{padding:10px 15px;font-size:11.5px;color:var(--txd);font-style:italic;text-align:center}
-.si{padding:9px 15px;border-bottom:1px solid var(--bd)}.si:last-child{border-bottom:none}
-.si-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:4px}
-.si-l{font-size:11.5px;color:var(--txm)}.si-v{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--ccm,var(--txm))}
-.bar{height:2px;background:var(--bd2);border-radius:1px;overflow:hidden}.bar-f{height:100%;border-radius:1px;background:var(--ccm,var(--txm));transition:width .8s ease}
-.si-note{font-size:10px;color:var(--txd);margin-top:3px}
-.si.tot{background:rgba(255,255,255,.015)}.si.tot .si-l{font-weight:600;font-size:12.5px;color:var(--tx)}.si.tot .si-v{font-size:14.5px}
-.si-fee{padding:9px 15px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between}
-.si-fl{font-size:11.5px;color:var(--txm)}.si-fv{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--txd)}
+.col-head{padding:12px 15px 10px;background:rgba(0,0,0,.14);border-bottom:1px solid var(--bd);flex-shrink:0}
+.col-head-row{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.col-name{font-size:12px;font-weight:600;letter-spacing:.025em;color:var(--ccm,var(--txm));line-height:1.3;flex:1}
+.col-fee{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--txd);white-space:nowrap}
+.col-stale{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--amber);margin-top:3px}
+.col-body{flex:1;display:flex;flex-direction:column;min-height:0}
+.credit-row{padding:10px 15px;border-bottom:1px solid var(--bd)}.credit-row:last-child{border-bottom:none}
+.cr-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.cr-name{font-size:12.5px;color:var(--txm);flex:1;line-height:1.4}.cr-name.warn{color:#F06840;font-weight:500}
+.cr-val{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:600;color:var(--ccm,var(--txm));white-space:nowrap;letter-spacing:-.02em}
+.cr-note{font-size:10px;color:var(--txd);margin-top:3px;line-height:1.5}
+.col-empty{padding:32px 15px;font-size:12.5px;color:var(--txd);font-style:italic;text-align:center;flex:1;display:flex;align-items:center;justify-content:center}
+.col-nomatch{padding:10px 15px;font-size:11.5px;color:var(--txd);font-style:italic;text-align:center}
+/* Summary rows */
+.sum-row{padding:9px 15px;border-bottom:1px solid var(--bd)}.sum-row:last-child{border-bottom:none}
+.sum-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:4px}
+.sum-l{font-size:11.5px;color:var(--txm)}.sum-v{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--ccm,var(--txm))}
+.sum-bar{height:2px;background:var(--bd2);border-radius:1px;overflow:hidden}.sum-bar-fill{height:100%;border-radius:1px;background:var(--ccm,var(--txm));transition:width .8s ease}
+.sum-note{font-size:10px;color:var(--txd);margin-top:3px}
+.sum-row.total{background:rgba(255,255,255,.015)}.sum-row.total .sum-l{font-weight:600;font-size:12.5px;color:var(--tx)}.sum-row.total .sum-v{font-size:14.5px}
+.sum-fee{padding:9px 15px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;font-size:11.5px}
+.sum-fee-l{color:var(--txm)}.sum-fee-v{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--txd)}
+/* Apply row */
 .apply-row{margin-top:auto;padding:9px 15px 10px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0}
-.apply-row-offer{font-size:11px;color:var(--txd);flex:1;line-height:1.45;min-width:0}.apply-row-offer strong{color:var(--txm);font-weight:500}
-.apply-link{display:inline-flex;align-items:center;gap:5px;font-family:'Figtree',sans-serif;font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;background:color-mix(in srgb,var(--cc,#333) 12%,transparent);border:1px solid color-mix(in srgb,var(--cc,#333) 28%,transparent);color:var(--ccm,var(--txm));text-decoration:none;white-space:nowrap;flex-shrink:0;transition:all .15s}
-.apply-link:hover{background:color-mix(in srgb,var(--cc,#333) 22%,transparent);border-color:color-mix(in srgb,var(--cc,#333) 45%,transparent)}
-.apply-link svg{transition:transform .14s}.apply-link:hover svg{transform:translateX(2px)}
+.apply-offer{font-size:11px;color:var(--txd);flex:1;line-height:1.45;min-width:0}.apply-offer strong{color:var(--txm)}
+.apply-btn{display:inline-flex;align-items:center;gap:5px;font-family:'Figtree',sans-serif;font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;background:color-mix(in srgb,var(--cc,#333) 12%,transparent);border:1px solid color-mix(in srgb,var(--cc,#333) 28%,transparent);color:var(--ccm,var(--txm));text-decoration:none;white-space:nowrap;transition:all .15s}
+.apply-btn:hover{background:color-mix(in srgb,var(--cc,#333) 22%,transparent)}
+.apply-btn svg{transition:transform .14s}.apply-btn:hover svg{transform:translateX(2px)}
 
-/* MODALS */
-.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.80);display:flex;align-items:center;justify-content:center;padding:20px;animation:mfade .18s ease}
-@keyframes mfade{from{opacity:0}to{opacity:1}}
-.modal{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;padding:34px 32px 28px;width:100%;max-width:400px;position:relative;animation:mslide .2s ease}
-@keyframes mslide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--txd);cursor:pointer;font-size:18px;line-height:1;padding:4px;transition:color .15s}.modal-close:hover{color:var(--txm)}
-.modal-title{font-family:'Cormorant',serif;font-size:26px;font-weight:500;margin-bottom:8px}
-.modal-sub{font-size:13.5px;color:var(--txm);margin-bottom:24px;line-height:1.6}
-.modal-divider{display:flex;align-items:center;gap:12px;margin:20px 0}.modal-divider-line{flex:1;height:1px;background:var(--bd)}.modal-divider-txt{font-size:10.5px;color:var(--txd);letter-spacing:.08em;text-transform:uppercase}
-.google-btn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;padding:12px 16px;background:var(--s2);border:1px solid var(--bd2);border-radius:8px;font-family:'Figtree',sans-serif;font-size:13.5px;font-weight:500;color:var(--tx);cursor:pointer;transition:all .15s;text-decoration:none}.google-btn:hover{background:var(--s3);border-color:var(--bd3)}.google-btn svg{width:18px;height:18px;flex-shrink:0}
-.magic-input{width:100%;padding:11px 14px;background:var(--s2);border:1px solid var(--bd2);border-radius:7px;font-family:'Figtree',sans-serif;font-size:13.5px;color:var(--tx);outline:none;transition:all .15s}.magic-input::placeholder{color:var(--txd)}.magic-input:focus{border-color:var(--bd3);background:var(--s1)}
-.magic-submit{width:100%;margin-top:10px;padding:11px;background:var(--tx);border:none;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13.5px;font-weight:600;color:var(--bg);cursor:pointer;transition:background .15s}.magic-submit:hover{background:#E8E8FF}
-.share-modal{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;padding:0;width:100%;max-width:580px;position:relative;overflow:hidden;animation:mslide .2s ease}
-.share-header{padding:24px 28px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-.share-title{font-family:'Cormorant',serif;font-size:24px;font-weight:500;color:var(--tx)}.share-sub{font-size:12.5px;color:var(--txm);margin-top:4px;line-height:1.5}
-.share-preview{padding:22px 28px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
-.share-canvas-wrap{width:100%;border-radius:10px;overflow:hidden;border:1px solid var(--bd2);position:relative}.share-canvas-wrap canvas{width:100%;height:auto;display:block}
-.share-generating{position:absolute;inset:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--txd)}
-.share-actions{padding:18px 28px 24px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
-.share-act{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--bd2);text-decoration:none;white-space:nowrap}
-.share-act-primary{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}.share-act-primary:hover{background:#E8E8FF}
-.share-act-secondary{background:transparent;color:var(--txm)}.share-act-secondary:hover{background:var(--s2);color:var(--tx)}
-.share-act-reddit{background:rgba(255,69,0,0.08);color:#FF6634;border-color:rgba(255,69,0,0.18)}.share-act-reddit:hover{background:rgba(255,69,0,0.15)}
-.share-act-twitter{background:rgba(29,161,242,0.08);color:#4DA8F0;border-color:rgba(29,161,242,0.18)}.share-act-twitter:hover{background:rgba(29,161,242,0.15)}
-.share-empty{padding:32px;text-align:center;font-size:13.5px;color:var(--txm);line-height:1.65}.share-empty strong{color:var(--tx);display:block;margin-bottom:8px;font-size:18px;font-family:'Cormorant',serif;font-weight:500}
-.profile-panel{background:var(--s1);border:1px solid var(--bd2);border-radius:12px;padding:20px;position:absolute;top:calc(100% + 8px);right:40px;width:268px;z-index:300;box-shadow:0 12px 48px rgba(0,0,0,.6);animation:mslide .16s ease}
-.profile-name{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:3px}.profile-email{font-size:11px;color:var(--txd);margin-bottom:14px}
-.profile-stat{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd)}.profile-stat:last-of-type{border-bottom:none;margin-bottom:12px}
-.profile-stat-l{font-size:12.5px;color:var(--txm)}.profile-stat-v{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--tx)}
-.profile-actions{display:flex;gap:7px}.profile-action{flex:1;padding:8px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--bd2);color:var(--txm);background:transparent;text-align:center}.profile-action:hover{background:var(--s2);color:var(--tx)}
-.profile-action.danger{color:var(--txd)}.profile-action.danger:hover{color:var(--red);border-color:rgba(232,72,72,.2)}
+/* VIEWS */
+#view-mycards,#view-browse,#view-promos{display:none}
+#view-mycards.active,#view-browse.active,#view-promos.active{display:block}
 
-/* TOAST + FOOTER */
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--s3);border:1px solid var(--bd2);border-radius:9px;padding:11px 20px;font-size:13px;color:var(--txm);display:flex;align-items:center;gap:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:999;white-space:nowrap}.toast.show{transform:translateX(-50%) translateY(0)}
-.footer-legal{font-size:11.5px;color:var(--txd);padding:16px var(--px);margin-top:auto;background:var(--s0);border-top:1px solid var(--bd);line-height:1.7}
-.footer-legal a{color:var(--txd);text-decoration:underline;text-underline-offset:3px}.footer-legal a:hover{color:var(--txm)}
-
-/* RESPONSIVE */
-@media(max-width:900px){:root{--px:32px}.ph-logo{font-size:42px}}
-@media(max-width:640px){
-  :root{--px:20px}.ph{padding:28px var(--px) 20px}.ph-logo{font-size:36px}.ph-sub{font-size:13px}
-  .col{flex:0 0 260px}.gfade{display:none}
-  .toolbar{flex-wrap:wrap}.sw{max-width:100%;flex:0 0 100%}.tb-cnt{margin-left:0}
-  .email-bar{flex-wrap:wrap;gap:8px}.eb-form{min-width:100%;flex:0 0 100%}
-  .ew{padding:72px var(--px) 60px;min-height:400px}.ew-t{font-size:30px}
-}
-
-/* ── LIVE PROMOS PAGE ──────────────────────────── */
-.promos-wrap{padding:0 var(--px) 80px}
+/* LIVE PROMOS */
+.promos-page{padding:0 var(--px) 80px}
 .promos-hdr{padding:28px 0 22px;border-bottom:1px solid var(--bd);margin-bottom:28px}
-.promos-hdr-t{font-family:'Cormorant',serif;font-size:32px;font-weight:500;margin-bottom:6px;letter-spacing:-.02em}
-.promos-hdr-s{font-size:13.5px;color:var(--txm);line-height:1.5}
-.promos-section{margin-bottom:52px}
-.promos-section-t{font-family:'Cormorant',serif;font-size:22px;font-weight:500;color:var(--tx);margin-bottom:5px;letter-spacing:-.01em}
-.promos-section-s{font-size:12.5px;color:var(--txd);margin-bottom:20px;line-height:1.5}
-/* SOB card grid */
-.sob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(296px,1fr));gap:10px}
+.promos-hdr-title{font-family:'Cormorant',serif;font-size:32px;font-weight:500;margin-bottom:6px;letter-spacing:-.02em}
+.promos-hdr-sub{font-size:13.5px;color:var(--txm);line-height:1.5}
+.promos-section{margin-bottom:48px}
+.promos-section-title{font-family:'Cormorant',serif;font-size:22px;font-weight:500;color:var(--tx);margin-bottom:5px}
+.promos-section-sub{font-size:12.5px;color:var(--txd);margin-bottom:20px;line-height:1.5}
+/* SOB grid */
+.sob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(292px,1fr));gap:10px}
 .sob-card{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--cc,#333);border-radius:0 0 10px 10px;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .22s,transform .2s;position:relative}
 .sob-card:hover{border-color:rgba(255,255,255,0.13);box-shadow:0 16px 48px rgba(0,0,0,.4);transform:translateY(-2px)}
 .sob-card::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(180deg,color-mix(in srgb,var(--cc,#333) 10%,transparent) 0%,transparent 100%);pointer-events:none;opacity:0;transition:opacity .2s}.sob-card:hover::before{opacity:1}
 .sob-head{padding:13px 16px 11px;background:rgba(0,0,0,.14);border-bottom:1px solid var(--bd);position:relative;z-index:1}
 .sob-name{font-size:12px;font-weight:600;color:var(--ccm,var(--txm));letter-spacing:.025em;margin-bottom:3px}
 .sob-meta{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--txd)}
-.sob-owned{color:var(--green);font-size:9.5px;font-weight:600;letter-spacing:.04em}
+.sob-owned{color:var(--green)}
 .sob-body{padding:14px 16px 12px;flex:1;position:relative;z-index:1}
 .sob-offer{font-size:17px;font-weight:600;color:var(--tx);line-height:1.3;margin-bottom:6px}
 .sob-req{font-size:11.5px;color:var(--txm);line-height:1.5}
 .sob-foot{padding:10px 16px 12px;border-top:1px solid var(--bd);position:relative;z-index:1}
 .sob-apply{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:10px 16px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:600;color:var(--bg);background:var(--tx);text-decoration:none;border:none;cursor:pointer;transition:all .15s}
 .sob-apply:hover{background:#E8E8FF;box-shadow:0 4px 20px rgba(160,160,255,0.20)}
-/* Transfer bonus rows */
-.transfer-grid{display:flex;flex-direction:column;gap:10px}
+/* Transfer bonuses */
+.transfer-list{display:flex;flex-direction:column;gap:10px}
 .tr-card{background:var(--s1);border:1px solid var(--bd);border-radius:10px;padding:20px 24px;display:flex;align-items:flex-start;gap:20px;transition:border-color .18s,box-shadow .2s;flex-wrap:wrap}
 .tr-card:hover{border-color:var(--bd2);box-shadow:0 6px 28px rgba(0,0,0,.25)}
 .tr-card.hot{border-left:3px solid var(--red)}.tr-card.warm{border-left:3px solid var(--amber)}
 .tr-left{flex:1;min-width:0}
 .tr-currency{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txd);margin-bottom:6px}
-.tr-bonus{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--amber);line-height:1;margin-bottom:4px}
-.tr-bonus-label{font-size:13px;color:var(--txm);font-family:'Figtree',sans-serif;font-weight:400;margin-left:8px}
+.tr-bonus{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:700;color:var(--amber);line-height:1}
+.tr-bonus-lbl{font-size:13px;color:var(--txm);margin-left:8px}
 .tr-partner{font-size:18px;font-weight:600;color:var(--tx);margin-bottom:14px}
-.tr-chips-label{font-size:9.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--txd);margin-bottom:7px}
+.tr-chips-lbl{font-size:9.5px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:var(--txd);margin-bottom:7px}
 .tr-chips{display:flex;flex-wrap:wrap;gap:5px}
 .tr-chip{font-size:11px;font-weight:500;color:var(--txm);background:var(--s2);border:1px solid var(--bd2);padding:3px 9px;border-radius:4px;white-space:nowrap}
 .tr-chip.owned{color:var(--green);border-color:rgba(36,184,112,0.28);background:rgba(36,184,112,0.07)}
-.tr-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0;padding-top:4px}
+.tr-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px;flex-shrink:0}
 .tr-exp{font-family:'JetBrains Mono',monospace;font-size:11px;padding:5px 12px;border-radius:6px;background:rgba(232,152,32,0.08);color:var(--amber);border:1px solid rgba(232,152,32,0.14)}
 .tr-exp.hot{background:rgba(232,72,72,0.08);color:var(--red);border-color:rgba(232,72,72,0.18)}
 .tr-apply{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:600;color:var(--bg);background:var(--tx);text-decoration:none;border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
-.tr-apply:hover{background:#E8E8FF;box-shadow:0 4px 16px rgba(160,160,255,0.18)}
-.promos-empty{padding:80px 0;text-align:center;color:var(--txd);font-size:13px}
-@media(max-width:640px){.sob-grid{grid-template-columns:1fr}.tr-card{flex-direction:column}.tr-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}}
+.tr-apply:hover{background:#E8E8FF}
+.promos-none{padding:80px 0;text-align:center;color:var(--txd);font-size:13px}
 
-.ganim{animation:gfade .18s ease}
-@keyframes gfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.80);display:flex;align-items:center;justify-content:center;padding:20px;animation:mfade .18s ease}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;padding:34px 32px 28px;width:100%;max-width:400px;position:relative;animation:mslide .2s ease}
+@keyframes mslide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.modal-x{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--txd);cursor:pointer;font-size:18px;line-height:1;padding:4px;transition:color .15s}.modal-x:hover{color:var(--txm)}
+.modal-title{font-family:'Cormorant',serif;font-size:26px;font-weight:500;margin-bottom:8px}
+.modal-sub{font-size:13.5px;color:var(--txm);margin-bottom:24px;line-height:1.6}
+.modal-div{display:flex;align-items:center;gap:12px;margin:20px 0}.modal-div-line{flex:1;height:1px;background:var(--bd)}.modal-div-txt{font-size:10.5px;color:var(--txd);letter-spacing:.08em;text-transform:uppercase}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;padding:12px 16px;background:var(--s2);border:1px solid var(--bd2);border-radius:8px;font-family:'Figtree',sans-serif;font-size:13.5px;font-weight:500;color:var(--tx);cursor:pointer;transition:all .15s;text-decoration:none}.google-btn:hover{background:var(--s3)}.google-btn svg{width:18px;height:18px}
+.magic-inp{width:100%;padding:11px 14px;background:var(--s2);border:1px solid var(--bd2);border-radius:7px;font-family:'Figtree',sans-serif;font-size:13.5px;color:var(--tx);outline:none;transition:all .15s}.magic-inp::placeholder{color:var(--txd)}.magic-inp:focus{border-color:var(--bd3)}
+.magic-btn{width:100%;margin-top:10px;padding:11px;background:var(--tx);border:none;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13.5px;font-weight:600;color:var(--bg);cursor:pointer;transition:background .15s}.magic-btn:hover{background:#E8E8FF}
+.share-modal{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;padding:0;width:100%;max-width:580px;position:relative;overflow:hidden;animation:mslide .2s ease}
+.share-hdr{padding:24px 28px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.share-title{font-family:'Cormorant',serif;font-size:24px;font-weight:500}.share-sub{font-size:12.5px;color:var(--txm);margin-top:4px;line-height:1.5}
+.share-preview{padding:22px 28px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.share-canvas-wrap{width:100%;border-radius:10px;overflow:hidden;border:1px solid var(--bd2);position:relative}.share-canvas-wrap canvas{width:100%;height:auto;display:block}
+.share-gen{position:absolute;inset:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--txd)}
+.share-acts{padding:18px 28px 24px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.share-act{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--bd2);text-decoration:none;white-space:nowrap}
+.share-act.primary{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}.share-act.primary:hover{background:#E8E8FF}
+.share-act.secondary{background:transparent;color:var(--txm)}.share-act.secondary:hover{background:var(--s2);color:var(--tx)}
+.share-act.reddit{background:rgba(255,69,0,0.08);color:#FF6634;border-color:rgba(255,69,0,0.18)}
+.share-act.twitter{background:rgba(29,161,242,0.08);color:#4DA8F0;border-color:rgba(29,161,242,0.18)}
+.share-empty{padding:32px;text-align:center;font-size:13.5px;color:var(--txm);line-height:1.65}.share-empty strong{color:var(--tx);display:block;margin-bottom:8px;font-size:18px;font-family:'Cormorant',serif;font-weight:500}
+.profile-panel{background:var(--s1);border:1px solid var(--bd2);border-radius:12px;padding:20px;position:absolute;top:calc(100% + 8px);right:40px;width:268px;z-index:300;box-shadow:0 12px 48px rgba(0,0,0,.6);animation:mslide .16s ease}
+.pp-name{font-size:14px;font-weight:600;margin-bottom:3px}.pp-email{font-size:11px;color:var(--txd);margin-bottom:14px}
+.pp-stat{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd)}.pp-stat:last-of-type{border-bottom:none;margin-bottom:12px}
+.pp-stat-l{font-size:12.5px;color:var(--txm)}.pp-stat-v{font-family:'JetBrains Mono',monospace;font-size:12.5px}
+.pp-acts{display:flex;gap:7px}.pp-act{flex:1;padding:8px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--bd2);color:var(--txm);background:transparent;text-align:center}.pp-act:hover{background:var(--s2);color:var(--tx)}.pp-act.danger:hover{color:var(--red);border-color:rgba(232,72,72,.2)}
+
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--s3);border:1px solid var(--bd2);border-radius:9px;padding:11px 20px;font-size:13px;color:var(--txm);display:flex;align-items:center;gap:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:999;white-space:nowrap}.toast.show{transform:translateX(-50%) translateY(0)}
+.footer{font-size:11.5px;color:var(--txd);padding:16px var(--px);margin-top:auto;background:var(--s0);border-top:1px solid var(--bd);line-height:1.7}
+.footer a{color:var(--txd);text-decoration:underline;text-underline-offset:3px}.footer a:hover{color:var(--txm)}
+@media(max-width:900px){:root{--px:32px}}
+@media(max-width:640px){:root{--px:20px}.col{flex:0 0 260px}.grid-fade{display:none!important}.toolbar{flex-wrap:wrap}.search-wrap{max-width:100%;flex:0 0 100%}.tb-cnt{margin-left:0}.email-bar{flex-wrap:wrap;gap:8px}.eb-form{min-width:100%;flex:0 0 100%}.empty-state{padding:72px var(--px) 60px;min-height:400px}.es-title{font-size:30px}.sob-grid{grid-template-columns:1fr}.tr-card{flex-direction:column}.tr-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}}
+.ganim{animation:gfade .18s ease}@keyframes gfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
-
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="ph">
   <div class="ph-row">
-    <div class="ph-left">
+    <div>
       <div class="ph-logo">Card Roundup</div>
       <p class="ph-sub">Track every credit card benefit before it expires.</p>
     </div>
     <div class="ph-acts">
-      <!-- Only shown when user has wallet but no account -->
-      <button class="btn btn-save" id="saveWalletBtn" style="display:none" onclick="toggleAuthModal()">
-        Save my wallet
-      </button>
-      <!-- Auth: Sign in (anonymous) or Avatar (signed in) -->
+      <button class="btn btn-g" id="saveBtn" style="display:none" onclick="openAuthModal()">Save wallet</button>
       <button class="auth-btn" id="authBtn" onclick="handleAuthClick()">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
         Sign in
       </button>
     </div>
   </div>
-  <div class="ph-meta" id="phMeta">
-    <span class="phm"><strong id="hMine">0</strong> in my wallet</span>
-    <span class="phm">·</span>
+  <div class="ph-meta">
+    <span class="phm"><strong id="stat-mine">0</strong> in my wallet</span>
     <span class="phm"><strong>46</strong> cards tracked</span>
-    <span class="phm">·</span>
     <span class="phm"><strong>8</strong> issuers</span>
   </div>
 </div>
 
-<!-- MODE BAR -->
-<div class="mode-bar">
-  <button class="mb on" data-m="mycards" onclick="setMode('mycards')">
-    <span class="mb-dot" style="background:#3DD68C"></span>My Cards
-    <span class="mcb" id="mcBadge">0</span>
+<!-- STICKY NAV -->
+<nav class="topnav">
+  <button class="tn on" data-view="mycards">
+    <span class="tn-dot" style="background:#3DD68C"></span>My Cards
+    <span class="tn-badge" id="mycards-badge">0</span>
   </button>
-  <button class="mb" data-m="browse" onclick="setMode('browse')">
-    <span class="mb-dot" style="background:#6AAEF0"></span>Browse All
+  <button class="tn" data-view="browse">
+    <span class="tn-dot" style="background:#6AAEF0"></span>Browse &amp; Compare
   </button>
-  <button class="mb" data-m="promos" onclick="setMode('promos')">
-    <span class="mb-dot" style="background:#E89820"></span>Live Promos
+  <button class="tn" data-view="promos">
+    <span class="tn-dot" style="background:#E89820"></span>Live Promos
   </button>
-  <!-- Edit wallet lives here — contextual to mode, not header-level -->
-  <button class="mb mb-edit" id="editBtn" onclick="toggleWalletEdit()" style="margin-left:auto;border-left:1px solid var(--bd);padding-left:14px">
+  <button class="tn tn-edit" id="edit-btn" style="display:none">
     <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
     Edit wallet
   </button>
+</nav>
+
+<!-- WALLET SETUP -->
+<div class="ws" id="wallet-setup">
+  <div class="ws-t">Your cards</div>
+  <div class="ws-s">Select every card you carry. Credits and resets track across all tabs.</div>
+  <div class="ws-rows" id="ws-rows"></div>
 </div>
 
-
-<div class="ws" id="walletSetup" style="display:none">
-  <div class="ws-t">Your Card Wallet</div>
-  <div class="ws-s">Select the cards you carry. Your view filters to these across all tabs.</div>
-  <div class="ws-rows" id="wsRows"></div>
-</div>
-
-<!-- BROWSE PICKER (hidden in My Cards mode) -->
-<div class="bpicker" id="browsePicker" style="display:none"></div>
+<!-- BROWSE PICKER -->
+<div class="bpicker" id="browse-picker"></div>
 
 <!-- EMAIL BAR -->
-<div class="email-bar" id="emailBar">
-  <div class="eb-text">🔔 <strong>Get reset reminders</strong> — 7 days before your credits expire</div>
-  <div class="eb-form" id="ebForm">
-    <input class="eb-input" type="email" id="ebInput" placeholder="your@email.com" autocomplete="email">
-    <button class="eb-sub" onclick="submitEmail()">Remind me</button>
+<div class="email-bar" id="email-bar">
+  <div class="eb-text">&#x1F514; <strong>Get reset reminders</strong> &mdash; 7 days before credits expire</div>
+  <div class="eb-form" id="eb-form">
+    <input class="eb-input" type="email" id="eb-input" placeholder="your@email.com" autocomplete="email">
+    <button class="eb-sub" id="eb-submit">Remind me</button>
   </div>
-  <button class="eb-x" onclick="dismissEmail()">✕</button>
+  <button class="eb-x" id="eb-dismiss">&#x2715;</button>
 </div>
 
-
-<!-- NAV -->
-<div class="nav-wrap">
-  <nav class="nav" id="navEl">
-    <div class="nav-ind" id="navInd"></div>
-    <button class="nb on" data-s="monthly"><span class="nd" style="background:#FF7A3C"></span>Monthly</button>
-    <button class="nb" data-s="quarterly"><span class="nd" style="background:#AA82F0"></span>Quarterly</button>
-    <button class="nb" data-s="semiannual"><span class="nd" style="background:#45C9A8"></span>Semi-annual</button>
-    <button class="nb" data-s="annual"><span class="nd" style="background:#6AAEF0"></span>Annual</button>
-    <button class="nb" data-s="multiyear"><span class="nd" style="background:#E8C84E"></span>Multi-year</button>
-    <button class="nb" data-s="static"><span class="nd" style="background:#888898"></span>Always-on</button>
-    <button class="nb" data-s="summary"><span class="nd" style="background:#C0C0D8"></span>Summary</button>
-  </nav>
-  <div class="reset-b" id="resetBadge"></div>
-</div>
-
-<!-- MAIN -->
-<div class="main" id="mainContent">
-  <div id="emptyState" style="display:none">
-    <div class="ew">
-      <div class="ew-i">&#x25C8;</div>
-      <div class="ew-t">Which cards do you carry?</div>
-      <div class="ew-s">Add your cards and we'll track every credit expiring this month, quarter, and year &#x2014; so you never leave money on the table.</div>
-      <button class="btn btn-p btn-lg" id="ewPickBtn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> Add my cards</button>
-      <div class="ew-browse">or <button class="ew-browse-link" id="ewBrowseBtn">compare all 46 cards side by side</button></div>
-    </div>
+<!-- MY CARDS VIEW -->
+<div id="view-mycards" class="active">
+  <div class="sectabs" id="sect-tabs">
+    <div class="st-ind" id="st-ind"></div>
+    <button class="st on" data-s="monthly"><span class="st-dot" style="background:#FF7A3C"></span>Monthly</button>
+    <button class="st" data-s="quarterly"><span class="st-dot" style="background:#AA82F0"></span>Quarterly</button>
+    <button class="st" data-s="semiannual"><span class="st-dot" style="background:#45C9A8"></span>Semi-annual</button>
+    <button class="st" data-s="annual"><span class="st-dot" style="background:#6AAEF0"></span>Annual</button>
+    <button class="st" data-s="multiyear"><span class="st-dot" style="background:#E8C84E"></span>Multi-year</button>
+    <button class="st" data-s="static"><span class="st-dot" style="background:#888898"></span>Always-on</button>
+    <button class="st" data-s="summary"><span class="st-dot" style="background:#C0C0D8"></span>Summary</button>
   </div>
-  <div class="toolbar">
-    <div class="sw">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
-      <input class="si-inp" type="text" id="searchInput" placeholder="Search benefits…" autocomplete="off">
-      <button class="sc-x" id="scX" onclick="clearSearch()">✕</button>
-    </div>
-    <button class="tb-cal" onclick="exportCalendar()" title="Sync reset dates to your calendar">
-      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
-      Sync calendar
+  <div class="reset-strip" id="reset-strip"></div>
+  <!-- Empty state -->
+  <div class="empty-state" id="empty-state">
+    <div class="es-icon">&#x25C8;</div>
+    <div class="es-title">Which cards do you carry?</div>
+    <div class="es-sub">Add your cards and we&rsquo;ll track every credit expiring this month, quarter, and year &mdash; so you never leave money on the table.</div>
+    <button class="btn btn-p btn-lg" id="es-add-btn">
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+      Add my cards
     </button>
-    <span class="tb-cnt" id="tbCnt"></span>
+    <div class="es-browse">or <button class="es-browse-btn" id="es-browse-btn">compare all 46 cards side by side</button></div>
   </div>
-  <div class="gw">
-    <div class="gfade" id="gFade"></div>
-    <div class="grid ganim" id="grid"></div>
-  </div>
-  <div class="scroll-track"><div class="scroll-thumb-el" id="scrollThumb" style="width:100%"></div></div>
-  <!-- Summary tab: aggregate share CTA shown below all cards -->
-  <div id="summaryFooter"></div>
-</div>
-
-<!-- LIVE PROMOS VIEW -->
-<div id="promosView" style="display:none">
-  <div class="promos-wrap"><div id="promosContent"></div></div>
-</div>
-
-<!-- FOOTER: one FTC line only -->
-<div class="footer-legal">
-  Some cards include affiliate links — we earn a commission if you apply and are approved, at no cost to you. This never influences our data. <a href="#">Affiliate policy</a> · <a href="#">Terms</a>
-</div>
-<!-- SHARE MODAL -->
-<div id="shareModal" style="display:none">
-  <div class="modal-overlay" onclick="if(event.target===this)closeShareModal()">
-    <div class="share-modal">
-      <div class="share-header">
-        <div>
-          <div class="share-title">Share your stack</div>
-          <div class="share-sub">A snapshot of your wallet — credits, fees, and net value. Post it anywhere.</div>
-        </div>
-        <button class="modal-close" style="position:static;margin-top:-2px" onclick="closeShareModal()">✕</button>
+  <!-- Card area -->
+  <div class="content" id="mycards-content" style="display:none">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
+        <input class="search-inp" type="text" id="mc-search" placeholder="Search benefits&hellip;" autocomplete="off">
+        <button class="search-clear" id="mc-search-clear">&#x2715;</button>
       </div>
-      <div id="shareBody"></div>
+      <button class="tb-cal" id="cal-btn">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
+        Sync calendar
+      </button>
+      <span class="tb-cnt" id="mc-cnt"></span>
     </div>
+    <div class="grid-wrap">
+      <div class="grid-fade" id="mc-fade"></div>
+      <div class="grid ganim" id="mc-grid"></div>
+    </div>
+    <div class="scroll-track"><div class="scroll-thumb" id="mc-thumb" style="width:100%"></div></div>
+    <div id="mc-summary-footer"></div>
   </div>
 </div>
 
-<!-- AUTH MODAL -->
-<div id="authModal" style="display:none">
+<!-- BROWSE VIEW -->
+<div id="view-browse">
+  <div class="sectabs" style="display:flex" id="browse-sect-tabs">
+    <div class="st-ind" id="bst-ind"></div>
+    <button class="st on" data-s="monthly"><span class="st-dot" style="background:#FF7A3C"></span>Monthly</button>
+    <button class="st" data-s="quarterly"><span class="st-dot" style="background:#AA82F0"></span>Quarterly</button>
+    <button class="st" data-s="semiannual"><span class="st-dot" style="background:#45C9A8"></span>Semi-annual</button>
+    <button class="st" data-s="annual"><span class="st-dot" style="background:#6AAEF0"></span>Annual</button>
+    <button class="st" data-s="multiyear"><span class="st-dot" style="background:#E8C84E"></span>Multi-year</button>
+    <button class="st" data-s="static"><span class="st-dot" style="background:#888898"></span>Always-on</button>
+    <button class="st" data-s="summary"><span class="st-dot" style="background:#C0C0D8"></span>Summary</button>
+  </div>
+  <div class="content">
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
+        <input class="search-inp" type="text" id="br-search" placeholder="Search benefits&hellip;" autocomplete="off">
+        <button class="search-clear" id="br-search-clear">&#x2715;</button>
+      </div>
+      <span class="tb-cnt" id="br-cnt"></span>
+    </div>
+    <div class="grid-wrap">
+      <div class="grid-fade" id="br-fade"></div>
+      <div class="grid ganim" id="br-grid"></div>
+    </div>
+    <div class="scroll-track"><div class="scroll-thumb" id="br-thumb" style="width:100%"></div></div>
+    <div id="br-summary-footer"></div>
+  </div>
+</div>
+
+<!-- PROMOS VIEW -->
+<div id="view-promos">
+  <div class="content">
+    <div class="promos-page" id="promos-content"></div>
+  </div>
+</div>
+
+<!-- MODALS -->
+<div id="auth-modal" style="display:none">
   <div class="modal-overlay" onclick="if(event.target===this)closeAuthModal()">
     <div class="modal">
-      <button class="modal-close" onclick="closeAuthModal()">✕</button>
+      <button class="modal-x" onclick="closeAuthModal()">&#x2715;</button>
       <div class="modal-title">Save your wallet</div>
-      <div class="modal-sub">Sign in to sync your cards across devices and get expiry reminders by email.</div>
-
-      <!-- Google Sign-In -->
+      <div class="modal-sub">Sign in to sync cards across devices and get expiry reminders.</div>
       <button class="google-btn" onclick="signInGoogle()">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-        </svg>
+        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         Continue with Google
       </button>
-
-      <div class="modal-divider"><div class="modal-divider-line"></div><span class="modal-divider-txt">or</span><div class="modal-divider-line"></div></div>
-
-      <input class="magic-input" type="email" id="magicEmail" placeholder="your@email.com" autocomplete="email">
-      <button class="magic-submit" onclick="sendMagicLink()">Send magic link</button>
-      <div id="magicMsg" style="font-size:10.5px;color:var(--green);margin-top:8px;display:none">✓ Check your email for a sign-in link.</div>
+      <div class="modal-div"><div class="modal-div-line"></div><span class="modal-div-txt">or</span><div class="modal-div-line"></div></div>
+      <input class="magic-inp" type="email" id="magic-email" placeholder="your@email.com" autocomplete="email">
+      <button class="magic-btn" onclick="sendMagicLink()">Send magic link</button>
+      <div id="magic-msg" style="font-size:10.5px;color:var(--green);margin-top:8px;display:none">&#x2713; Check your email.</div>
     </div>
   </div>
 </div>
 
-<!-- PROFILE PANEL (shown when signed in, anchored to auth button) -->
-<div id="profilePanel" style="display:none;position:relative;z-index:200"></div>
+<div id="share-modal" style="display:none">
+  <div class="modal-overlay" onclick="if(event.target===this)closeShareModal()">
+    <div class="share-modal">
+      <div class="share-hdr">
+        <div><div class="share-title">Share your stack</div><div class="share-sub">A snapshot of your wallet &mdash; credits, fees, net value.</div></div>
+        <button class="modal-x" style="position:static" onclick="closeShareModal()">&#x2715;</button>
+      </div>
+      <div id="share-body"></div>
+    </div>
+  </div>
+</div>
 
-<div class="toast" id="toast"><span id="toastMsg"></span></div>
+<div id="profile-panel-wrap" style="position:relative;z-index:300"></div>
+<div class="toast" id="toast"><span id="toast-msg"></span></div>
+
+<div class="footer">
+  Some cards include affiliate links &mdash; we earn a commission if you apply and are approved, at no cost to you. This never influences our data. <a href="#">Affiliate policy</a> &middot; <a href="#">Terms</a>
+</div>
 
 <script>
-// Analytics — replace with your PostHog key from posthog.com
+// ═══════════════════════════════════════════════════════
+// ALL VARIABLES — declared first, before any function
+// ═══════════════════════════════════════════════════════
 const POSTHOG_KEY = 'YOUR_POSTHOG_KEY';
+const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID';
+const RESEND_FROM_EMAIL = 'reminders@cardroundup.com';
+const SK = 'kbyli_v4';
 
-// Affiliate tracking
 const AFF={
   csr:'https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve?ICID=AFFL_KBYLI_CJ',
   csp:'https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred?ICID=AFFL_KBYLI_CJ',
@@ -700,926 +689,681 @@ const CARDS=[
 ];
 
 const ISSUERS=['Chase','American Express','Capital One','Citi','Wells Fargo','U.S. Bank','Bank of America','Barclays'];
-const SK='kbyli_v4';
-let myCards=new Set((()=>{try{const s=localStorage.getItem(SK);return s?JSON.parse(s):[]}catch{return[]}})());
-let browseCards=new Set();
-let mode='mycards';
-let walletOpen=false;
-let section='monthly';
-let q='';
-let promoClosed=false;
 
-function saveMyCards(){try{localStorage.setItem(SK,JSON.stringify([...myCards]))}catch{}}
-
-/* ── ONBOARDING STRIP ──────────────── */
-function initOnboard(){}
-function dismissOnboard(){}
-function maybeHideOnboard(){}
-
-function syncHeader(){
-  document.getElementById('hMine').textContent = myCards.size;
-  document.getElementById('mcBadge').textContent = myCards.size;
-  // Show "Save my wallet" nudge when user has cards but isn't signed in
-  const saveBtn = document.getElementById('saveWalletBtn');
-  if(saveBtn) saveBtn.style.display = (myCards.size > 0 && !currentUser) ? 'flex' : 'none';
-}
-
-/* ── EMAIL BAR ─────────────────── */
-// Email bar serves anonymous users only
-// If user is signed in with Google, email bar never shows — Google email handles sync
-function initEmailBar(){
-  const bar = document.getElementById('emailBar');
-  if(!bar) return;
-  // Hide if: already dismissed, already signed in, or already gave email
-  var _showEb=myCards.size>0&&!currentUser&&!localStorage.getItem('eb_d')&&!getSavedEmail();
-  bar.style.display=_showEb?'flex':'none';
-}
-function dismissEmail(){localStorage.setItem('eb_d','1');document.getElementById('emailBar').style.display='none';}
-
-function getSavedEmail(){ try{ return localStorage.getItem('cr_email')||''; }catch{ return ''; } }
-function saveEmail(email){ try{ localStorage.setItem('cr_email',email); }catch{} }
-
-// Core sync function — posts email + cards to Resend via our API
-async function syncWalletToResend(email, cards){
-  if(!email) return;
-  try {
-    await fetch('/api/subscribe', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email, cards})
-    });
-    console.log('[CardRoundup] Synced to Resend:', email);
-  } catch(e) {
-    console.log('[CardRoundup] Sync failed (offline?)');
-  }
-}
-
-// Wallet syncs happen ONLY on explicit user actions:
-// 1. submitEmail() — user submits email bar
-// 2. onSignedIn() — user signs in with Google or magic link
-// 3. Page unload (sendBeacon) — captures final wallet state per session
-//    sendBeacon fires once when user closes/leaves tab — guaranteed delivery,
-//    never blocks the page, zero API spam regardless of how many cards toggled
-window.addEventListener('beforeunload', () => {
-  const email = currentUser?.email || getSavedEmail();
-  if(!email || myCards.size === 0) return;
-  // sendBeacon is fire-and-forget — browser guarantees delivery
-  navigator.sendBeacon('/api/subscribe', JSON.stringify({
-    email,
-    cards: [...myCards].join(',')
-  }));
-});
-
-async function submitEmail(){
-  const inp=document.getElementById('ebInput'),email=inp.value.trim();
-  if(!email||!email.includes('@')){inp.style.borderColor='rgba(255,90,90,.4)';inp.focus();return;}
-  inp.style.borderColor='';
-
-  // Save email to localStorage — marks this anonymous user as known
-  saveEmail(email);
-
-  // One-time sync: captures their wallet at this moment
-  // If they later sign in with Google, auto-sync takes over
-  await syncWalletToResend(email, [...myCards].join(','));
-
-  document.getElementById('ebForm').innerHTML='<div class="eb-ok">✓ You\'re on the list — we\'ll remind you before credits expire.</div>';
-  localStorage.setItem('eb_d','1');
-  setTimeout(()=>document.getElementById('emailBar').style.display='none',4000);
-}
-document.getElementById('ebInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitEmail();});
-
-/* ── PROMO TICKER ──────────────── */
-function daysUntil(d){const n=new Date();n.setHours(0,0,0,0);const t=new Date(d);t.setHours(0,0,0,0);return Math.round((t-n)/86400000);}
-
-function renderPromoTicker(){/* promo ticker removed — see Live Promos tab */}
-function closePromo(){promoClosed=false;}
-
-/* ── MODE ─────────────────────── */
-function setMode(m){
-  mode=m;walletOpen=false;
-  document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
-  document.getElementById('walletSetup').style.display='none';
-  document.getElementById('browsePicker').style.display=m==='browse'?'block':'none';
-  // Show/hide nav tabs (hidden on promos page)
-  var nw=document.getElementById('navEl');var rw=document.querySelector('.nav-wrap');
-  if(nw)nw.closest('.nav-wrap').style.display=m==='promos'?'none':'block';
-  // Show/hide promos view
-  var pv=document.getElementById('promosView');
-  if(pv)pv.style.display=m==='promos'?'block':'none';
-  // Show/hide main content
-  var mc=document.getElementById('mainContent');
-  if(mc)mc.style.display=m==='promos'?'none':'block';
-  if(m==='promos'){renderPromosPage();return;}
-  renderGrid();
-}
-function toggleWalletEdit(){
-  if(mode!=='mycards'){setMode('mycards');return;}
-  walletOpen=!walletOpen;
-  document.getElementById('walletSetup').style.display=walletOpen?'block':'none';
-  if(walletOpen)renderWalletSetup();
-  document.getElementById('editBtn').innerHTML=walletOpen
-    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2l12 12M14 2L2 14"/></svg> Done'
-    :'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet';
-}
-
-/* ── WALLET SETUP ─────────────── */
-function renderWalletSetup(){
-  const el=document.getElementById('wsRows');
-  const byI={};CARDS.forEach(c=>{if(!byI[c.issuer])byI[c.issuer]=[];byI[c.issuer].push(c);});
-  el.innerHTML=ISSUERS.filter(i=>byI[i]).map(issuer=>{
-    const chips=byI[issuer].map(card=>{
-      const on=myCards.has(card.id),fee=card.fee===0?'$0':'$'+card.fee;
-      return`<button class="wchip${on?' on':''}" style="--chip-c:${card.c}" onclick="toggleMyCard('${card.id}')"><span class="wchip-d"></span>${card.short} ${fee}</button>`;
-    }).join('');
-    return`<div class="ws-row"><span class="ws-il">${issuer==='American Express'?'Amex':issuer}</span><div class="ws-chips">${chips}</div></div>`;
-  }).join('');
-}
-function toggleMyCard(id){
-  if(myCards.has(id))myCards.delete(id);else myCards.add(id);
-  saveMyCards();syncHeader();renderWalletSetup();renderPromoTicker();renderGrid();updateTabCounts();initEmailBar();
-  // No Resend sync here — wallet syncs once at email capture, never automatically
-}
-
-/* ── BROWSE PICKER ────────────── */
-function renderBrowsePicker(){
-  const el=document.getElementById('browsePicker');
-  const byI={};CARDS.forEach(c=>{if(!byI[c.issuer])byI[c.issuer]=[];byI[c.issuer].push(c);});
-  const groups=ISSUERS.filter(i=>byI[i]).map(issuer=>{
-    const chips=byI[issuer].map(card=>{
-      const on=browseCards.has(card.id),fee=card.fee===0?'$0':'$'+card.fee;
-      return`<button class="chip${on?' on':''}" style="--chip-c:${card.c}" onclick="toggleBrowse('${card.id}')"><span class="chip-d"></span>${card.short} ${fee}</button>`;
-    }).join('');
-    return`<div class="bp-g"><span class="bp-il">${issuer==='American Express'?'Amex':issuer}</span>${chips}</div>`;
-  }).join('');
-  el.innerHTML=`<div class="bp-row"><span class="bp-l">Filter</span><div class="bp-div"></div><button class="bp-a" onclick="browseAll()">All ${CARDS.length}</button><button class="bp-a" onclick="browseClear()">Clear</button><span class="bp-cnt">${browseCards.size} / ${CARDS.length} shown</span></div><div class="bp-chips">${groups}</div>`;
-}
-function toggleBrowse(id){if(browseCards.has(id))browseCards.delete(id);else browseCards.add(id);renderBrowsePicker();renderGrid();}
-function browseAll(){CARDS.forEach(c=>browseCards.add(c.id));renderBrowsePicker();renderGrid();}
-function browseClear(){browseCards.clear();renderBrowsePicker();renderGrid();}
-
-/* ── RESET BADGE ──────────────── */
-function nextReset(s){
-  const t=new Date(),y=t.getFullYear(),m=t.getMonth();
-  if(s==='monthly')return{d:daysUntil(new Date(y,m+1,1)),label:'monthly reset'};
-  if(s==='quarterly'){const qs=[0,3,6,9],nq=qs.find(q=>q>m)??(qs[0]+12);return{d:daysUntil(new Date(y+(nq>=12?1:0),nq%12,1)),label:'quarterly reset'};}
-  if(s==='semiannual')return{d:daysUntil(m<6?new Date(y,6,1):new Date(y+1,0,1)),label:'semi-annual reset'};
-  if(s==='annual')return{d:daysUntil(new Date(y+1,0,1)),label:'annual reset (Jan 1)'};
-  return null;
-}
-function renderResetBadge(){
-  const el=document.getElementById('resetBadge');
-  const r=nextReset(section);
-  if(!r||r.d<0){el.innerHTML='';el.style.display='none';return;}
-  el.style.display='flex';const hot=r.d<=7;
-  el.className='reset-b'+(hot?' urg':'');
-  el.innerHTML=`<span class="rb-t${hot?' hot':''}">⟳ <strong>${r.d} day${r.d===1?'':'s'}</strong> until ${r.label}</span>`;
-}
-
-/* ── NAV INDICATOR ────────────── */
-function updateInd(){
-  const a=document.querySelector('.nb.on'),ind=document.getElementById('navInd'),nav=document.getElementById('navEl');
-  if(!a||!ind||!nav)return;
-  const br=a.getBoundingClientRect(),nr=nav.getBoundingClientRect();
-  ind.style.width=br.width+'px';
-  ind.style.transform=`translateX(${br.left-nr.left+nav.scrollLeft}px)`;
-}
-
-/* ── SEARCH ───────────────────── */
-document.getElementById('searchInput').addEventListener('input',function(){
-  q=this.value.trim().toLowerCase();
-  document.getElementById('scX').style.display=q?'flex':'none';
-  renderGrid();
-});
-function clearSearch(){document.getElementById('searchInput').value='';q='';document.getElementById('scX').style.display='none';renderGrid();}
-
-/* ── RENDERING ────────────────── */
-function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function vis(){return CARDS.filter(c=>(mode==='mycards'?myCards:browseCards).has(c.id));}
-
-/* Card header — clean: name, fee, stale warning only if needed */
-function colHead(card){
-  const fee=card.fee===0?'$0':'$'+card.fee;
-  const stale=card.verified<'2026-01';
-  // Only show meta row if card is stale (otherwise it's noise)
-  const metaRow=stale
-    ?`<div class="ch-meta"><span class="ch-ver stale" title="Data may be outdated — ${esc(card.verified)}">⚠ data may be outdated</span><button class="ch-flag" onclick="flagCard('${card.id}')">flag</button></div>`
-    :'';
-  return`<div class="ch">
-    <div class="ch-top"><span class="ch-name">${esc(card.name)}</span><span class="ch-fee">${fee}/yr</span></div>
-    ${metaRow}
-  </div>`;
-}
-
-/* Apply row appears on ALL tabs at bottom of every card.
-   On credit tabs: just "Apply →" link — unobtrusive.
-   On summary tab: shows full offer via buildSummary's applyRow call.
-   This is how we make money without looking like an ad site. */
-function applyFooter(card){
-  const link=AFF[card.id];
-  if(!link||section==='summary')return''; // summary handles it internally
-  return`<div class="apply-row">
-    <a class="apply-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
-  </div>`;
-}
-
-// applyRow for summary — shows full offer
-function applyRow(card){
-  const link=AFF[card.id];
-  if(!link)return'';
-  const s=card.sob;
-  const hasOffer=s&&s.offer&&!s.offer.startsWith('No');
-  return`<div class="apply-row">
-    ${hasOffer?`<div class="apply-row-offer"><strong>${esc(s.offer)}</strong>${s.req?'<br><span style="font-size:9.5px">'+esc(s.req)+'</span>':''}</div>`:'<div class="apply-row-offer">View current offers</div>'}
-    <a class="apply-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
-  </div>`;
-}
-
-function buildCredits(card){
-  const items=card.credits[section]||[];
-  const filtered=q?items.filter(it=>it.n.toLowerCase().includes(q)||(it.note&&it.note.toLowerCase().includes(q))):items;
-  let body='';
-  if(items.length===0)body='<div class="empty">No credits this cadence</div>';
-  else if(filtered.length===0&&q)body=`<div class="nomatch">No match for "${esc(q)}"</div>`;
-  else body=filtered.map(it=>`<div class="ci"><div class="ci-top"><span class="ci-n${it.warn?' warn':''}">${esc(it.n)}</span><span class="ci-a">${esc(it.a)}</span></div>${it.note?`<div class="ci-note">${esc(it.note)}</div>`:''}</div>`).join('');
-  return`<div class="cb">${body}</div>`;
-}
-
-const SMAX=3200;
-function buildSummary(card){
-  const s=card.summary;
-  const sob=card.sob&&card.sob.offer&&!card.sob.offer.startsWith('No')
-    ?`<div class="si"><div class="si-top"><span class="si-l">Sign-on bonus</span><span class="si-v" style="color:var(--green);font-size:11px">${esc(card.sob.offer)}</span></div>${card.sob.req?`<div class="si-note">${esc(card.sob.req)}</div>`:''}</div>`:'';
-  const feeRow=`<div class="si-fee"><span class="si-fl">Annual fee</span><span class="si-fv">${card.fee===0?'$0':'$'+card.fee+'/yr'}</span></div>`;
-  const rows=s.rows.map(r=>{const p=Math.min(100,Math.round(r.v/SMAX*100));return`<div class="si"><div class="si-top"><span class="si-l">${esc(r.l)}</span><span class="si-v">${esc(r.a)}</span></div><div class="bar"><div class="bar-f" style="width:${p}%"></div></div>${r.note?`<div class="si-note">${esc(r.note)}</div>`:''}</div>`;}).join('');
-  const tp=Math.min(100,Math.round(s.totalV/SMAX*100));
-  const total=`<div class="si tot"><div class="si-top"><span class="si-l">Total potential credits</span><span class="si-v">${esc(s.total)}</span></div><div class="bar" style="height:2.5px"><div class="bar-f" style="width:${tp}%"></div></div>${s.note?`<div class="si-note">${esc(s.note)}</div>`:''}</div>`;
-  return`<div class="cb">${sob}${feeRow}${rows}${total}</div>${applyRow(card)}`;
-}
-
-/* Summary tab footer — share CTA shown once below ALL cards, not per-card */
-function renderSummaryFooter(cards){
-  if(!cards||cards.length<2)return;
-  const totalCredits=cards.reduce((a,c)=>a+(c.summary?.totalV||0),0);
-  const totalFees=cards.reduce((a,c)=>a+c.fee,0);
-  const net=totalCredits-totalFees;
-  const el=document.getElementById('summaryFooter');
-  if(!el)return;
-  el.innerHTML=`<div style="padding:20px 0 4px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-    <div style="font-size:12px;color:var(--txm)">
-      <span style="color:var(--tx);font-weight:500">Your stack total:</span>
-      $${totalCredits.toLocaleString()}/yr in credits · $${totalFees.toLocaleString()}/yr in fees ·
-      <span style="color:${net>=0?'var(--green)':'var(--red)'};font-weight:500">${net>=0?'+':'-'}$${Math.abs(net).toLocaleString()} net</span>
-    </div>
-    <button class="btn btn-share" style="margin-left:auto;flex-shrink:0" onclick="openShareModal()">
-      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>
-      Share your stack
-    </button>
-  </div>`;
-}
-
-function renderGrid(){
-  const gridEl=document.getElementById('grid');
-  if(!gridEl)return;
-  const allVisible=vis();
-
-  const _isEmpty=allVisible.length===0&&mode==='mycards';
-  var _esEl=document.getElementById('emptyState');
-  var _tbEl=document.querySelector('.toolbar');
-  var _gwEl=document.querySelector('.gw');
-  if(_esEl)_esEl.style.display=_isEmpty?'flex':'none';
-  if(_tbEl)_tbEl.style.display=_isEmpty?'none':'flex';
-  if(_gwEl)_gwEl.style.display=_isEmpty?'none':'';
-  if(_isEmpty){var g2=document.getElementById('grid');if(g2)g2.innerHTML='';return;}
-
-  // For credit tabs: sort cards with credits first, empty cards go to end
-  // For summary/always-on: show all in order
-  let sorted=allVisible;
-  if(section!=='summary'&&section!=='static'){
-    const withCredits=allVisible.filter(c=>(c.credits[section]||[]).length>0);
-    const withoutCredits=allVisible.filter(c=>(c.credits[section]||[]).length===0);
-    sorted=[...withCredits,...withoutCredits];
-    // Only show empty cards if there are no non-empty ones, or user is searching
-    if(!q&&withCredits.length>0){
-      sorted=withCredits; // Hide empty cards entirely — unclutter
-    }
-  }
-
-  const cntEl=document.getElementById('tbCnt');
-  if(cntEl)cntEl.innerHTML=`<strong>${sorted.length}</strong> card${sorted.length!==1?'s':''}`;
-  const fadeEl=document.getElementById('gFade');
-  if(fadeEl)fadeEl.style.display=sorted.length>3?'block':'none';
-
-  gridEl.innerHTML='';
-  if(sorted.length===0){
-    gridEl.innerHTML='<div style="padding:40px;text-align:center;color:var(--txd);font-size:12px">No results.</div>';
-    return;
-  }
-  sorted.forEach(card=>{
-    const col=document.createElement('div');
-    col.className='col';
-    col.style.cssText=`--cc:${card.c};--ccm:${card.cm}`;
-    col.innerHTML=colHead(card)+(section==='summary'?buildSummary(card):buildCredits(card))+applyFooter(card);
-    gridEl.appendChild(col);
-  });
-
-  // Clear/render summary footer
-  const sfEl=document.getElementById('summaryFooter');
-  if(sfEl){
-    if(section==='summary'&&sorted.length>=2) renderSummaryFooter(sorted);
-    else sfEl.innerHTML='';
-  }
-  setTimeout(()=>{
-    const g=document.getElementById('grid');
-    const thumb=document.getElementById('scrollThumb');
-    if(!g||!thumb)return;
-    const upd=()=>{
-      const r=g.scrollWidth>g.clientWidth?g.clientWidth/g.scrollWidth:1;
-      const p=g.scrollWidth>g.clientWidth?g.scrollLeft/(g.scrollWidth-g.clientWidth):0;
-      thumb.style.width=(r*100)+'%';
-      thumb.style.transform=`translateX(${p*(100/r*(1-r))}%)`;
-      if(fadeEl)fadeEl.style.opacity=p<0.97?'1':'0';
-    };
-    g.removeEventListener('scroll',g._scrollHandler);
-    g._scrollHandler=upd;
-    g.addEventListener('scroll',upd,{passive:true});
-    upd();
-  },60);
-}
-
-/* Update nav tab count badges based on visible cards */
-function updateTabCounts(){
-  const allVis=vis();
-  const sections=['monthly','quarterly','semiannual','annual','multiyear','static'];
-  document.querySelectorAll('.nb').forEach(btn=>{
-    const s=btn.dataset.s;
-    if(!sections.includes(s))return;
-    let cnt=btn.querySelector('.nb-cnt');
-    if(!cnt){cnt=document.createElement('span');cnt.className='nb-cnt';btn.appendChild(cnt);}
-    const n=allVis.filter(c=>(c.credits[s]||[]).length>0).length;
-    cnt.textContent=n;
-    cnt.style.display=n>0?'inline-block':'none';
-  });
-}
-
-function trackApply(id){
-  const card=CARDS.find(c=>c.id===id);
-  console.log('[CardRoundup affiliate] click →',id,card?.name);
-  if(window.posthog) posthog.capture('apply_click',{card_id:id,card_name:card?.name,section});
-}
-function flagCard(id){const card=CARDS.find(c=>c.id===id);showToast(`Flagged "${card?.name}" as outdated — thanks`);}
-
-/* ── CALENDAR EXPORT ──────────── */
-function exportCalendar(){
-  const today=new Date(),y=today.getFullYear(),m=today.getMonth();
-  const pad=n=>String(n).padStart(2,'0'),id=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`,uid=()=>Math.random().toString(36).slice(2)+'@kbyli.app';
-  const visible=vis(),events=[];
-  for(let i=0;i<3;i++){const d=new Date(y,m+1+i,1);const mc=visible.filter(c=>(c.credits.monthly||[]).length>0);if(mc.length>0)events.push({date:d,title:`Monthly credits reset — ${mc.length} cards`,note:mc.map(c=>c.name).join(', ')});}
-  [0,3,6,9].forEach(q=>{const d=new Date(y+(q+1>11?1:0),(q+1)%12,1);if(daysUntil(d)>0&&daysUntil(d)<366){const qc=visible.filter(c=>(c.credits.quarterly||[]).length>0);if(qc.length>0)events.push({date:d,title:`Quarterly reset — ${qc.length} cards`,note:qc.map(c=>c.name).join(', ')});}});
-  [{mo:7,l:'Semi-annual reset H2'},{mo:1,l:'Semi-annual reset H1'}].forEach(({mo,l})=>{const d=new Date(y+(mo===1?1:0),mo-1,1);if(daysUntil(d)>0){const sc=visible.filter(c=>(c.credits.semiannual||[]).length>0);if(sc.length>0)events.push({date:d,title:l+` — ${sc.length} cards`,note:sc.map(c=>c.name).join(', ')});}});
-  const ac=visible.filter(c=>(c.credits.annual||[]).length>0);if(ac.length>0)events.push({date:new Date(y+1,0,1),title:`Annual credits reset — ${ac.length} cards`,note:ac.map(c=>c.name).join(', ')});
-  if(events.length===0){showToast('No upcoming resets to export');return;}
-  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Know Before You Lose It//EN\r\nCALSCALE:GREGORIAN\r\n';
-  events.forEach(e=>{ics+=`BEGIN:VEVENT\r\nUID:${uid()}\r\nDTSTAMP:${id(new Date())}T000000Z\r\nDTSTART;VALUE=DATE:${id(e.date)}\r\nDTEND;VALUE=DATE:${id(e.date)}\r\nSUMMARY:💳 ${e.title}\r\nDESCRIPTION:${e.note}\r\nBEGIN:VALARM\r\nTRIGGER:-P3D\r\nACTION:DISPLAY\r\nDESCRIPTION:Reminder: ${e.title}\r\nEND:VALARM\r\nEND:VEVENT\r\n`;});
-  ics+='END:VCALENDAR';
-  const b=new Blob([ics],{type:'text/calendar'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='card-resets.ics';a.click();
-  showToast(`Exported ${events.length} reset events`);
-}
-
-function showToast(msg,dur=2800){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
-
-/* ── NAV ──────────────────────── */
-document.querySelectorAll('.nb').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');section=btn.dataset.s;
-    renderResetBadge();renderGrid();requestAnimationFrame(updateInd);
-  });
-});
-window.addEventListener('resize',updateInd);
-
-/* ══════════════════════════════════════════════════════
-   AUTH SYSTEM
-   Architecture:
-   - Google Identity Services (GSI) for OAuth — no backend
-   - Magic link via Formspree (or swap in Supabase later)
-   - User profile stored in localStorage keyed by user ID
-   - When user signs in: wallet auto-saves under their profile
-   - Upgrade path: swap localStorage for Supabase calls
-══════════════════════════════════════════════════════ */
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID'; // console.cloud.google.com
-
-let currentUser = null; // { id, name, email, avatar, provider }
+let myCards = new Set((function(){
+  try { var s = localStorage.getItem(SK); return s ? JSON.parse(s) : []; }
+  catch(e) { return []; }
+})());
+let browseCards = new Set();
+let currentView = 'mycards';
+let walletOpen = false;
+let mcSection = 'monthly';
+let brSection = 'monthly';
+let mcQuery = '';
+let brQuery = '';
+let currentUser = null;
 let profilePanelOpen = false;
-
-function initAuth(){
-  // Load saved user from localStorage
-  try {
-    const saved = localStorage.getItem('kbyli_user');
-    if(saved){ currentUser = JSON.parse(saved); renderAuthBtn(); }
-  } catch {}
-
-  // Load Google Identity Services SDK
-  if(GOOGLE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID'){
-    const s = document.createElement('script');
-    s.src = 'https://accounts.google.com/gsi/client';
-    s.onload = initGSI;
-    document.head.appendChild(s);
-  }
-}
-
-function initGSI(){
-  if(!window.google) return;
-  google.accounts.id.initialize({
-    client_id: GOOGLE_CLIENT_ID,
-    callback: handleGoogleSignIn,
-    auto_select: false,
-  });
-}
-
-async function signInGoogle(){
-  if(GOOGLE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID'){
-    // Demo mode — simulate a user for UI preview
-    currentUser = {id:'demo_001',name:'Demo User',email:'demo@cardroundup.com',avatar:null,provider:'google'};
-    saveUser();
-    onSignedIn(currentUser.email);
-    renderAuthBtn();closeAuthModal();
-    showToast('Signed in as Demo User');
-    return;
-  }
-  if(!window.google){ showToast('Loading Google…'); return; }
-  google.accounts.id.prompt();
-}
-
-function handleGoogleSignIn(response){
-  try {
-    const payload = JSON.parse(atob(response.credential.split('.')[1]));
-    currentUser = {
-      id: payload.sub,
-      name: payload.name,
-      email: payload.email,
-      avatar: payload.picture || null,
-      provider: 'google',
-    };
-    saveUser();
-    onSignedIn(payload.email);
-    renderAuthBtn();
-    closeAuthModal();
-    showToast(`Signed in as ${currentUser.name}`);
-    migrateWallet();
-  } catch(e){ console.error('GSI decode error', e); }
-}
-
-// Called whenever a user signs in (Google or magic link)
-// Centralizes all sign-in side effects in one place
-function onSignedIn(email){
-  // Save email to localStorage
-  saveEmail(email);
-  // Do an immediate full sync of current wallet
-  syncWalletToResend(email, [...myCards].join(','));
-  // Hide email bar permanently — signed-in users don't need it
-  localStorage.setItem('eb_d','1');
-  const bar = document.getElementById('emailBar');
-  if(bar) bar.style.display = 'none';
-}
-
-async function sendMagicLink(){
-  const email = document.getElementById('magicEmail').value.trim();
-  if(!email || !email.includes('@')){ return; }
-  const msg = document.getElementById('magicMsg');
-
-  // Same as signing in — sync wallet, hide email bar, save email
-  onSignedIn(email);
-
-  msg.style.display = 'block';
-  console.log('[CardRoundup] Magic link requested:', email);
-  setTimeout(closeAuthModal, 3500);
-}
-
-function saveUser(){
-  try { localStorage.setItem('kbyli_user', JSON.stringify(currentUser)); } catch {}
-}
-
-function signOut(){
-  currentUser = null;
-  localStorage.removeItem('kbyli_user');
-  if(window.google) google.accounts.id.disableAutoSelect();
-  renderAuthBtn();
-  closeProfilePanel();
-  showToast('Signed out');
-}
-
-function migrateWallet(){
-  // Cards are already in myCards (localStorage) — nothing to migrate in this version
-  // With Supabase: upsert the wallet to the user's remote row
-  syncHeader();
-}
-
-function renderAuthBtn(){
-  const btn = document.getElementById('authBtn');
-  const saveBtn = document.getElementById('saveWalletBtn');
-  if(!btn) return;
-  if(currentUser){
-    const initial = currentUser.name ? currentUser.name[0].toUpperCase() : '?';
-    btn.innerHTML = `<div class="auth-avatar">${currentUser.avatar ? `<img src="${currentUser.avatar}" alt="">` : initial}</div>${currentUser.name.split(' ')[0]}`;
-    btn.onclick = toggleProfilePanel;
-    if(saveBtn) saveBtn.style.display='none';
-  } else {
-    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg> Sign in`;
-    btn.onclick = toggleAuthModal;
-    // Show "Save my wallet" nudge only when user has cards but no account
-    if(saveBtn) saveBtn.style.display = myCards.size>0 ? 'flex' : 'none';
-  }
-}
-
-function handleAuthClick(){
-  if(currentUser) toggleProfilePanel();
-  else toggleAuthModal();
-}
-
-/* Auth modal */
 let authModalOpen = false;
-function toggleAuthModal(){
-  authModalOpen = !authModalOpen;
-  document.getElementById('authModal').style.display = authModalOpen ? 'block' : 'none';
-}
-function closeAuthModal(){
-  authModalOpen = false;
-  document.getElementById('authModal').style.display = 'none';
-}
-
-/* Profile panel */
-function toggleProfilePanel(){
-  profilePanelOpen = !profilePanelOpen;
-  if(profilePanelOpen) showProfilePanel(); else closeProfilePanel();
-}
-function closeProfilePanel(){
-  profilePanelOpen = false;
-  const pp = document.getElementById('profilePanel');
-  if(pp) pp.innerHTML = '';
-  pp.style.display = 'none';
-}
-
-function showProfilePanel(){
-  if(!currentUser) return;
-  const pp = document.getElementById('profilePanel');
-  pp.style.display = 'block';
-  const cards = CARDS.filter(c => myCards.has(c.id));
-  const totalAnnual = cards.reduce((acc, c) => acc + (c.summary?.totalV || 0), 0);
-  const totalFee = cards.reduce((acc, c) => acc + c.fee, 0);
-  const net = totalAnnual - totalFee;
-  pp.innerHTML = `<div class="profile-panel">
-    <div class="profile-name">${esc(currentUser.name)}</div>
-    <div class="profile-email">${esc(currentUser.email)}</div>
-    <div class="profile-stat"><span class="profile-stat-l">Cards in wallet</span><span class="profile-stat-v">${myCards.size}</span></div>
-    <div class="profile-stat"><span class="profile-stat-l">Total annual fees</span><span class="profile-stat-v">$${totalFee.toLocaleString()}</span></div>
-    <div class="profile-stat"><span class="profile-stat-l">Total potential credits</span><span class="profile-stat-v">$${totalAnnual.toLocaleString()}+</span></div>
-    <div class="profile-stat"><span class="profile-stat-l">Net value</span><span class="profile-stat-v" style="color:${net>=0?'var(--green)':'var(--red)'}">${net>=0?'+':'-'}$${Math.abs(net).toLocaleString()}</span></div>
-    <div class="profile-actions" style="flex-wrap:wrap;gap:6px">
-      <button class="profile-action" style="flex:0 0 calc(50% - 3px);background:rgba(61,214,140,0.07);color:var(--green);border-color:rgba(61,214,140,0.2)" onclick="closeProfilePanel();openShareModal()">
-        <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>
-        Share stack
-      </button>
-      <button class="profile-action" style="flex:0 0 calc(50% - 3px)" onclick="exportCalendar();closeProfilePanel()">
-        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
-        Sync calendar
-      </button>
-      <button class="profile-action danger" style="flex:1" onclick="signOut()">Sign out</button>
-    </div>
-  </div>`;
-  setTimeout(() => {
-    document.addEventListener('click', function outsideClick(e){
-      if(!pp.contains(e.target) && e.target.id !== 'authBtn'){
-        closeProfilePanel();
-        document.removeEventListener('click', outsideClick);
-      }
-    });
-  }, 10);
-}
-
-/* Close modal on Escape */
-/* ══════════════════════════════════════════════════════
-   SHARE STACK — Canvas image generator
-   Produces a 1200×630px card image (Twitter/OG optimal)
-   showing the user's wallet: cards, credits, fees, net.
-   No backend needed — pure Canvas API.
-══════════════════════════════════════════════════════ */
-
 let shareModalOpen = false;
 
-function openShareModal(){
-  shareModalOpen = true;
-  document.getElementById('shareModal').style.display = 'block';
-  renderShareBody();
+// ═══════════════════════════════════════════════════════
+// UTILITY FUNCTIONS
+// ═══════════════════════════════════════════════════════
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
-function closeShareModal(){
-  shareModalOpen = false;
-  document.getElementById('shareModal').style.display = 'none';
+function daysUntil(d) {
+  var now = new Date(); now.setHours(0,0,0,0);
+  var then = new Date(d); then.setHours(0,0,0,0);
+  return Math.round((then - now) / 86400000);
+}
+function saveMyCards() {
+  try { localStorage.setItem(SK, JSON.stringify([...myCards])); } catch(e) {}
+}
+function showToast(msg, dur) {
+  dur = dur || 2800;
+  var t = document.getElementById('toast');
+  var m = document.getElementById('toast-msg');
+  if (!t || !m) return;
+  m.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, dur);
 }
 
-function renderShareBody(){
-  const body = document.getElementById('shareBody');
-  const cards = CARDS.filter(c => myCards.has(c.id));
+// ═══════════════════════════════════════════════════════
+// HEADER SYNC
+// ═══════════════════════════════════════════════════════
+function syncHeader() {
+  var el = document.getElementById('stat-mine');
+  if (el) el.textContent = myCards.size;
+  var badge = document.getElementById('mycards-badge');
+  if (badge) badge.textContent = myCards.size;
+  var saveBtn = document.getElementById('saveBtn');
+  if (saveBtn) saveBtn.style.display = (myCards.size > 0 && !currentUser) ? 'inline-flex' : 'none';
+  var editBtn = document.getElementById('edit-btn');
+  if (editBtn) editBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
+}
 
-  if(cards.length === 0){
-    body.innerHTML = `<div class="share-empty">
-      <strong>Your wallet is empty</strong>
-      Add cards to your wallet first, then share your stack.
-      <br><br>
-      <button class="share-act share-act-primary" onclick="closeShareModal();toggleWalletEdit()">Add cards</button>
-    </div>`;
+// ═══════════════════════════════════════════════════════
+// EMAIL BAR
+// ═══════════════════════════════════════════════════════
+function getSavedEmail() {
+  try { return localStorage.getItem('cr_email') || ''; } catch(e) { return ''; }
+}
+function syncEmailBar() {
+  var bar = document.getElementById('email-bar');
+  if (!bar) return;
+  var show = myCards.size > 0 && !currentUser && !localStorage.getItem('eb_d') && !getSavedEmail();
+  bar.style.display = show ? 'flex' : 'none';
+}
+function dismissEmail() {
+  localStorage.setItem('eb_d', '1');
+  var bar = document.getElementById('email-bar');
+  if (bar) bar.style.display = 'none';
+}
+async function submitEmail() {
+  var inp = document.getElementById('eb-input');
+  if (!inp) return;
+  var email = inp.value.trim();
+  if (!email || !email.includes('@')) { inp.style.borderColor = 'rgba(232,72,72,.4)'; inp.focus(); return; }
+  inp.style.borderColor = '';
+  try { localStorage.setItem('cr_email', email); } catch(e) {}
+  try {
+    await fetch('/api/subscribe', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email: email, cards: [...myCards].join(',')}) });
+  } catch(e) {}
+  var form = document.getElementById('eb-form');
+  if (form) form.innerHTML = '<div class="eb-ok">&#x2713; You\'re on the list &mdash; we\'ll remind you before credits expire.</div>';
+  localStorage.setItem('eb_d', '1');
+  setTimeout(function(){ var bar = document.getElementById('email-bar'); if (bar) bar.style.display = 'none'; }, 4000);
+}
+
+// ═══════════════════════════════════════════════════════
+// VIEW SWITCHING
+// ═══════════════════════════════════════════════════════
+function switchView(view) {
+  currentView = view;
+  // Update nav tabs
+  document.querySelectorAll('.tn').forEach(function(b) {
+    b.classList.toggle('on', b.dataset.view === view);
+  });
+  // Show/hide views
+  document.querySelectorAll('[id^="view-"]').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  var target = document.getElementById('view-' + view);
+  if (target) target.classList.add('active');
+  // Browse picker only in browse view
+  var bp = document.getElementById('browse-picker');
+  if (bp) bp.style.display = (view === 'browse') ? 'block' : 'none';
+  // Close wallet if switching away
+  if (view !== 'mycards' && walletOpen) {
+    walletOpen = false;
+    var ws = document.getElementById('wallet-setup');
+    if (ws) ws.style.display = 'none';
+  }
+  // Edit button only on mycards
+  var editBtn = document.getElementById('edit-btn');
+  if (editBtn) editBtn.style.display = (view === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
+  // Render the view
+  if (view === 'mycards') { renderMycards(); }
+  if (view === 'browse') { renderBrowsePicker(); renderBrowse(); }
+  if (view === 'promos') { renderPromos(); }
+}
+
+// ═══════════════════════════════════════════════════════
+// WALLET SETUP
+// ═══════════════════════════════════════════════════════
+function toggleWallet() {
+  if (currentView !== 'mycards') { switchView('mycards'); return; }
+  walletOpen = !walletOpen;
+  var ws = document.getElementById('wallet-setup');
+  if (ws) ws.style.display = walletOpen ? 'block' : 'none';
+  if (walletOpen) renderWalletSetup();
+  var editBtn = document.getElementById('edit-btn');
+  if (editBtn) editBtn.innerHTML = walletOpen
+    ? '<svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2l12 12M14 2L2 14"/></svg> Done'
+    : '<svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet';
+}
+function renderWalletSetup() {
+  var el = document.getElementById('ws-rows');
+  if (!el) return;
+  var byI = {};
+  CARDS.forEach(function(c) { if (!byI[c.issuer]) byI[c.issuer] = []; byI[c.issuer].push(c); });
+  el.innerHTML = ISSUERS.filter(function(i){ return byI[i]; }).map(function(issuer) {
+    var chips = byI[issuer].map(function(card) {
+      var on = myCards.has(card.id);
+      var fee = card.fee === 0 ? '$0' : '$' + card.fee;
+      return '<button class="wchip' + (on ? ' on' : '') + '" style="--chip-c:' + card.c + '" data-id="' + card.id + '">'
+        + '<span class="wchip-d"></span>' + esc(card.short) + ' ' + fee + '</button>';
+    }).join('');
+    var label = issuer === 'American Express' ? 'Amex' : issuer;
+    return '<div class="ws-row"><span class="ws-il">' + label + '</span><div class="ws-chips">' + chips + '</div></div>';
+  }).join('');
+  // Wire chip clicks
+  el.querySelectorAll('.wchip').forEach(function(btn) {
+    btn.addEventListener('click', function() { toggleCard(btn.dataset.id); });
+  });
+}
+function toggleCard(id) {
+  if (myCards.has(id)) myCards.delete(id); else myCards.add(id);
+  saveMyCards();
+  syncHeader();
+  syncEmailBar();
+  renderWalletSetup();
+  renderMycards();
+  updateTabCounts();
+}
+
+// ═══════════════════════════════════════════════════════
+// BROWSE PICKER
+// ═══════════════════════════════════════════════════════
+function renderBrowsePicker() {
+  var el = document.getElementById('browse-picker');
+  if (!el) return;
+  var byI = {};
+  CARDS.forEach(function(c) { if (!byI[c.issuer]) byI[c.issuer] = []; byI[c.issuer].push(c); });
+  var groups = ISSUERS.filter(function(i){ return byI[i]; }).map(function(issuer) {
+    var chips = byI[issuer].map(function(card) {
+      var on = browseCards.has(card.id);
+      var fee = card.fee === 0 ? '$0' : '$' + card.fee;
+      return '<button class="chip' + (on ? ' on' : '') + '" style="--chip-c:' + card.c + '" data-id="' + card.id + '">'
+        + '<span class="chip-d"></span>' + esc(card.short) + ' ' + fee + '</button>';
+    }).join('');
+    var label = issuer === 'American Express' ? 'Amex' : issuer;
+    return '<div class="bp-g"><span class="bp-il">' + label + '</span>' + chips + '</div>';
+  }).join('');
+  var sel = browseCards.size;
+  el.innerHTML = '<div class="bp-row">'
+    + '<span class="bp-l">Compare cards</span><div class="bp-sep"></div>'
+    + '<button class="bp-a" id="br-all-btn">All 46</button>'
+    + (sel > 0 ? '<button class="bp-a" id="br-clear-btn">Clear (' + sel + ')</button>' : '')
+    + '<span class="bp-cnt">' + (sel === 0 ? 'None selected' : sel + ' selected') + '</span>'
+    + '</div><div class="bp-chips">' + groups + '</div>';
+  // Wire buttons
+  var allBtn = el.querySelector('#br-all-btn');
+  if (allBtn) allBtn.addEventListener('click', function() { CARDS.forEach(function(c){ browseCards.add(c.id); }); renderBrowsePicker(); renderBrowse(); });
+  var clearBtn = el.querySelector('#br-clear-btn');
+  if (clearBtn) clearBtn.addEventListener('click', function() { browseCards.clear(); renderBrowsePicker(); renderBrowse(); });
+  el.querySelectorAll('.chip').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var id = btn.dataset.id;
+      if (browseCards.has(id)) browseCards.delete(id); else browseCards.add(id);
+      renderBrowsePicker(); renderBrowse();
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════
+// CARD RENDERING HELPERS
+// ═══════════════════════════════════════════════════════
+function makeColHead(card) {
+  var fee = card.fee === 0 ? '$0' : '$' + card.fee;
+  var stale = card.verified < '2026-01';
+  return '<div class="col-head">'
+    + '<div class="col-head-row"><span class="col-name">' + esc(card.name) + '</span><span class="col-fee">' + fee + '/yr</span></div>'
+    + (stale ? '<div class="col-stale">&#x26A0; data may be outdated</div>' : '')
+    + '</div>';
+}
+function makeApplyRow(card, sec) {
+  var link = AFF[card.id];
+  if (!link || sec === 'summary') return '';
+  return '<div class="apply-row"><a class="apply-btn" href="' + esc(link) + '" target="_blank" rel="noopener" onclick="trackApply(\'' + card.id + '\')">'
+    + 'Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>';
+}
+function makeCredits(card, sec, q) {
+  var items = card.credits[sec] || [];
+  var filtered = q ? items.filter(function(it){ return it.n.toLowerCase().indexOf(q) >= 0 || (it.note && it.note.toLowerCase().indexOf(q) >= 0); }) : items;
+  if (items.length === 0) return '<div class="col-body"><div class="col-empty">No credits this cadence</div></div>';
+  if (filtered.length === 0 && q) return '<div class="col-body"><div class="col-nomatch">No match for &ldquo;' + esc(q) + '&rdquo;</div></div>';
+  return '<div class="col-body">' + filtered.map(function(it) {
+    return '<div class="credit-row">'
+      + '<div class="cr-top"><span class="cr-name' + (it.warn ? ' warn' : '') + '">' + esc(it.n) + '</span>'
+      + '<span class="cr-val">' + esc(it.a) + '</span></div>'
+      + (it.note ? '<div class="cr-note">' + esc(it.note) + '</div>' : '')
+      + '</div>';
+  }).join('') + '</div>';
+}
+var SMAX = 3200;
+function makeSummary(card) {
+  var s = card.summary;
+  var sob = (card.sob && card.sob.offer && !card.sob.offer.startsWith('No'))
+    ? '<div class="sum-row"><div class="sum-top"><span class="sum-l">Sign-on bonus</span><span class="sum-v" style="color:var(--green)">' + esc(card.sob.offer) + '</span></div>'
+      + (card.sob.req ? '<div class="sum-note">' + esc(card.sob.req) + '</div>' : '') + '</div>' : '';
+  var feeRow = '<div class="sum-fee"><span class="sum-fee-l">Annual fee</span><span class="sum-fee-v">' + (card.fee === 0 ? '$0' : '$' + card.fee + '/yr') + '</span></div>';
+  var rows = s.rows.map(function(r) {
+    var p = Math.min(100, Math.round(r.v / SMAX * 100));
+    return '<div class="sum-row"><div class="sum-top"><span class="sum-l">' + esc(r.l) + '</span><span class="sum-v">' + esc(r.a) + '</span></div>'
+      + '<div class="sum-bar"><div class="sum-bar-fill" style="width:' + p + '%"></div></div>'
+      + (r.note ? '<div class="sum-note">' + esc(r.note) + '</div>' : '') + '</div>';
+  }).join('');
+  var tp = Math.min(100, Math.round(s.totalV / SMAX * 100));
+  var total = '<div class="sum-row total"><div class="sum-top"><span class="sum-l">Total potential credits</span><span class="sum-v">' + esc(s.total) + '</span></div>'
+    + '<div class="sum-bar"><div class="sum-bar-fill" style="width:' + tp + '%"></div></div>'
+    + (s.note ? '<div class="sum-note">' + esc(s.note) + '</div>' : '') + '</div>';
+  var applyRow = '';
+  var link = AFF[card.id];
+  if (link) {
+    var hasOffer = card.sob && card.sob.offer && !card.sob.offer.startsWith('No');
+    applyRow = '<div class="apply-row">'
+      + (hasOffer ? '<div class="apply-offer"><strong>' + esc(card.sob.offer) + '</strong>' + (card.sob.req ? '<br><span style="font-size:9.5px">' + esc(card.sob.req) + '</span>' : '') + '</div>' : '<div class="apply-offer">View current offers</div>')
+      + '<a class="apply-btn" href="' + esc(link) + '" target="_blank" rel="noopener" onclick="trackApply(\'' + card.id + '\')">'
+      + 'Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>';
+  }
+  return '<div class="col-body">' + sob + feeRow + rows + total + '</div>' + applyRow;
+}
+function buildCol(card, sec, q) {
+  var div = document.createElement('div');
+  div.className = 'col';
+  div.style.cssText = '--cc:' + card.c + ';--ccm:' + card.cm;
+  div.innerHTML = makeColHead(card)
+    + (sec === 'summary' ? makeSummary(card) : makeCredits(card, sec, q))
+    + makeApplyRow(card, sec);
+  return div;
+}
+function wireScrollThumb(gridId, thumbId, fadeId) {
+  setTimeout(function() {
+    var g = document.getElementById(gridId);
+    var thumb = document.getElementById(thumbId);
+    var fade = document.getElementById(fadeId);
+    if (!g || !thumb) return;
+    function upd() {
+      var ratio = g.scrollWidth > g.clientWidth ? g.clientWidth / g.scrollWidth : 1;
+      var pos = g.scrollWidth > g.clientWidth ? g.scrollLeft / (g.scrollWidth - g.clientWidth) : 0;
+      thumb.style.width = (ratio * 100) + '%';
+      thumb.style.transform = 'translateX(' + (pos * (100 / ratio) * (1 - ratio)) + '%)';
+      if (fade) fade.style.display = (g.scrollWidth > g.clientWidth && pos < 0.97) ? 'block' : 'none';
+    }
+    if (g._scrollHandler) g.removeEventListener('scroll', g._scrollHandler);
+    g._scrollHandler = upd;
+    g.addEventListener('scroll', upd, { passive: true });
+    upd();
+  }, 60);
+}
+
+// ═══════════════════════════════════════════════════════
+// MY CARDS RENDER
+// ═══════════════════════════════════════════════════════
+function renderMycards() {
+  var isEmpty = myCards.size === 0;
+  var emptyEl = document.getElementById('empty-state');
+  var contentEl = document.getElementById('mycards-content');
+  var tabsEl = document.getElementById('sect-tabs');
+  var resetEl = document.getElementById('reset-strip');
+  if (emptyEl) emptyEl.style.display = isEmpty ? 'flex' : 'none';
+  if (contentEl) contentEl.style.display = isEmpty ? 'none' : 'block';
+  if (tabsEl) tabsEl.style.display = isEmpty ? 'none' : 'flex';
+  if (resetEl && isEmpty) { resetEl.className = 'reset-strip'; resetEl.innerHTML = ''; }
+  if (isEmpty) return;
+  // Reset badge
+  renderResetBadge();
+  // Build grid
+  var cards = CARDS.filter(function(c){ return myCards.has(c.id); });
+  var sorted = cards;
+  if (mcSection !== 'summary' && mcSection !== 'static') {
+    var withC = cards.filter(function(c){ return (c.credits[mcSection] || []).length > 0; });
+    if (!mcQuery && withC.length > 0) sorted = withC;
+  }
+  if (mcQuery) {
+    sorted = cards.filter(function(c) {
+      return (c.credits[mcSection] || []).some(function(it){
+        return it.n.toLowerCase().indexOf(mcQuery) >= 0 || (it.note && it.note.toLowerCase().indexOf(mcQuery) >= 0);
+      });
+    });
+  }
+  var cntEl = document.getElementById('mc-cnt');
+  if (cntEl) cntEl.innerHTML = '<strong>' + sorted.length + '</strong> card' + (sorted.length !== 1 ? 's' : '');
+  var grid = document.getElementById('mc-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  if (sorted.length === 0) {
+    grid.innerHTML = '<div style="padding:40px;text-align:center;color:var(--txd);font-size:13px">No results.</div>';
     return;
   }
-
-  // Compute stats
-  const totalCredits = cards.reduce((a,c) => a + (c.summary?.totalV||0), 0);
-  const totalFees    = cards.reduce((a,c) => a + c.fee, 0);
-  const net          = totalCredits - totalFees;
-  const issuers      = [...new Set(cards.map(c => c.issuer))];
-
-  body.innerHTML = `
-    <div class="share-preview">
-      <div class="share-canvas-wrap">
-        <div class="share-generating" id="shareGenerating">Generating…</div>
-        <canvas id="shareCanvas" width="1200" height="630"></canvas>
-      </div>
-    </div>
-    <div class="share-actions">
-      <button class="share-act share-act-primary" onclick="downloadShareImage()">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v8M5 7l3 3 3-3M2 13h12"/></svg>
-        Download image
-      </button>
-      <button class="share-act share-act-secondary" onclick="copyShareImage()">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="9" height="9" rx="1.5"/><path d="M3 3V2a1 1 0 011-1h9a1 1 0 011 1v9a1 1 0 01-1 1h-1"/></svg>
-        Copy image
-      </button>
-      <a class="share-act share-act-twitter" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(buildShareText(cards, totalCredits, totalFees, net))}" target="_blank" rel="noopener">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-        Post to X
-      </a>
-      <a class="share-act share-act-reddit" href="https://reddit.com/submit?title=${encodeURIComponent('My credit card stack via Card Roundup')}&url=https://cardroundup.com" target="_blank" rel="noopener">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
-        Post to Reddit
-      </a>
-    </div>`;
-
-  // Generate canvas async so modal renders first
-  requestAnimationFrame(() => drawShareCanvas(cards, totalCredits, totalFees, net));
-}
-
-function buildShareText(cards, totalCredits, totalFees, net){
-  const names = cards.slice(0,4).map(c=>c.short).join(' + ');
-  const extra = cards.length > 4 ? ` +${cards.length-4} more` : '';
-  const netStr = net >= 0 ? `+$${net.toLocaleString()} net positive` : `-$${Math.abs(net).toLocaleString()} net`;
-  return `My credit card stack: ${names}${extra}\n$${totalCredits.toLocaleString()}/yr in credits · $${totalFees.toLocaleString()}/yr in fees · ${netStr}\n\nvia @CardRoundup cardroundup.com`;
-}
-
-function drawShareCanvas(cards, totalCredits, totalFees, net){
-  const canvas = document.getElementById('shareCanvas');
-  const gen    = document.getElementById('shareGenerating');
-  if(!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = 1200, H = 630;
-
-  /* ── BACKGROUND ───────────────────────────────── */
-  // Deep dark gradient
-  const bg = ctx.createLinearGradient(0,0,W,H);
-  bg.addColorStop(0,'#0D0D16');
-  bg.addColorStop(0.55,'#101018');
-  bg.addColorStop(1,'#0E0F1C');
-  ctx.fillStyle = bg;
-  ctx.fillRect(0,0,W,H);
-
-  // Subtle top-left radial glow
-  const glow = ctx.createRadialGradient(W*0.75, 0, 0, W*0.75, 0, H*0.8);
-  glow.addColorStop(0,'rgba(100,100,200,0.055)');
-  glow.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle = glow;
-  ctx.fillRect(0,0,W,H);
-
-  /* ── GRID LINES (subtle) ─────────────────────── */
-  ctx.strokeStyle = 'rgba(255,255,255,0.025)';
-  ctx.lineWidth = 1;
-  for(let x = 60; x < W; x += 60){ ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke(); }
-  for(let y = 60; y < H; y += 60){ ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke(); }
-
-  /* ── BRAND ───────────────────────────────────── */
-  ctx.font = '700 28px "Figtree", system-ui, sans-serif';
-  ctx.fillStyle = 'rgba(255,255,255,0.5)';
-  ctx.fillText('Card Roundup', 56, 68);
-
-  /* ── CARD STACK DISPLAY ──────────────────────── */
-  // Show up to 8 card color bars as a visual stack
-  const maxCards = Math.min(cards.length, 8);
-  const barH = 8, barW = 320, barGap = 14;
-  const stackX = 56, stackY = 100;
-
-  for(let i = 0; i < maxCards; i++){
-    const card = cards[i];
-    const y = stackY + i * (barH + barGap);
-    // Color bar
-    ctx.fillStyle = card.c;
-    roundRect(ctx, stackX, y, barW, barH, 3);
-    ctx.fill();
-    // Mid accent line
-    ctx.fillStyle = card.cm;
-    ctx.fillRect(stackX, y, barW * 0.35, barH);
-    // Card name beside bar
-    ctx.font = '500 17px "Figtree", system-ui';
-    ctx.fillStyle = 'rgba(255,255,255,0.72)';
-    ctx.fillText(card.name, stackX + barW + 20, y + barH - 1);
+  sorted.forEach(function(card) { grid.appendChild(buildCol(card, mcSection, mcQuery)); });
+  // Summary footer
+  var sfEl = document.getElementById('mc-summary-footer');
+  if (sfEl) {
+    if (mcSection === 'summary' && sorted.length >= 2) renderSummaryFooter(sorted, sfEl);
+    else sfEl.innerHTML = '';
   }
-  if(cards.length > 8){
-    const y = stackY + 8 * (barH + barGap);
-    ctx.font = '400 14px "Figtree", system-ui';
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
-    ctx.fillText(`+ ${cards.length - 8} more`, stackX, y + 14);
+  wireScrollThumb('mc-grid', 'mc-thumb', 'mc-fade');
+  updateTabInd();
+}
+
+// ═══════════════════════════════════════════════════════
+// BROWSE RENDER
+// ═══════════════════════════════════════════════════════
+function renderBrowse() {
+  var grid = document.getElementById('br-grid');
+  if (!grid) return;
+  if (browseCards.size === 0) {
+    grid.innerHTML = '<div style="padding:60px 40px;text-align:center">'
+      + '<p style="font-size:16px;font-weight:500;color:var(--txm);margin-bottom:8px">Select cards to compare</p>'
+      + '<p style="font-size:13px;color:var(--txd);line-height:1.7">Click any chip above to add a card. Pick multiple to compare side by side.</p></div>';
+    var cntEl = document.getElementById('br-cnt'); if (cntEl) cntEl.innerHTML = '';
+    return;
   }
-
-  /* ── DIVIDER LINE ────────────────────────────── */
-  const divX = W * 0.54;
-  ctx.strokeStyle = 'rgba(255,255,255,0.07)';
-  ctx.lineWidth = 1;
-  ctx.beginPath(); ctx.moveTo(divX, 52); ctx.lineTo(divX, H - 52); ctx.stroke();
-
-  /* ── STATS RIGHT SIDE ────────────────────────── */
-  const sx = divX + 56;
-  const statsY = H * 0.18;
-
-  // Total credits
-  drawStatBlock(ctx, sx, statsY, 'Total credits/yr',
-    '$' + totalCredits.toLocaleString(),
-    'rgba(106,174,240,0.9)', W);
-
-  // Total fees
-  drawStatBlock(ctx, sx, statsY + 155, 'Annual fees',
-    '$' + totalFees.toLocaleString(),
-    'rgba(255,255,255,0.38)', W);
-
-  // Net value — green if positive, red if not
-  const netColor = net >= 0 ? 'rgba(61,214,140,0.95)' : 'rgba(255,90,90,0.9)';
-  const netLabel = net >= 0 ? 'Net positive / year' : 'Net cost / year';
-  const netDisplay = (net >= 0 ? '+' : '-') + '$' + Math.abs(net).toLocaleString();
-  drawStatBlock(ctx, sx, statsY + 310, netLabel, netDisplay, netColor, W);
-
-  /* ── BOTTOM BADGE ────────────────────────────── */
-  // Cards count pill
-  const pillTxt = `${cards.length} card${cards.length!==1?'s':''} tracked`;
-  ctx.font = '500 15px "Figtree", system-ui';
-  const pillW = ctx.measureText(pillTxt).width + 28;
-  ctx.fillStyle = 'rgba(255,255,255,0.07)';
-  roundRect(ctx, 56, H - 72, pillW, 32, 16); ctx.fill();
-  ctx.fillStyle = 'rgba(255,255,255,0.45)';
-  ctx.fillText(pillTxt, 70, H - 52);
-
-  // URL
-  ctx.font = '400 16px "Figtree", system-ui';
-  ctx.fillStyle = 'rgba(255,255,255,0.22)';
-  ctx.fillText('cardroundup.com', W - 56 - ctx.measureText('cardroundup.com').width, H - 52);
-
-  /* ── DONE ─────────────────────────────────────── */
-  if(gen) gen.style.display = 'none';
+  var cards = CARDS.filter(function(c){ return browseCards.has(c.id); });
+  var sorted = cards;
+  if (brSection !== 'summary' && brSection !== 'static') {
+    var withC = cards.filter(function(c){ return (c.credits[brSection] || []).length > 0; });
+    if (!brQuery && withC.length > 0) sorted = withC;
+  }
+  if (brQuery) {
+    sorted = cards.filter(function(c) {
+      return (c.credits[brSection] || []).some(function(it){
+        return it.n.toLowerCase().indexOf(brQuery) >= 0 || (it.note && it.note.toLowerCase().indexOf(brQuery) >= 0);
+      });
+    });
+  }
+  var cntEl = document.getElementById('br-cnt');
+  if (cntEl) cntEl.innerHTML = '<strong>' + sorted.length + '</strong> card' + (sorted.length !== 1 ? 's' : '');
+  grid.innerHTML = '';
+  sorted.forEach(function(card) { grid.appendChild(buildCol(card, brSection, brQuery)); });
+  var sfEl = document.getElementById('br-summary-footer');
+  if (sfEl) {
+    if (brSection === 'summary' && sorted.length >= 2) renderSummaryFooter(sorted, sfEl);
+    else sfEl.innerHTML = '';
+  }
+  wireScrollThumb('br-grid', 'br-thumb', 'br-fade');
+  updateBrowseTabInd();
 }
 
-function drawStatBlock(ctx, x, y, label, value, valueColor, W){
-  // Label
-  ctx.font = '400 16px "Figtree", system-ui';
-  ctx.fillStyle = 'rgba(255,255,255,0.38)';
-  ctx.fillText(label, x, y);
-  // Value in large mono
-  ctx.font = '500 62px "Figtree", system-ui';
-  ctx.fillStyle = valueColor;
-  // Constrain to right portion
-  const maxW = W - x - 56;
-  ctx.fillText(value, x, y + 75, maxW);
-}
-
-function roundRect(ctx, x, y, w, h, r){
-  ctx.beginPath();
-  ctx.moveTo(x+r, y);
-  ctx.lineTo(x+w-r, y); ctx.arcTo(x+w,y,x+w,y+r,r);
-  ctx.lineTo(x+w, y+h-r); ctx.arcTo(x+w,y+h,x+w-r,y+h,r);
-  ctx.lineTo(x+r, y+h); ctx.arcTo(x,y+h,x,y+h-r,r);
-  ctx.lineTo(x, y+r); ctx.arcTo(x,y,x+r,y,r);
-  ctx.closePath();
-}
-
-function getShareBlob(cb){
-  const canvas = document.getElementById('shareCanvas');
-  if(!canvas) return;
-  canvas.toBlob(blob => cb(blob), 'image/png');
-}
-
-function downloadShareImage(){
-  const canvas = document.getElementById('shareCanvas');
-  if(!canvas) return;
-  const a = document.createElement('a');
-  a.href = canvas.toDataURL('image/png');
-  a.download = 'my-cardroundup-stack.png';
-  a.click();
-  showToast('Image downloaded');
-}
-
-async function copyShareImage(){
-  try {
-    const canvas = document.getElementById('shareCanvas');
-    if(!canvas) return;
-    canvas.toBlob(async blob => {
-      try {
-        await navigator.clipboard.write([new ClipboardItem({'image/png': blob})]);
-        showToast('Image copied to clipboard');
-      } catch {
-        // Fallback: download instead
-        downloadShareImage();
-      }
-    }, 'image/png');
-  } catch { downloadShareImage(); }
-}
-
-document.addEventListener('keydown', e => {
-  if(e.key==='Escape'){closeAuthModal();closeProfilePanel();closeShareModal();}
-});
-
-
-/* ── LIVE PROMOS PAGE ─────────────────────────── */
-function renderPromosPage(){
-  var el=document.getElementById('promosContent');if(!el)return;
-
-  // SECTION 1: Sign-on Bonuses — primary revenue (affiliate links)
-  var sobCards=CARDS.filter(function(c){return AFF[c.id]&&c.sob&&c.sob.offer&&!c.sob.offer.startsWith('No');});
-  var sobHtml=sobCards.map(function(card){
-    var link=AFF[card.id];
-    var owned=myCards.has(card.id);
-    var fee=card.fee===0?'No annual fee':'$'+card.fee+'/yr';
-    return '<div class="sob-card" style="--cc:'+card.c+';--ccm:'+card.cm+'">'
-      +'<div class="sob-head"><div class="sob-name">'+esc(card.name)+'</div>'
-      +'<div class="sob-meta">'+esc(fee)+(owned?' &nbsp;&#x2022;&nbsp; <span class="sob-owned">&#x2713; In your wallet</span>':'')+'</div></div>'
-      +'<div class="sob-body"><div class="sob-offer">'+esc(card.sob.offer)+'</div>'
-      +(card.sob.req?'<div class="sob-req">Spend '+esc(card.sob.req)+'</div>':'')+'</div>'
-      +'<div class="sob-foot"><a class="sob-apply" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer" onclick="trackApply(''+card.id+'')">Apply now '
-      +'<svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>'
-      +'</div>';
+// ═══════════════════════════════════════════════════════
+// LIVE PROMOS RENDER
+// ═══════════════════════════════════════════════════════
+function renderPromos() {
+  var el = document.getElementById('promos-content');
+  if (!el) return;
+  // Sign-on bonuses
+  var sobCards = CARDS.filter(function(c){ return AFF[c.id] && c.sob && c.sob.offer && !c.sob.offer.startsWith('No'); });
+  var sobHtml = sobCards.map(function(card) {
+    var link = AFF[card.id];
+    var owned = myCards.has(card.id);
+    var fee = card.fee === 0 ? 'No annual fee' : '$' + card.fee + '/yr';
+    return '<div class="sob-card" style="--cc:' + card.c + ';--ccm:' + card.cm + '">'
+      + '<div class="sob-head"><div class="sob-name">' + esc(card.name) + '</div>'
+      + '<div class="sob-meta">' + esc(fee) + (owned ? ' &nbsp;&bull;&nbsp; <span class="sob-owned">&#x2713; In your wallet</span>' : '') + '</div></div>'
+      + '<div class="sob-body"><div class="sob-offer">' + esc(card.sob.offer) + '</div>'
+      + (card.sob.req ? '<div class="sob-req">Spend requirement: ' + esc(card.sob.req) + '</div>' : '') + '</div>'
+      + '<div class="sob-foot"><a class="sob-apply" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer" onclick="trackApply(\'' + card.id + '\')">'
+      + 'Apply now <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>'
+      + '</div>';
   }).join('');
-
-  // SECTION 2: Transfer Bonuses
-  var live=PROMOS.filter(function(p){return daysUntil(p.expires)>=0;})
-    .sort(function(a,b){return daysUntil(a.expires)-daysUntil(b.expires);});
-  var ownedCount=live.filter(function(p){return p.cards.some(function(id){return myCards.has(id);});}).length;
-  var hdrNote=myCards.size>0
-    ?'<strong style="color:var(--green)">'+ownedCount+' of '+live.length+' match your wallet.</strong> Green chips = your cards.'
-    :'<a href="#" onclick="setMode('mycards');return false;" style="color:var(--blue)">Add your cards</a> to see which promos apply.';
-
-  var transferHtml=live.map(function(p){
-    var d=daysUntil(p.expires),hot=d<=7,warm=d<=14;
-    var link='https://www.google.com/search?q='+encodeURIComponent(p.currency+' '+p.partner+' transfer bonus');
-    var chips=CARDS.filter(function(cd){return p.cards.indexOf(cd.id)>=0;})
-      .map(function(cd){return '<span class="tr-chip'+(myCards.has(cd.id)?' owned':'')+'" title="'+esc(cd.name)+'">'+esc(cd.short)+'</span>';}).join('');
-    return '<div class="tr-card'+(hot?' hot':warm?' warm':'')+'">'
-      +'<div class="tr-left"><div class="tr-currency">'+esc(p.currency)+'</div>'
-      +'<div><span class="tr-bonus">'+esc(p.bonus)+'</span><span class="tr-bonus-label">transfer bonus</span></div>'
-      +'<div class="tr-partner">'+esc(p.partner)+'</div>'
-      +'<div class="tr-chips-label">Eligible cards</div><div class="tr-chips">'+chips+'</div></div>'
-      +'<div class="tr-right"><span class="tr-exp'+(hot?' hot':'')+'">'+(d===0?'Expires today':'Expires in '+d+' day'+(d!==1?'s':''))+'</span>'
-      +'<a class="tr-apply" href="'+esc(link)+'" target="_blank" rel="noopener">Transfer points '
-      +'<svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div></div>';
+  // Transfer bonuses
+  var live = PROMOS.filter(function(p){ return daysUntil(p.expires) >= 0; })
+    .sort(function(a, b){ return daysUntil(a.expires) - daysUntil(b.expires); });
+  var ownedCount = live.filter(function(p){ return p.cards.some(function(id){ return myCards.has(id); }); }).length;
+  var transferNote = myCards.size > 0
+    ? '<strong style="color:var(--green)">' + ownedCount + ' of ' + live.length + ' match your wallet.</strong> Green chips = your cards.'
+    : 'Add your cards to My Cards to see which promos you qualify for.';
+  var transferHtml = live.map(function(p) {
+    var d = daysUntil(p.expires), hot = d <= 7, warm = d <= 14;
+    var link = 'https://www.google.com/search?q=' + encodeURIComponent(p.currency + ' ' + p.partner + ' transfer bonus');
+    var chips = CARDS.filter(function(cd){ return p.cards.indexOf(cd.id) >= 0; })
+      .map(function(cd){ return '<span class="tr-chip' + (myCards.has(cd.id) ? ' owned' : '') + '">' + esc(cd.short) + '</span>'; }).join('');
+    return '<div class="tr-card' + (hot ? ' hot' : warm ? ' warm' : '') + '">'
+      + '<div class="tr-left">'
+      + '<div class="tr-currency">' + esc(p.currency) + '</div>'
+      + '<div><span class="tr-bonus">' + esc(p.bonus) + '</span><span class="tr-bonus-lbl">transfer bonus</span></div>'
+      + '<div class="tr-partner">' + esc(p.partner) + '</div>'
+      + '<div class="tr-chips-lbl">Eligible cards</div><div class="tr-chips">' + chips + '</div>'
+      + '</div>'
+      + '<div class="tr-right">'
+      + '<span class="tr-exp' + (hot ? ' hot' : '') + '">' + (d === 0 ? 'Expires today' : 'Expires in ' + d + ' day' + (d !== 1 ? 's' : '')) + '</span>'
+      + '<a class="tr-apply" href="' + esc(link) + '" target="_blank" rel="noopener">Transfer points '
+      + '<svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a>'
+      + '</div></div>';
   }).join('');
-
-  el.innerHTML='<div class="promos-hdr">'
-    +'<div class="promos-hdr-t">Live Promos &amp; Sign-on Offers</div>'
-    +'<div class="promos-hdr-s">Current welcome bonuses and transfer promotions. Apply through our links at no cost to you.</div></div>'
-    +'<div class="promos-section">'
-    +'<div class="promos-section-t">&#x1F4B3; Sign-on Bonuses</div>'
-    +'<div class="promos-section-s">Current welcome offers. These change frequently &#x2014; apply before they drop.</div>'
-    +'<div class="sob-grid">'+sobHtml+'</div></div>'
-    +(live.length>0?'<div class="promos-section">'
-    +'<div class="promos-section-t">&#x1F501; Live Transfer Bonuses</div>'
-    +'<div class="promos-section-s">'+hdrNote+'</div>'
-    +'<div class="transfer-grid">'+transferHtml+'</div></div>':'');
+  el.innerHTML = '<div class="promos-hdr">'
+    + '<div class="promos-hdr-title">Live Promos &amp; Offers</div>'
+    + '<div class="promos-hdr-sub">Current welcome bonuses and transfer promotions. Apply through our links at no cost to you.</div>'
+    + '</div>'
+    + '<div class="promos-section">'
+    + '<div class="promos-section-title">&#x1F4B3; Sign-on Bonuses</div>'
+    + '<div class="promos-section-sub">Current welcome offers &mdash; apply before they drop.</div>'
+    + '<div class="sob-grid">' + sobHtml + '</div></div>'
+    + (live.length > 0
+      ? '<div class="promos-section"><div class="promos-section-title">&#x1F501; Transfer Bonuses</div>'
+        + '<div class="promos-section-sub">' + transferNote + '</div>'
+        + '<div class="transfer-list">' + transferHtml + '</div></div>'
+      : '');
 }
 
-/* ── INIT ──────────────────────── */
-if(mode==='browse'){
-  document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m==='browse'));
-  document.getElementById('browsePicker').style.display='block';
+// ═══════════════════════════════════════════════════════
+// RESET BADGE
+// ═══════════════════════════════════════════════════════
+function renderResetBadge() {
+  var el = document.getElementById('reset-strip');
+  if (!el) return;
+  var t = new Date(), y = t.getFullYear(), m = t.getMonth();
+  var resets = {
+    monthly: { d: daysUntil(new Date(y, m+1, 1)), label: 'monthly reset' },
+    quarterly: (function(){ var qs=[0,3,6,9]; var nq=qs.find(function(q){return q>m;}); if(nq==null)nq=qs[0]+12; return {d:daysUntil(new Date(y+(nq>=12?1:0),nq%12,1)),label:'quarterly reset'}; })(),
+    semiannual: { d: daysUntil(m < 6 ? new Date(y,6,1) : new Date(y+1,0,1)), label: 'semi-annual reset' },
+    annual: { d: daysUntil(new Date(y+1,0,1)), label: 'annual reset' }
+  };
+  var r = resets[mcSection];
+  if (!r || r.d < 0) { el.className = 'reset-strip'; el.innerHTML = ''; return; }
+  var hot = r.d <= 7;
+  el.className = 'reset-strip show' + (hot ? ' hot' : '');
+  el.innerHTML = '&#x27F3; <strong>' + r.d + ' day' + (r.d !== 1 ? 's' : '') + '</strong> until ' + r.label;
 }
-initEmailBar();
-initAuth();
-syncHeader();
-renderBrowsePicker();
-var ewP=document.getElementById('ewPickBtn');
-var ewB=document.getElementById('ewBrowseBtn');
-if(ewP) ewP.addEventListener('click',function(){
-  walletOpen=true;
-  var ws=document.getElementById('walletSetup');
-  if(ws){ws.style.display='block';renderWalletSetup();}
-  var eb=document.getElementById('editBtn');
-  if(eb)eb.innerHTML='Done';
-  if(ws)ws.scrollIntoView({behavior:'smooth',block:'nearest'});
-});
-if(ewB) ewB.addEventListener('click',function(){setMode('browse');});
-renderResetBadge();
-renderGrid();
-updateTabCounts();
-requestAnimationFrame(updateInd);
+
+// ═══════════════════════════════════════════════════════
+// TAB COUNTS + INDICATORS
+// ═══════════════════════════════════════════════════════
+function updateTabCounts() {
+  var cards = CARDS.filter(function(c){ return myCards.has(c.id); });
+  document.querySelectorAll('#sect-tabs .st').forEach(function(btn) {
+    var s = btn.dataset.s;
+    if (!s || s === 'summary') return;
+    var cnt = btn.querySelector('.st-cnt');
+    if (!cnt) { cnt = document.createElement('span'); cnt.className = 'st-cnt'; btn.appendChild(cnt); }
+    var n = cards.filter(function(c){ return (c.credits[s] || []).length > 0; }).length;
+    cnt.textContent = n;
+    cnt.style.display = n > 0 ? 'inline' : 'none';
+  });
+}
+function updateTabInd() {
+  var bar = document.getElementById('sect-tabs');
+  var ind = document.getElementById('st-ind');
+  if (!bar || !ind) return;
+  var active = bar.querySelector('.st.on');
+  if (!active) return;
+  var br = active.getBoundingClientRect();
+  var nr = bar.getBoundingClientRect();
+  ind.style.width = br.width + 'px';
+  ind.style.transform = 'translateX(' + (br.left - nr.left + bar.scrollLeft) + 'px)';
+}
+function updateBrowseTabInd() {
+  var bar = document.getElementById('browse-sect-tabs');
+  var ind = document.getElementById('bst-ind');
+  if (!bar || !ind) return;
+  var active = bar.querySelector('.st.on');
+  if (!active) return;
+  var br = active.getBoundingClientRect();
+  var nr = bar.getBoundingClientRect();
+  ind.style.width = br.width + 'px';
+  ind.style.transform = 'translateX(' + (br.left - nr.left + bar.scrollLeft) + 'px)';
+}
+
+// ═══════════════════════════════════════════════════════
+// SUMMARY FOOTER
+// ═══════════════════════════════════════════════════════
+function renderSummaryFooter(cards, el) {
+  var tc = cards.reduce(function(a,c){ return a + (c.summary ? c.summary.totalV || 0 : 0); }, 0);
+  var tf = cards.reduce(function(a,c){ return a + c.fee; }, 0);
+  var net = tc - tf;
+  el.innerHTML = '<div style="padding:20px 0 4px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
+    + '<div style="font-size:13px;color:var(--txm)"><span style="color:var(--tx);font-weight:500">Stack total:</span>'
+    + ' $' + tc.toLocaleString() + '/yr credits &middot; $' + tf.toLocaleString() + '/yr fees &middot; '
+    + '<span style="color:' + (net >= 0 ? 'var(--green)' : 'var(--red)') + ';font-weight:500">'
+    + (net >= 0 ? '+' : '-') + '$' + Math.abs(net).toLocaleString() + ' net</span></div>'
+    + '<button class="btn btn-share" style="margin-left:auto;flex-shrink:0" onclick="openShareModal()">'
+    + '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>'
+    + ' Share your stack</button></div>';
+}
+
+// ═══════════════════════════════════════════════════════
+// CALENDAR EXPORT
+// ═══════════════════════════════════════════════════════
+function exportCalendar() {
+  var today = new Date(), y = today.getFullYear(), m = today.getMonth();
+  function pad(n){ return String(n).padStart(2,'0'); }
+  function isoDate(d){ return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate()); }
+  function uid(){ return Math.random().toString(36).slice(2)+'@cardroundup.app'; }
+  var visible = CARDS.filter(function(c){ return myCards.has(c.id); });
+  var events = [];
+  for (var i = 0; i < 3; i++) {
+    var d = new Date(y, m+1+i, 1);
+    var mc = visible.filter(function(c){ return (c.credits.monthly||[]).length>0; });
+    if (mc.length > 0) events.push({date:d,title:'Monthly credits reset — '+mc.length+' cards',note:mc.map(function(c){return c.name;}).join(', ')});
+  }
+  var ac = visible.filter(function(c){ return (c.credits.annual||[]).length>0; });
+  if (ac.length > 0) events.push({date:new Date(y+1,0,1),title:'Annual credits reset — '+ac.length+' cards',note:ac.map(function(c){return c.name;}).join(', ')});
+  if (events.length === 0) { showToast('No upcoming resets to export'); return; }
+  var ics = 'BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Card Roundup//EN\r\nCALSCALE:GREGORIAN\r\n';
+  events.forEach(function(e){
+    ics += 'BEGIN:VEVENT\r\nUID:'+uid()+'\r\nDTSTAMP:'+isoDate(new Date())+'T000000Z\r\nDTSTART;VALUE=DATE:'+isoDate(e.date)+'\r\nDTEND;VALUE=DATE:'+isoDate(e.date)+'\r\nSUMMARY:\uD83D\uDCB3 '+e.title+'\r\nDESCRIPTION:'+e.note+'\r\nEND:VEVENT\r\n';
+  });
+  ics += 'END:VCALENDAR';
+  var blob = new Blob([ics], {type:'text/calendar'});
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'card-resets.ics'; a.click();
+  showToast('Exported ' + events.length + ' events');
+}
+
+// ═══════════════════════════════════════════════════════
+// MISC
+// ═══════════════════════════════════════════════════════
+function trackApply(id) {
+  try { if (window.posthog) posthog.capture('apply_click', {card_id: id}); } catch(e) {}
+}
+function openAuthModal() { authModalOpen = true; var m = document.getElementById('auth-modal'); if (m) m.style.display = 'block'; }
+function closeAuthModal() { authModalOpen = false; var m = document.getElementById('auth-modal'); if (m) m.style.display = 'none'; }
+function openShareModal() {
+  shareModalOpen = true;
+  var m = document.getElementById('share-modal');
+  if (m) m.style.display = 'block';
+  var body = document.getElementById('share-body');
+  if (body) body.innerHTML = '<div class="share-empty"><strong>Share coming soon</strong>Export your wallet as an image to share with the community.</div>';
+}
+function closeShareModal() { shareModalOpen = false; var m = document.getElementById('share-modal'); if (m) m.style.display = 'none'; }
+function handleAuthClick() { openAuthModal(); }
+function signInGoogle() { showToast('Google sign-in coming soon'); closeAuthModal(); }
+function sendMagicLink() {
+  var email = document.getElementById('magic-email');
+  if (!email || !email.value.includes('@')) return;
+  var msg = document.getElementById('magic-msg');
+  if (msg) { msg.style.display = 'block'; msg.textContent = '\u2713 Check your email for a sign-in link.'; }
+}
+
+// ═══════════════════════════════════════════════════════
+// INIT — runs after all HTML is parsed, all vars declared
+// ═══════════════════════════════════════════════════════
+(function() {
+  // Nav tab clicks
+  document.querySelectorAll('.tn[data-view]').forEach(function(btn) {
+    btn.addEventListener('click', function() { switchView(btn.dataset.view); });
+  });
+  // Edit wallet button
+  var editBtn = document.getElementById('edit-btn');
+  if (editBtn) editBtn.addEventListener('click', function() { toggleWallet(); });
+  // Section tab clicks — My Cards
+  document.querySelectorAll('#sect-tabs .st').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#sect-tabs .st').forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+      mcSection = btn.dataset.s;
+      renderMycards();
+      renderResetBadge();
+      requestAnimationFrame(updateTabInd);
+    });
+  });
+  // Section tab clicks — Browse
+  document.querySelectorAll('#browse-sect-tabs .st').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#browse-sect-tabs .st').forEach(function(b){ b.classList.remove('on'); });
+      btn.classList.add('on');
+      brSection = btn.dataset.s;
+      renderBrowse();
+      requestAnimationFrame(updateBrowseTabInd);
+    });
+  });
+  // Search — My Cards
+  var mcSearch = document.getElementById('mc-search');
+  var mcClear = document.getElementById('mc-search-clear');
+  if (mcSearch) {
+    mcSearch.addEventListener('input', function() {
+      mcQuery = mcSearch.value.trim().toLowerCase();
+      if (mcClear) mcClear.style.display = mcQuery ? 'flex' : 'none';
+      renderMycards();
+    });
+  }
+  if (mcClear) {
+    mcClear.addEventListener('click', function() {
+      if (mcSearch) mcSearch.value = '';
+      mcQuery = '';
+      mcClear.style.display = 'none';
+      renderMycards();
+    });
+  }
+  // Search — Browse
+  var brSearch = document.getElementById('br-search');
+  var brClear = document.getElementById('br-search-clear');
+  if (brSearch) {
+    brSearch.addEventListener('input', function() {
+      brQuery = brSearch.value.trim().toLowerCase();
+      if (brClear) brClear.style.display = brQuery ? 'flex' : 'none';
+      renderBrowse();
+    });
+  }
+  if (brClear) {
+    brClear.addEventListener('click', function() {
+      if (brSearch) brSearch.value = '';
+      brQuery = '';
+      brClear.style.display = 'none';
+      renderBrowse();
+    });
+  }
+  // Empty state buttons
+  var esAdd = document.getElementById('es-add-btn');
+  if (esAdd) {
+    esAdd.addEventListener('click', function() {
+      walletOpen = true;
+      var ws = document.getElementById('wallet-setup');
+      if (ws) { ws.style.display = 'block'; renderWalletSetup(); ws.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+      var editBtn2 = document.getElementById('edit-btn');
+      if (editBtn2) { editBtn2.style.display = 'flex'; editBtn2.innerHTML = '<svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2l12 12M14 2L2 14"/></svg> Done'; }
+    });
+  }
+  var esBrowse = document.getElementById('es-browse-btn');
+  if (esBrowse) esBrowse.addEventListener('click', function() { switchView('browse'); });
+  // Email bar
+  var ebSubmit = document.getElementById('eb-submit');
+  if (ebSubmit) ebSubmit.addEventListener('click', submitEmail);
+  var ebInput = document.getElementById('eb-input');
+  if (ebInput) ebInput.addEventListener('keydown', function(e) { if (e.key === 'Enter') submitEmail(); });
+  var ebDismiss = document.getElementById('eb-dismiss');
+  if (ebDismiss) ebDismiss.addEventListener('click', dismissEmail);
+  // Calendar button
+  var calBtn = document.getElementById('cal-btn');
+  if (calBtn) calBtn.addEventListener('click', exportCalendar);
+  // Keyboard escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeAuthModal(); closeShareModal(); }
+  });
+  // Resize
+  window.addEventListener('resize', function() { updateTabInd(); updateBrowseTabInd(); });
+
+  // BOOT
+  syncHeader();
+  syncEmailBar();
+  renderMycards();
+  updateTabCounts();
+  requestAnimationFrame(updateTabInd);
+})();
 </script>
 </body>
 </html>
