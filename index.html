@@ -1199,47 +1199,44 @@ function handleGoogleCredential(response) {
 }
 
 async function signInUser(email, name, pic) {
-  // 1. Save to localStorage so we remember them on return visits
+  // 1. Save to localStorage
   try {
     localStorage.setItem('cr_email', email);
     localStorage.setItem('cr_name', name);
     if (pic) localStorage.setItem('cr_pic', pic);
   } catch(e) {}
 
-  // 2. Set currentUser so the UI updates
+  // 2. Update UI immediately
   currentUser = { email, name, pic };
   showSignedInUI(email, name, pic);
+  syncHeader();
+  syncEmailBar();
 
-  // 3. Check if they have a saved wallet on the server (cross-device restore)
-  var existingCards = [...myCards];
+  // 3. Try to restore wallet from server
+  var localCards = [...myCards]; // cards already in this browser
   try {
     var r = await fetch('/api/get-wallet?email=' + encodeURIComponent(email));
     var data = await r.json();
-    if (data.found && data.cards) {
-      var serverCards = data.cards.split(',').filter(Boolean);
-      if (serverCards.length > 0 && existingCards.length === 0) {
-        // New device — load their saved wallet
-        serverCards.forEach(function(id) { myCards.add(id); });
-        saveMyCards();
-        renderMycards();
-        updateTabCounts();
-        showToast('\u2713 Wallet loaded — ' + serverCards.length + ' card' + (serverCards.length !== 1 ? 's' : '') + ' restored');
-      } else {
-        // Existing device — sync current wallet to server
-        await syncWalletToServer(email);
-        showToast('\u2713 Signed in as ' + name.split(' ')[0] + ' — wallet saved');
-      }
-    } else {
-      // No server wallet yet — save current one
+    var serverCards = (data.cards || '').split(',').filter(Boolean);
+
+    if (serverCards.length > 0 && localCards.length === 0) {
+      // New device with no local cards — restore from server
+      serverCards.forEach(function(id) { myCards.add(id); });
+      saveMyCards();
+      renderMycards();
+      updateTabCounts();
+      showToast('\u2713 Wallet restored — ' + serverCards.length + ' card' + (serverCards.length !== 1 ? 's' : ''));
+    } else if (localCards.length > 0) {
+      // This device has cards — sync them to server (don't overwrite with empty)
       await syncWalletToServer(email);
       showToast('\u2713 Signed in as ' + name.split(' ')[0] + ' — wallet saved');
+    } else {
+      // No cards anywhere yet
+      showToast('\u2713 Signed in as ' + name.split(' ')[0]);
     }
   } catch(e) {
     showToast('\u2713 Signed in as ' + name.split(' ')[0]);
   }
-
-  syncHeader();
-  syncEmailBar();
 }
 
 async function syncWalletToServer(email) {
