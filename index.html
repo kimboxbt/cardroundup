@@ -1131,8 +1131,6 @@ function initGoogleSignIn() {
     setTimeout(initGoogleSignIn, 500);
     return;
   }
-  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === '645643410488-h8b9o5qp2a6abm6gjtgrtrl7st1v1o0g.apps.googleusercontent.com') return;
-
   google.accounts.id.initialize({
     client_id: GOOGLE_CLIENT_ID,
     callback: handleGoogleCredential,
@@ -1161,7 +1159,6 @@ function handleAuthClick() { openAuthModal(); }
 
 function renderGoogleButton() {
   if (typeof google === 'undefined' || !google.accounts) return;
-  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === '645643410488-h8b9o5qp2a6abm6gjtgrtrl7st1v1o0g.apps.googleusercontent.com') return;
   var container = document.getElementById('gsi-btn-container');
   if (!container) return;
   // Clear and re-render — Google fails silently on hidden/zero-size elements
