@@ -706,6 +706,10 @@ function toggleCard(id) {
   renderWalletSetup();
   renderMycards();
   updateTabCounts();
+  // If signed in, keep server wallet in sync automatically
+  if (currentUser && currentUser.email) {
+    syncWalletToServer(currentUser.email);
+  }
   var addedCard = CARDS.find(function(c){ return c.id === id; });
   if (myCards.has(id) && addedCard && addedCard.fee > 0 && !renewals[id]) {
     showRenewalPicker(addedCard);
