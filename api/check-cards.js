@@ -67,16 +67,30 @@ function postJson(url, data, apiKey) {
 }
 
 function extractFeeFromHtml(html) {
-  // Matches: "$395 annual fee", "annual fee of $150", "annual fee: $95"
+  // Strip out credit/reward dollar amounts to avoid false matches
+  // e.g. "up to $250 in statement credits" should not match
+  const cleaned = html
+    .replace(/up to \$[\d,]+/gi, '')
+    .replace(/\$[\d,]+ (statement credit|in credit|back|cash back|reward|bonus|value)/gi, '')
+    .replace(/earn \$[\d,]+/gi, '')
+    .replace(/save \$[\d,]+/gi, '');
+
+  // Look for the actual annual fee in tight context
   const patterns = [
     /\$(\d{1,4})\s+annual\s+fee/i,
-    /annual\s+fee[^$\d]{0,20}\$(\d{1,4})/i,
+    /annual\s+fee[^$\d]{0,15}\$(\d{1,4})/i,
+    /annual\s+fee\s+of\s+\$(\d{1,4})/i,
   ];
   for (const p of patterns) {
-    const m = html.match(p);
-    if (m) return parseInt(m[1], 10);
+    const m = cleaned.match(p);
+    if (m) {
+      const fee = parseInt(m[1], 10);
+      // Ignore implausible values — real annual fees are $0, $25–$695
+      // $0 means we probably just didn't find it, not that the card is free
+      if (fee > 0 && fee <= 700) return fee;
+    }
   }
-  return null;
+  return null;  // null = could not determine, do not flag
 }
 
 function daysSince(verifiedStr) {
