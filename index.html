@@ -6,813 +6,354 @@
 <title>Card Roundup — Never lose a credit card benefit again</title>
 <meta name="description" content="Track every credit card benefit before it expires. 46 premium cards, organized by reset cadence. Free.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<!-- PostHog Analytics — tracks affiliate clicks and page views -->
 <script>
 !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]);t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString()+" (stub)"},o="capture identify alias people.set people.set_once set register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+// Replace YOUR_POSTHOG_KEY below with key from posthog.com after creating account
 posthog.init('YOUR_POSTHOG_KEY',{api_host:'https://us.i.posthog.com',loaded:function(ph){if('YOUR_POSTHOG_KEY'==='YOUR_POSTHOG_KEY')ph.opt_out_capturing();}});
 </script>
 <style>
-/* ══════════════════════════════════════════════════
-   CARD ROUNDUP — Design System
-   Dark premium terminal aesthetic.
-   Inspired by Linear, Vercel, Raycast.
-══════════════════════════════════════════════════ */
-:root {
-  /* Backgrounds */
-  --bg:  #06060E;
-  --s0:  #0A0A14;
-  --s1:  #0F0F1C;
-  --s2:  #151524;
-  --s3:  #1C1C2E;
-  --s4:  #242438;
-  /* Borders */
-  --bd:  rgba(255,255,255,0.06);
-  --bd2: rgba(255,255,255,0.10);
-  --bd3: rgba(255,255,255,0.18);
-  /* Text */
-  --tx:  #E8E8F4;
-  --txm: #7070A0;
-  --txd: #3A3A58;
-  /* Accents */
-  --amber: #E89820;
-  --red:   #E84848;
-  --green: #24B870;
-  --blue:  #4888D8;
-  --purple:#8868C8;
-  /* Layout */
-  --px: 52px;
-  --nav-h: 48px;
-  --rad: 10px;
+:root{
+  --bg:#06060E;--s0:#0B0B16;--s1:#10101C;--s2:#161624;--s3:#1E1E2C;
+  --bd:rgba(255,255,255,0.06);--bd2:rgba(255,255,255,0.10);--bd3:rgba(255,255,255,0.18);
+  --tx:#E8E8F4;--txm:#6868A0;--txd:#363654;
+  --amber:#E89820;--red:#E84848;--green:#24B870;--blue:#4888D8;
+  --px:52px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { height: 100%; }
-body {
-  font-family: 'Figtree', sans-serif;
-  background: var(--bg); color: var(--tx);
-  font-size: 14px; line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100vh;display:flex;flex-direction:column}
 
-/* ══ HERO HEADER ═══════════════════════════════════ */
-.ph {
-  padding: 40px var(--px) 0;
-  background: var(--bg);
-  flex-shrink: 0; position: relative; overflow: hidden;
-}
-/* Top-right purple ambient */
-.ph::before {
-  content: ''; position: absolute; top: -140px; right: -100px;
-  width: 640px; height: 520px; border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(88,68,200,0.10) 0%, transparent 60%);
-  pointer-events: none;
-}
-/* Bottom-left green ambient */
-.ph::after {
-  content: ''; position: absolute; bottom: 0; left: 10%;
-  width: 500px; height: 160px;
-  background: radial-gradient(ellipse, rgba(36,184,112,0.05) 0%, transparent 70%);
-  pointer-events: none;
-}
-.ph-row {
-  display: flex; align-items: flex-start;
-  justify-content: space-between; gap: 24px;
-  position: relative; z-index: 1;
-}
-.ph-logo {
-  font-family: 'Cormorant', serif;
-  font-size: clamp(40px, 5vw, 58px);
-  font-weight: 600; letter-spacing: -.03em; line-height: 1;
-  background: linear-gradient(135deg, #FFFFFF 0%, #D0D0F0 45%, #9898C8 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text; margin-bottom: 8px;
-}
-.ph-sub { font-size: 15px; color: var(--txm); line-height: 1.5; }
-.ph-acts { display: flex; gap: 8px; align-items: center; flex-shrink: 0; padding-top: 6px; }
-/* Stat pills */
-.ph-meta {
-  display: flex; align-items: center; gap: 6px;
-  margin-top: 22px; padding-bottom: 28px;
-  position: relative; z-index: 1;
-}
-.phm {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-family: 'JetBrains Mono', monospace; font-size: 10px;
-  color: var(--txd); letter-spacing: .04em;
-  padding: 5px 12px; border-radius: 20px;
-  background: rgba(255,255,255,0.035);
-  border: 1px solid var(--bd);
-}
-.phm strong { color: var(--txm); font-weight: 500; }
-/* Fade line at bottom of header */
-.ph-line {
-  position: relative; z-index: 1; height: 1px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    var(--bd2) 15%,
-    var(--bd2) 85%,
-    transparent 100%
-  );
-}
+/* HEADER */
+.ph{padding:40px var(--px) 28px;background:var(--bg);border-bottom:1px solid var(--bd2);flex-shrink:0;position:relative;overflow:hidden}
+.ph::before{content:'';position:absolute;top:-120px;right:-80px;width:600px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(88,68,200,0.10) 0%,transparent 60%);pointer-events:none}
+.ph::after{content:'';position:absolute;bottom:-60px;left:15%;width:500px;height:200px;background:radial-gradient(ellipse,rgba(36,184,112,0.06) 0%,transparent 70%);pointer-events:none}
+.ph-row{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;position:relative;z-index:1}
+.ph-logo{font-family:'Cormorant',serif;font-size:clamp(40px,5vw,58px);font-weight:600;letter-spacing:-.03em;line-height:1;background:linear-gradient(135deg,#FFF 0%,#D0D0F0 45%,#9898C8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.ph-sub{font-size:15px;color:var(--txm);line-height:1.5}
+.ph-acts{display:flex;gap:8px;align-items:center;flex-shrink:0;padding-top:6px}
+.ph-meta{display:flex;align-items:center;gap:6px;margin-top:22px;position:relative;z-index:1}
+.phm{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--txd);letter-spacing:.04em;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,0.04);border:1px solid var(--bd)}
+.phm strong{color:var(--txm);font-weight:500}
 
-/* ══ BUTTONS ════════════════════════════════════════ */
-.btn {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 18px; border-radius: 7px;
-  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 500;
-  cursor: pointer; transition: all .16s;
-  border: 1px solid var(--bd2);
-  white-space: nowrap; text-decoration: none; line-height: 1;
-}
-.btn-g { background: transparent; color: var(--txm); }
-.btn-g:hover { background: var(--s2); color: var(--tx); border-color: var(--bd3); }
-.btn-p {
-  background: var(--tx); color: var(--bg);
-  border-color: transparent; font-weight: 600;
-}
-.btn-p:hover {
-  background: #E8E8FF;
-  box-shadow: 0 0 24px rgba(160,160,255,0.20);
-  transform: translateY(-1px);
-}
-.btn-p:active { transform: none; box-shadow: none; }
-.btn-lg { padding: 13px 32px; font-size: 15px; border-radius: 8px; letter-spacing: .01em; }
-.btn-save { background: rgba(255,255,255,0.04); color: var(--txm); border-color: var(--bd); }
-.btn-save:hover { background: var(--s2); color: var(--tx); border-color: var(--bd3); }
-.btn-share { background: rgba(36,184,112,0.07); color: var(--green); border-color: rgba(36,184,112,0.18); }
-.btn-share:hover { background: rgba(36,184,112,0.13); border-color: rgba(36,184,112,0.30); }
-.auth-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 8px 16px; border-radius: 7px;
-  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 500;
-  color: var(--txm); background: transparent; border: 1px solid var(--bd2);
-  cursor: pointer; transition: all .16s;
-}
-.auth-btn:hover { background: var(--s2); color: var(--tx); border-color: var(--bd3); }
-.auth-avatar {
-  width: 22px; height: 22px; border-radius: 50%;
-  background: var(--s3); border: 1px solid var(--bd2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 10px; font-weight: 600; color: var(--txm);
-  overflow: hidden; flex-shrink: 0;
-}
-.auth-avatar img { width: 100%; height: 100%; object-fit: cover; }
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .16s;border:1px solid var(--bd2);white-space:nowrap;text-decoration:none;line-height:1}
+.btn-g{background:transparent;color:var(--txm)}.btn-g:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.btn-p{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}.btn-p:hover{background:#E8E8FF;box-shadow:0 0 24px rgba(160,160,255,0.20);transform:translateY(-1px)}.btn-p:active{transform:none;box-shadow:none}
+.btn-lg{padding:13px 32px;font-size:15px;border-radius:8px}
+.btn-save{background:rgba(255,255,255,0.04);color:var(--txm);border-color:var(--bd)}.btn-save:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.btn-share{background:rgba(36,184,112,0.07);color:var(--green);border-color:rgba(36,184,112,0.18)}.btn-share:hover{background:rgba(36,184,112,0.13);border-color:rgba(36,184,112,0.30)}
+.auth-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txm);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .16s}.auth-btn:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.auth-avatar{width:22px;height:22px;border-radius:50%;background:var(--s3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--txm);overflow:hidden;flex-shrink:0}.auth-avatar img{width:100%;height:100%;object-fit:cover}
 
-/* ══ PRIMARY NAV ════════════════════════════════════ */
-.pnav {
-  background: rgba(6,6,14,0.92);
-  border-bottom: 1px solid var(--bd2);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  position: sticky; top: 0; z-index: 200;
-  display: flex; align-items: stretch;
-  padding: 0 var(--px);
-}
-.pn-tab {
-  display: flex; align-items: center; gap: 8px;
-  padding: 0 20px; height: var(--nav-h);
-  border: none; background: transparent;
-  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 500;
-  color: var(--txd); cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: color .15s, border-color .15s;
-  white-space: nowrap;
-}
-.pn-tab:hover { color: var(--txm); }
-.pn-tab.on { color: var(--tx); border-bottom-color: rgba(255,255,255,0.45); }
-.pn-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: .35; transition: opacity .15s; }
-.pn-tab.on .pn-dot { opacity: 1; }
-.pn-badge {
-  font-family: 'JetBrains Mono', monospace; font-size: 9px;
-  background: var(--s3); color: var(--txm);
-  padding: 2px 7px; border-radius: 10px;
-  border: 1px solid var(--bd);
-}
-.pn-tab.on .pn-badge { background: rgba(255,255,255,0.08); color: var(--tx); border-color: var(--bd2); }
+/* MODE BAR — sticky nav */
+.mode-bar{background:rgba(6,6,14,0.95);border-bottom:1px solid var(--bd2);padding:0 var(--px);display:flex;align-items:stretch;position:sticky;top:0;z-index:200;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.mb{padding:0 20px;height:48px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s;display:flex;align-items:center;gap:7px}
+.mb:hover{color:var(--txm)}.mb.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.45)}
+.mb-dot{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0;opacity:.35;transition:opacity .15s}.mb.on .mb-dot{opacity:1}
+.mcb{font-family:'JetBrains Mono',monospace;font-size:9px;background:var(--s3);color:var(--txm);padding:2px 7px;border-radius:10px;border:1px solid var(--bd)}.mb.on .mcb{background:rgba(255,255,255,0.08);color:var(--tx)}
+.mb-edit{color:var(--txd);font-size:11px;border-bottom:none!important;margin-left:auto;padding-left:16px;border-left:1px solid var(--bd)}.mb-edit:hover{color:var(--txm);background:transparent}
 
-/* ══ WALLET SETUP PANEL ═════════════════════════════ */
-.ws {
-  padding: 28px var(--px) 32px;
-  border-bottom: 1px solid var(--bd2);
-  background: var(--s0);
-  position: relative;
-}
-.ws::before {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(36,184,112,0.025) 0%, transparent 50%);
-  pointer-events: none;
-}
-.ws-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 22px; position: relative; z-index: 1; }
-.ws-t { font-family: 'Cormorant', serif; font-size: 22px; font-weight: 500; color: var(--tx); margin-bottom: 4px; }
-.ws-s { font-size: 12.5px; color: var(--txm); line-height: 1.5; }
-.ws-close {
-  background: none; border: 1px solid var(--bd); color: var(--txd);
-  cursor: pointer; font-size: 16px; padding: 5px 9px;
-  transition: all .15s; border-radius: 6px; line-height: 1;
-}
-.ws-close:hover { color: var(--txm); background: var(--s2); border-color: var(--bd2); }
-.ws-rows { display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1; }
-.ws-row { display: flex; align-items: flex-start; gap: 14px; }
-.ws-il {
-  font-size: 9px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--txd); width: 80px; flex-shrink: 0; padding-top: 8px;
-}
-.ws-chips { display: flex; flex-wrap: wrap; gap: 6px; }
-.wchip {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 5px 11px 5px 8px; border-radius: 6px;
-  font-size: 12px; font-weight: 500; cursor: pointer;
-  border: 1px solid var(--chip-c, var(--bd2));
-  color: var(--txd); background: transparent;
-  transition: all .13s; font-family: 'Figtree', sans-serif; white-space: nowrap;
-}
-.wchip-d { width: 5px; height: 5px; border-radius: 50%; background: var(--chip-c, var(--txd)); flex-shrink: 0; opacity: .35; transition: opacity .13s; }
-.wchip:hover:not(.on) { color: var(--txm); border-color: var(--bd3); background: var(--s2); }
-.wchip.on { color: #fff; background: color-mix(in srgb, var(--chip-c) 18%, transparent); border-color: var(--chip-c); }
-.wchip.on .wchip-d { opacity: 1; background: rgba(255,255,255,.5); }
+/* ONBOARDING STRIP */
+.onboard-strip{background:linear-gradient(90deg,rgba(36,184,112,0.04),rgba(72,136,216,0.04));border-bottom:1px solid rgba(255,255,255,0.06);padding:14px var(--px);display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.ob-step{display:flex;align-items:center;gap:8px}
+.ob-num{width:20px;height:20px;border-radius:50%;background:var(--s3);border:1px solid var(--bd2);font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--txm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ob-txt{font-size:11.5px;color:var(--txm)}.ob-txt strong{color:var(--tx);font-weight:500}
+.ob-arr{color:var(--txd);font-size:14px}
+.ob-dismiss{margin-left:auto;background:none;border:none;color:var(--txd);cursor:pointer;font-size:11px;font-family:'Figtree',sans-serif;transition:color .15s}.ob-dismiss:hover{color:var(--txm)}
 
-/* ══ BROWSE PICKER ══════════════════════════════════ */
-.bpicker {
-  background: var(--s0); border-bottom: 1px solid var(--bd);
-  padding: 16px var(--px) 18px;
-}
-.bp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-.bp-title { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--txd); }
-.bp-actions { display: flex; align-items: center; gap: 12px; }
-.bp-a { font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 500; color: var(--txd); background: none; border: none; cursor: pointer; padding: 3px 0; transition: color .15s; }
-.bp-a:hover { color: var(--txm); }
-.bp-count { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--txd); font-style: italic; }
-.bp-chips { display: flex; flex-wrap: wrap; gap: 5px 16px; }
-.bp-g { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
-.bp-il { font-size: 8.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--txd); padding-right: 6px; border-right: 1px solid var(--bd2); margin-right: 2px; }
-.chip {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 4px 10px 4px 7px; border-radius: 5px;
-  font-size: 11.5px; font-weight: 500; cursor: pointer;
-  border: 1px solid var(--chip-c, var(--bd2));
-  color: var(--txd); background: transparent;
-  transition: all .13s; font-family: 'Figtree', sans-serif; white-space: nowrap;
-}
-.chip-d { width: 5px; height: 5px; border-radius: 50%; background: var(--chip-c, var(--txd)); flex-shrink: 0; opacity: .35; transition: opacity .13s; }
-.chip.on { color: #fff; background: color-mix(in srgb, var(--chip-c) 16%, transparent); border-color: var(--chip-c); }
-.chip.on .chip-d { opacity: 1; }
-.chip:not(.on):hover { color: var(--txm); border-color: var(--bd3); background: var(--s2); }
+/* WALLET SETUP */
+.ws{padding:28px var(--px) 32px;border-bottom:1px solid var(--bd2);background:var(--s0);position:relative}
+.ws::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(36,184,112,0.025) 0%,transparent 50%);pointer-events:none}
+.ws-t{font-family:'Cormorant',serif;font-size:22px;font-weight:500;margin-bottom:4px;color:var(--tx);position:relative;z-index:1}
+.ws-s{font-size:12.5px;color:var(--txm);margin-bottom:18px;line-height:1.5;position:relative;z-index:1}
+.ws-rows{display:flex;flex-direction:column;gap:14px;position:relative;z-index:1}
+.ws-row{display:flex;align-items:flex-start;gap:14px}
+.ws-il{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--txd);width:80px;flex-shrink:0;padding-top:8px}
+.ws-chips{display:flex;flex-wrap:wrap;gap:6px}
+.wchip{display:inline-flex;align-items:center;gap:5px;padding:5px 11px 5px 8px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--chip-c,var(--bd2));color:var(--txd);background:transparent;transition:all .13s;font-family:'Figtree',sans-serif;white-space:nowrap}
+.wchip-d{width:5px;height:5px;border-radius:50%;background:var(--chip-c,var(--txd));flex-shrink:0;opacity:.35;transition:opacity .13s}
+.wchip:hover:not(.on){color:var(--txm);border-color:var(--bd3);background:var(--s2)}
+.wchip.on{color:#fff;background:color-mix(in srgb,var(--chip-c) 16%,transparent);border-color:var(--chip-c)}.wchip.on .wchip-d{opacity:1;background:rgba(255,255,255,.45)}
 
-/* ══ EMAIL BAR ══════════════════════════════════════ */
-.email-bar {
-  background: rgba(36,184,112,0.03); border-bottom: 1px solid rgba(36,184,112,0.08);
-  padding: 12px var(--px); display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-}
-.eb-text { font-size: 13px; color: var(--txm); display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.eb-text strong { color: var(--tx); font-weight: 600; }
-.eb-form { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 240px; max-width: 420px; }
-.eb-input {
-  flex: 1; padding: 8px 13px;
-  background: var(--s2); border: 1px solid var(--bd2); border-radius: 6px;
-  font-family: 'Figtree', sans-serif; font-size: 13px; color: var(--tx);
-  outline: none; transition: all .15s;
-}
-.eb-input::placeholder { color: var(--txd); }
-.eb-input:focus { border-color: rgba(36,184,112,.35); background: var(--s1); }
-.eb-sub {
-  padding: 8px 16px; border-radius: 6px;
-  border: 1px solid rgba(36,184,112,0.24);
-  cursor: pointer; background: rgba(36,184,112,0.12);
-  color: var(--green); font-family: 'Figtree', sans-serif;
-  font-size: 12.5px; font-weight: 600;
-  transition: all .15s; white-space: nowrap; flex-shrink: 0;
-}
-.eb-sub:hover { background: rgba(36,184,112,0.20); }
-.eb-x { margin-left: auto; background: none; border: none; color: var(--txd); cursor: pointer; font-size: 16px; line-height: 1; padding: 4px; transition: color .15s; flex-shrink: 0; }
-.eb-x:hover { color: var(--txm); }
-.eb-ok { font-size: 13px; color: var(--green); display: flex; align-items: center; gap: 6px; }
+/* BROWSE PICKER */
+.bpicker{background:var(--s0);border-bottom:1px solid var(--bd);padding:14px var(--px) 16px}
+.bp-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.bp-l{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--txd);flex-shrink:0}
+.bp-div{width:1px;height:12px;background:var(--bd2);flex-shrink:0}
+.bp-a{font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);background:none;border:none;cursor:pointer;padding:2px 0;transition:color .15s}.bp-a:hover{color:var(--txm)}
+.bp-cnt{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--txd);margin-left:auto;font-style:italic}
+.bp-chips{display:flex;flex-wrap:wrap;gap:5px 16px}
+.bp-g{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.bp-il{font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--txd);padding-right:6px;border-right:1px solid var(--bd2);margin-right:2px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px 4px 7px;border-radius:5px;font-size:11.5px;font-weight:500;cursor:pointer;border:1px solid var(--chip-c,var(--bd2));color:var(--txd);background:transparent;transition:all .13s;font-family:'Figtree',sans-serif;white-space:nowrap}
+.chip-d{width:5px;height:5px;border-radius:50%;background:var(--chip-c,var(--txd));flex-shrink:0;opacity:.35;transition:opacity .13s}
+.chip.on{color:#fff;background:color-mix(in srgb,var(--chip-c) 14%,transparent);border-color:var(--chip-c)}.chip.on .chip-d{opacity:1}
+.chip:not(.on):hover{color:var(--txm);border-color:var(--bd3);background:var(--s2)}
 
-/* ══ SECTION TABS ═══════════════════════════════════ */
-.section-bar {
-  display: flex; align-items: stretch;
-  background: var(--s0); border-bottom: 1px solid var(--bd);
-  overflow-x: auto; scrollbar-width: none;
-  position: relative; flex-shrink: 0;
-  padding: 0 var(--px);
-}
-.section-bar::-webkit-scrollbar { display: none; }
-.stab {
-  display: flex; align-items: center; gap: 6px;
-  padding: 0 14px; height: 42px;
-  border: none; background: transparent;
-  font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 500;
-  color: var(--txd); cursor: pointer; white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  transition: color .15s, border-color .15s; flex-shrink: 0;
-}
-.stab:hover { color: var(--txm); }
-.stab.on { color: var(--tx); border-bottom-color: rgba(255,255,255,0.35); }
-.stab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; opacity: .4; transition: opacity .15s; }
-.stab.on .stab-dot { opacity: 1; }
-.stab-cnt {
-  font-family: 'JetBrains Mono', monospace; font-size: 8px;
-  background: var(--s3); color: var(--txd);
-  padding: 1px 5px; border-radius: 8px; min-width: 16px; text-align: center;
-  border: 1px solid var(--bd);
-}
-.stab.on .stab-cnt { background: rgba(255,255,255,.08); color: var(--txm); border-color: var(--bd2); }
-.sbar-ind {
-  position: absolute; bottom: 0; left: 0; height: 1.5px;
-  background: rgba(255,255,255,0.45); border-radius: 2px 2px 0 0;
-  transition: transform .22s cubic-bezier(.4,0,.2,1), width .22s cubic-bezier(.4,0,.2,1);
-  pointer-events: none;
-}
+/* EMAIL BAR */
+.email-bar{background:rgba(36,184,112,0.03);border-bottom:1px solid rgba(36,184,112,0.08);padding:12px var(--px);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.eb-text{font-size:13px;color:var(--txm);display:flex;align-items:center;gap:8px;flex-shrink:0}.eb-text strong{color:var(--tx);font-weight:600}
+.eb-form{display:flex;align-items:center;gap:8px;flex:1;min-width:240px;max-width:420px}
+.eb-input{flex:1;padding:8px 13px;background:var(--s2);border:1px solid var(--bd2);border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;color:var(--tx);outline:none;transition:all .15s}.eb-input::placeholder{color:var(--txd)}.eb-input:focus{border-color:rgba(36,184,112,.35);background:var(--s1)}
+.eb-sub{padding:8px 16px;border-radius:6px;border:1px solid rgba(36,184,112,0.24);cursor:pointer;background:rgba(36,184,112,0.12);color:var(--green);font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:600;transition:all .15s;white-space:nowrap;flex-shrink:0}.eb-sub:hover{background:rgba(36,184,112,0.20)}
+.eb-x{margin-left:auto;background:none;border:none;color:var(--txd);cursor:pointer;font-size:16px;line-height:1;padding:4px;transition:color .15s;flex-shrink:0}.eb-x:hover{color:var(--txm)}
+.eb-ok{font-size:13px;color:var(--green);display:flex;align-items:center;gap:6px}
 
-/* Reset countdown */
-.reset-strip { display: none; align-items: center; gap: 8px; padding: 5px var(--px); background: var(--s0); border-bottom: 1px solid var(--bd); flex-shrink: 0; }
-.reset-strip.show { display: flex; }
-.reset-strip.hot { background: rgba(232,72,72,0.04); border-bottom-color: rgba(232,72,72,0.10); }
-.reset-txt { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .05em; color: var(--txd); }
-.reset-txt strong { color: var(--txm); }
-.reset-txt.hot strong { color: #F06040; }
+/* NAV TABS */
+.nav-wrap{background:var(--s0);border-bottom:1px solid var(--bd2);position:sticky;top:48px;z-index:100}
+.nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;padding:0 var(--px);position:relative}
+.nav::-webkit-scrollbar{display:none}
+.nb{padding:0 14px;height:42px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:5px;transition:color .15s;flex-shrink:0;border-bottom:2px solid transparent}
+.nb:hover{color:var(--txm)}.nb.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.35)}
+.nd{width:6px;height:6px;border-radius:50%;display:inline-block;flex-shrink:0;opacity:.4;transition:opacity .15s}.nb.on .nd{opacity:1}
+.nb-cnt{font-family:'JetBrains Mono',monospace;font-size:8px;background:var(--s3);color:var(--txd);padding:1px 5px;border-radius:8px;min-width:16px;text-align:center;border:1px solid var(--bd)}.nb.on .nb-cnt{background:rgba(255,255,255,.08);color:var(--txm);border-color:var(--bd2)}
+.nav-ind{position:absolute;bottom:0;left:0;height:1.5px;background:rgba(255,255,255,0.4);border-radius:2px 2px 0 0;transition:transform .22s cubic-bezier(.4,0,.2,1),width .22s cubic-bezier(.4,0,.2,1)}
+.reset-b{display:flex;align-items:center;gap:8px;padding:5px var(--px);background:var(--s0);border-bottom:1px solid var(--bd)}
+.reset-b.urg{background:rgba(232,72,72,0.03);border-bottom-color:rgba(232,72,72,0.08)}
+.rb-t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:var(--txd)}.rb-t strong{color:var(--txm)}.rb-t.hot strong{color:#F06040}
 
-/* ══ CONTENT AREA ═══════════════════════════════════ */
-.content-pad { padding: 22px var(--px) 80px; flex: 1; }
-.toolbar { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.sw { position: relative; width: 240px; flex-shrink: 0; }
-.sw svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 13px; height: 13px; color: var(--txd); pointer-events: none; }
-.si-inp {
-  width: 100%; padding: 8px 28px 8px 30px;
-  background: var(--s1); border: 1px solid var(--bd2); border-radius: 6px;
-  font-family: 'Figtree', sans-serif; font-size: 13px; color: var(--tx);
-  outline: none; transition: all .15s;
-}
-.si-inp::placeholder { color: var(--txd); }
-.si-inp:focus { border-color: var(--bd3); background: var(--s2); }
-.sc-x { display: none; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 15px; height: 15px; align-items: center; justify-content: center; background: var(--s3); border-radius: 50%; cursor: pointer; font-size: 8px; color: var(--txd); border: none; }
-.tb-cnt { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: .05em; color: var(--txd); margin-left: auto; }
-.tb-cnt strong { color: var(--txm); }
-.tb-edit {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px; border-radius: 6px;
-  font-family: 'Figtree', sans-serif; font-size: 12.5px; font-weight: 500;
-  color: var(--txm); background: transparent; border: 1px solid var(--bd2);
-  cursor: pointer; transition: all .15s; white-space: nowrap;
-}
-.tb-edit:hover { background: var(--s2); color: var(--tx); border-color: var(--bd3); }
-.tb-edit.open { background: var(--s2); color: var(--tx); border-color: var(--bd3); }
-.tb-cal {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 7px 12px; border-radius: 6px;
-  font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 500;
-  color: var(--txd); background: transparent; border: 1px solid var(--bd2);
-  cursor: pointer; transition: all .15s;
-}
-.tb-cal:hover { color: var(--txm); border-color: var(--bd3); }
+/* MAIN CONTENT */
+.main{padding:20px var(--px) 72px;flex:1}
+.toolbar{display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.sw{position:relative;width:240px;flex-shrink:0}
+.sw svg{position:absolute;left:9px;top:50%;transform:translateY(-50%);width:13px;height:13px;color:var(--txd);pointer-events:none}
+.si-inp{width:100%;padding:8px 28px 8px 28px;background:var(--s1);border:1px solid var(--bd2);border-radius:6px;font-family:'Figtree',sans-serif;font-size:13px;color:var(--tx);outline:none;transition:all .15s}.si-inp::placeholder{color:var(--txd)}.si-inp:focus{border-color:var(--bd3);background:var(--s2)}
+.sc-x{display:none;position:absolute;right:7px;top:50%;transform:translateY(-50%);width:15px;height:15px;align-items:center;justify-content:center;background:var(--s3);border-radius:50%;cursor:pointer;font-size:8px;color:var(--txd);border:none}
+.tb-cnt{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;color:var(--txd);margin-left:auto}.tb-cnt strong{color:var(--txm)}
+.tb-edit{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12.5px;font-weight:500;color:var(--txm);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s;white-space:nowrap}.tb-edit:hover{background:var(--s2);color:var(--tx);border-color:var(--bd3)}.tb-edit.open{background:var(--s2);color:var(--tx);border-color:var(--bd3)}
+.tb-cal{display:inline-flex;align-items:center;gap:5px;padding:7px 12px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);background:transparent;border:1px solid var(--bd2);cursor:pointer;transition:all .15s}.tb-cal:hover{color:var(--txm);border-color:var(--bd3)}
 
-/* ══ EMPTY STATE ════════════════════════════════════ */
-.ew {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; padding: 90px 40px 80px;
-  min-height: 460px; flex: 1; position: relative;
-}
-/* Dot grid */
-.ew::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
-  background-size: 38px 38px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 85% at 50% 50%, black 30%, transparent 100%);
-  mask-image: radial-gradient(ellipse 80% 85% at 50% 50%, black 30%, transparent 100%);
-  pointer-events: none;
-}
-/* Glow */
-.ew::after {
-  content: ''; position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%);
-  width: 480px; height: 240px; border-radius: 50%;
-  background: radial-gradient(ellipse, rgba(88,68,200,0.08) 0%, transparent 65%);
-  pointer-events: none;
-}
-.ew-i { font-size: 26px; margin-bottom: 20px; opacity: .12; position: relative; z-index: 1; }
-.ew-t {
-  font-family: 'Cormorant', serif;
-  font-size: clamp(32px, 4.5vw, 50px);
-  font-weight: 500; margin-bottom: 14px; color: var(--tx);
-  line-height: 1.1; max-width: 560px;
-  position: relative; z-index: 1; letter-spacing: -.02em;
-}
-.ew-s {
-  font-size: 15px; color: var(--txm); margin-bottom: 36px;
-  max-width: 400px; line-height: 1.75; position: relative; z-index: 1;
-}
-.ew-browse { margin-top: 20px; font-size: 12.5px; color: var(--txd); position: relative; z-index: 1; }
-.ew-browse-link { background: none; border: none; color: var(--txm); font-size: 12.5px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; padding: 0; transition: color .13s; }
-.ew-browse-link:hover { color: var(--tx); }
+/* EMPTY STATE */
+.ew{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 40px 80px;min-height:460px;flex:1;position:relative}
+.ew::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.07) 1px,transparent 1px);background-size:38px 38px;-webkit-mask-image:radial-gradient(ellipse 80% 85% at 50% 50%,black 30%,transparent 100%);mask-image:radial-gradient(ellipse 80% 85% at 50% 50%,black 30%,transparent 100%);pointer-events:none}
+.ew::after{content:'';position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:480px;height:240px;border-radius:50%;background:radial-gradient(ellipse,rgba(88,68,200,0.08) 0%,transparent 65%);pointer-events:none}
+.ew-i{font-size:26px;margin-bottom:20px;opacity:.12;position:relative;z-index:1}
+.ew-t{font-family:'Cormorant',serif;font-size:clamp(32px,4.5vw,50px);font-weight:500;margin-bottom:14px;color:var(--tx);line-height:1.1;max-width:560px;position:relative;z-index:1;letter-spacing:-.02em}
+.ew-s{font-size:15px;color:var(--txm);margin-bottom:36px;max-width:400px;line-height:1.75;position:relative;z-index:1}
+.ew-browse{margin-top:20px;font-size:12.5px;color:var(--txd);position:relative;z-index:1}
+.ew-browse-link{background:none;border:none;color:var(--txm);font-size:12.5px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:0;transition:color .13s}.ew-browse-link:hover{color:var(--tx)}
 
-/* Browse empty */
-.browse-empty { padding: 80px 40px; text-align: center; }
-.browse-empty-t { font-size: 16px; font-weight: 500; color: var(--txm); margin-bottom: 8px; }
-.browse-empty-s { font-size: 13px; color: var(--txd); line-height: 1.7; }
+/* GRID */
+.gw{position:relative}
+.gfade{position:absolute;right:0;top:0;bottom:0;width:100px;background:linear-gradient(to right,transparent,var(--bg) 90%);pointer-events:none;z-index:2}
+.grid{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,0.07) transparent;padding-right:80px;padding-bottom:4px}
+.grid::-webkit-scrollbar{height:3px}.grid::-webkit-scrollbar-track{background:transparent}.grid::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:2px}
+.scroll-track{height:1.5px;background:var(--bd);border-radius:1px;margin-top:8px;overflow:hidden}
+.scroll-thumb-el{height:100%;background:rgba(255,255,255,0.14);border-radius:1px;transition:width .08s,transform .08s}
 
-/* ══ CARD GRID ══════════════════════════════════════ */
-.gw { position: relative; }
-.gfade { position: absolute; right: 0; top: 0; bottom: 20px; width: 100px; background: linear-gradient(to right, transparent, var(--bg) 90%); pointer-events: none; z-index: 2; }
-.grid {
-  display: flex; gap: 10px;
-  overflow-x: auto; scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.07) transparent;
-  padding-right: 80px; padding-bottom: 4px;
-}
-.grid::-webkit-scrollbar { height: 3px; }
-.grid::-webkit-scrollbar-track { background: transparent; }
-.grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 2px; }
-.scroll-track { height: 1.5px; background: var(--bd); border-radius: 1px; margin-top: 8px; overflow: hidden; }
-.scroll-thumb-el { height: 100%; background: rgba(255,255,255,0.14); border-radius: 1px; transition: width .08s, transform .08s; }
+/* CARD COLUMN */
+.col{background:var(--s1);border:1px solid var(--bd);border-top:2px solid var(--cc,#333);border-radius:0 0 10px 10px;flex:1 1 280px;min-width:264px;max-width:318px;scroll-snap-align:start;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .22s,transform .2s;position:relative}
+.col:hover{border-color:rgba(255,255,255,0.13);border-top-color:var(--cc,#333);box-shadow:0 16px 48px rgba(0,0,0,.4);transform:translateY(-2px)}
+.col::before{content:'';position:absolute;top:0;left:0;right:0;height:60px;background:linear-gradient(180deg,color-mix(in srgb,var(--cc,#333) 10%,transparent) 0%,transparent 100%);pointer-events:none;opacity:0;transition:opacity .2s}.col:hover::before{opacity:1}
+.ch{padding:12px 15px 10px;background:rgba(0,0,0,.14);border-bottom:1px solid var(--bd);flex-shrink:0}
+.ch-top{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.ch-name{font-size:12px;font-weight:600;letter-spacing:.025em;color:var(--ccm,var(--txm));line-height:1.3;flex:1}
+.ch-fee{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--txd);white-space:nowrap;flex-shrink:0}
+.ch-meta{display:flex;align-items:center;gap:5px;margin-top:3px}
+.ch-ver{font-family:'JetBrains Mono',monospace;font-size:7.5px;color:var(--txd)}.ch-ver.stale{color:var(--amber)}
+.ch-flag{font-size:8px;color:var(--txd);cursor:pointer;border:none;background:none;font-family:'Figtree',sans-serif;padding:0;text-decoration:underline;text-decoration-color:transparent;transition:all .15s}.ch-flag:hover{color:var(--txm);text-decoration-color:currentColor}
+.cb{flex:1;display:flex;flex-direction:column;min-height:0}
+.ci{padding:10px 15px;border-bottom:1px solid var(--bd)}.ci:last-child{border-bottom:none}
+.ci-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.ci-n{font-size:12.5px;font-weight:400;color:var(--txm);flex:1;line-height:1.4}.ci-n.warn{color:#F06840;font-weight:500}
+.ci-a{font-family:'JetBrains Mono',monospace;font-size:13.5px;font-weight:600;color:var(--ccm,var(--txm));white-space:nowrap;flex-shrink:0;letter-spacing:-.02em}
+.ci-note{font-size:10px;color:var(--txd);margin-top:3px;line-height:1.5}
+.empty{padding:32px 15px;font-size:12.5px;color:var(--txd);font-style:italic;text-align:center;flex:1;display:flex;align-items:center;justify-content:center}
+.nomatch{padding:10px 15px;font-size:11.5px;color:var(--txd);font-style:italic;text-align:center}
+.si{padding:9px 15px;border-bottom:1px solid var(--bd)}.si:last-child{border-bottom:none}
+.si-top{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-bottom:4px}
+.si-l{font-size:11.5px;color:var(--txm)}.si-v{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;color:var(--ccm,var(--txm))}
+.bar{height:2px;background:var(--bd2);border-radius:1px;overflow:hidden}.bar-f{height:100%;border-radius:1px;background:var(--ccm,var(--txm));transition:width .8s ease}
+.si-note{font-size:10px;color:var(--txd);margin-top:3px}
+.si.tot{background:rgba(255,255,255,.015)}.si.tot .si-l{font-weight:600;font-size:12.5px;color:var(--tx)}.si.tot .si-v{font-size:14.5px}
+.si-fee{padding:9px 15px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between}
+.si-fl{font-size:11.5px;color:var(--txm)}.si-fv{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--txd)}
+.apply-row{margin-top:auto;padding:9px 15px 10px;border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0}
+.apply-row-offer{font-size:11px;color:var(--txd);flex:1;line-height:1.45;min-width:0}.apply-row-offer strong{color:var(--txm);font-weight:500}
+.apply-link{display:inline-flex;align-items:center;gap:5px;font-family:'Figtree',sans-serif;font-size:11.5px;font-weight:600;padding:5px 12px;border-radius:5px;background:color-mix(in srgb,var(--cc,#333) 12%,transparent);border:1px solid color-mix(in srgb,var(--cc,#333) 28%,transparent);color:var(--ccm,var(--txm));text-decoration:none;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.apply-link:hover{background:color-mix(in srgb,var(--cc,#333) 22%,transparent);border-color:color-mix(in srgb,var(--cc,#333) 45%,transparent)}
+.apply-link svg{transition:transform .14s}.apply-link:hover svg{transform:translateX(2px)}
 
-/* ══ CARD COLUMN ════════════════════════════════════ */
-.col {
-  background: var(--s1); border: 1px solid var(--bd);
-  border-top: 2px solid var(--cc, #333);
-  border-radius: 0 0 var(--rad) var(--rad);
-  flex: 1 1 280px; min-width: 264px; max-width: 318px;
-  scroll-snap-align: start; display: flex; flex-direction: column;
-  transition: border-color .2s, box-shadow .22s, transform .22s;
-  position: relative;
-}
-.col:hover {
-  border-color: rgba(255,255,255,0.13);
-  border-top-color: var(--cc, #333);
-  box-shadow: 0 16px 48px rgba(0,0,0,.4);
-  transform: translateY(-2px);
-}
-/* Subtle card-color top glow */
-.col::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 64px;
-  background: linear-gradient(180deg, color-mix(in srgb, var(--cc, #333) 10%, transparent) 0%, transparent 100%);
-  border-radius: 0 0 4px 4px; pointer-events: none;
-  opacity: 0; transition: opacity .22s;
-}
-.col:hover::before { opacity: 1; }
-.ch { padding: 13px 16px 11px; background: rgba(0,0,0,.15); border-bottom: 1px solid var(--bd); flex-shrink: 0; }
-.ch-top { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
-.ch-name { font-size: 12px; font-weight: 600; letter-spacing: .025em; color: var(--ccm, var(--txm)); line-height: 1.3; flex: 1; }
-.ch-fee { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--txd); white-space: nowrap; flex-shrink: 0; }
-.ch-meta { display: flex; align-items: center; gap: 5px; margin-top: 3px; }
-.ch-ver { font-family: 'JetBrains Mono', monospace; font-size: 7.5px; color: var(--txd); }
-.ch-ver.stale { color: var(--amber); }
-.ch-flag { font-size: 8px; color: var(--txd); cursor: pointer; border: none; background: none; font-family: 'Figtree', sans-serif; padding: 0; text-decoration: underline; text-decoration-color: transparent; transition: all .15s; }
-.ch-flag:hover { color: var(--txm); text-decoration-color: currentColor; }
-.cb { flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.ci { padding: 10px 16px; border-bottom: 1px solid var(--bd); }
-.ci:last-child { border-bottom: none; }
-.ci-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-.ci-n { font-size: 12.5px; font-weight: 400; color: var(--txm); flex: 1; line-height: 1.4; }
-.ci-n.warn { color: #F06840; font-weight: 500; }
-.ci-a { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; font-weight: 600; color: var(--ccm, var(--txm)); white-space: nowrap; flex-shrink: 0; letter-spacing: -.02em; }
-.ci-note { font-size: 10px; color: var(--txd); margin-top: 3px; line-height: 1.5; }
-.empty { padding: 32px 16px; font-size: 12.5px; color: var(--txd); font-style: italic; text-align: center; flex: 1; display: flex; align-items: center; justify-content: center; }
-.nomatch { padding: 10px 16px; font-size: 11.5px; color: var(--txd); font-style: italic; text-align: center; }
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.80);display:flex;align-items:center;justify-content:center;padding:20px;animation:mfade .18s ease}
+@keyframes mfade{from{opacity:0}to{opacity:1}}
+.modal{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;padding:34px 32px 28px;width:100%;max-width:400px;position:relative;animation:mslide .2s ease}
+@keyframes mslide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--txd);cursor:pointer;font-size:18px;line-height:1;padding:4px;transition:color .15s}.modal-close:hover{color:var(--txm)}
+.modal-title{font-family:'Cormorant',serif;font-size:26px;font-weight:500;margin-bottom:8px}
+.modal-sub{font-size:13.5px;color:var(--txm);margin-bottom:24px;line-height:1.6}
+.modal-divider{display:flex;align-items:center;gap:12px;margin:20px 0}.modal-divider-line{flex:1;height:1px;background:var(--bd)}.modal-divider-txt{font-size:10.5px;color:var(--txd);letter-spacing:.08em;text-transform:uppercase}
+.google-btn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;padding:12px 16px;background:var(--s2);border:1px solid var(--bd2);border-radius:8px;font-family:'Figtree',sans-serif;font-size:13.5px;font-weight:500;color:var(--tx);cursor:pointer;transition:all .15s;text-decoration:none}.google-btn:hover{background:var(--s3);border-color:var(--bd3)}.google-btn svg{width:18px;height:18px;flex-shrink:0}
+.magic-input{width:100%;padding:11px 14px;background:var(--s2);border:1px solid var(--bd2);border-radius:7px;font-family:'Figtree',sans-serif;font-size:13.5px;color:var(--tx);outline:none;transition:all .15s}.magic-input::placeholder{color:var(--txd)}.magic-input:focus{border-color:var(--bd3);background:var(--s1)}
+.magic-submit{width:100%;margin-top:10px;padding:11px;background:var(--tx);border:none;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13.5px;font-weight:600;color:var(--bg);cursor:pointer;transition:background .15s}.magic-submit:hover{background:#E8E8FF}
+.share-modal{background:var(--s1);border:1px solid var(--bd2);border-radius:14px;padding:0;width:100%;max-width:580px;position:relative;overflow:hidden;animation:mslide .2s ease}
+.share-header{padding:24px 28px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.share-title{font-family:'Cormorant',serif;font-size:24px;font-weight:500;color:var(--tx)}.share-sub{font-size:12.5px;color:var(--txm);margin-top:4px;line-height:1.5}
+.share-preview{padding:22px 28px 0;display:flex;flex-direction:column;align-items:center;gap:12px}
+.share-canvas-wrap{width:100%;border-radius:10px;overflow:hidden;border:1px solid var(--bd2);position:relative}.share-canvas-wrap canvas{width:100%;height:auto;display:block}
+.share-generating{position:absolute;inset:0;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--txd)}
+.share-actions{padding:18px 28px 24px;display:flex;gap:9px;align-items:center;flex-wrap:wrap}
+.share-act{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:7px;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--bd2);text-decoration:none;white-space:nowrap}
+.share-act-primary{background:var(--tx);color:var(--bg);border-color:transparent;font-weight:600}.share-act-primary:hover{background:#E8E8FF}
+.share-act-secondary{background:transparent;color:var(--txm)}.share-act-secondary:hover{background:var(--s2);color:var(--tx)}
+.share-act-reddit{background:rgba(255,69,0,0.08);color:#FF6634;border-color:rgba(255,69,0,0.18)}.share-act-reddit:hover{background:rgba(255,69,0,0.15)}
+.share-act-twitter{background:rgba(29,161,242,0.08);color:#4DA8F0;border-color:rgba(29,161,242,0.18)}.share-act-twitter:hover{background:rgba(29,161,242,0.15)}
+.share-empty{padding:32px;text-align:center;font-size:13.5px;color:var(--txm);line-height:1.65}.share-empty strong{color:var(--tx);display:block;margin-bottom:8px;font-size:18px;font-family:'Cormorant',serif;font-weight:500}
+.profile-panel{background:var(--s1);border:1px solid var(--bd2);border-radius:12px;padding:20px;position:absolute;top:calc(100% + 8px);right:40px;width:268px;z-index:300;box-shadow:0 12px 48px rgba(0,0,0,.6);animation:mslide .16s ease}
+.profile-name{font-size:14px;font-weight:600;color:var(--tx);margin-bottom:3px}.profile-email{font-size:11px;color:var(--txd);margin-bottom:14px}
+.profile-stat{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--bd)}.profile-stat:last-of-type{border-bottom:none;margin-bottom:12px}
+.profile-stat-l{font-size:12.5px;color:var(--txm)}.profile-stat-v{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--tx)}
+.profile-actions{display:flex;gap:7px}.profile-action{flex:1;padding:8px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;border:1px solid var(--bd2);color:var(--txm);background:transparent;text-align:center}.profile-action:hover{background:var(--s2);color:var(--tx)}
+.profile-action.danger{color:var(--txd)}.profile-action.danger:hover{color:var(--red);border-color:rgba(232,72,72,.2)}
 
-/* Summary */
-.si { padding: 9px 16px; border-bottom: 1px solid var(--bd); }
-.si:last-child { border-bottom: none; }
-.si-top { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; margin-bottom: 4px; }
-.si-l { font-size: 11.5px; color: var(--txm); }
-.si-v { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; color: var(--ccm, var(--txm)); }
-.bar { height: 2px; background: var(--bd2); border-radius: 1px; overflow: hidden; }
-.bar-f { height: 100%; border-radius: 1px; background: var(--ccm, var(--txm)); transition: width .8s ease; }
-.si-note { font-size: 10px; color: var(--txd); margin-top: 3px; }
-.si.tot { background: rgba(255,255,255,.015); }
-.si.tot .si-l { font-weight: 600; font-size: 12.5px; color: var(--tx); }
-.si.tot .si-v { font-size: 14.5px; }
-.si-fee { padding: 9px 16px; border-bottom: 1px solid var(--bd); display: flex; justify-content: space-between; }
-.si-fl { font-size: 11.5px; color: var(--txm); }
-.si-fv { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--txd); }
+/* TOAST + FOOTER */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--s3);border:1px solid var(--bd2);border-radius:9px;padding:11px 20px;font-size:13px;color:var(--txm);display:flex;align-items:center;gap:8px;box-shadow:0 10px 40px rgba(0,0,0,.5);transition:transform .28s cubic-bezier(.4,0,.2,1);z-index:999;white-space:nowrap}.toast.show{transform:translateX(-50%) translateY(0)}
+.footer-legal{font-size:11.5px;color:var(--txd);padding:16px var(--px);margin-top:auto;background:var(--s0);border-top:1px solid var(--bd);line-height:1.7}
+.footer-legal a{color:var(--txd);text-decoration:underline;text-underline-offset:3px}.footer-legal a:hover{color:var(--txm)}
 
-/* Apply row */
-.apply-row { margin-top: auto; padding: 10px 16px 11px; border-top: 1px solid var(--bd); display: flex; align-items: center; justify-content: flex-end; gap: 8px; flex-shrink: 0; }
-.apply-row-offer { font-size: 11px; color: var(--txd); flex: 1; line-height: 1.45; min-width: 0; }
-.apply-row-offer strong { color: var(--txm); font-weight: 500; }
-.apply-link {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-family: 'Figtree', sans-serif; font-size: 11.5px; font-weight: 600;
-  padding: 5px 12px; border-radius: 5px;
-  background: color-mix(in srgb, var(--cc, #333) 12%, transparent);
-  border: 1px solid color-mix(in srgb, var(--cc, #333) 28%, transparent);
-  color: var(--ccm, var(--txm));
-  text-decoration: none; white-space: nowrap; flex-shrink: 0;
-  transition: all .15s;
+/* RESPONSIVE */
+@media(max-width:900px){:root{--px:32px}.ph-logo{font-size:42px}}
+@media(max-width:640px){
+  :root{--px:20px}.ph{padding:28px var(--px) 20px}.ph-logo{font-size:36px}.ph-sub{font-size:13px}
+  .col{flex:0 0 260px}.gfade{display:none}
+  .toolbar{flex-wrap:wrap}.sw{max-width:100%;flex:0 0 100%}.tb-cnt{margin-left:0}
+  .email-bar{flex-wrap:wrap;gap:8px}.eb-form{min-width:100%;flex:0 0 100%}
+  .ew{padding:72px var(--px) 60px;min-height:400px}.ew-t{font-size:30px}
 }
-.apply-link:hover {
-  background: color-mix(in srgb, var(--cc, #333) 22%, transparent);
-  border-color: color-mix(in srgb, var(--cc, #333) 45%, transparent);
-}
-.apply-link svg { transition: transform .14s; }
-.apply-link:hover svg { transform: translateX(2px); }
-
-/* ══ LIVE PROMOS PAGE ═══════════════════════════════ */
-.promos-wrap { padding: 0 var(--px) 80px; flex: 1; }
-.promos-hdr { padding: 28px 0 22px; border-bottom: 1px solid var(--bd); margin-bottom: 28px; }
-.promos-hdr-t { font-family: 'Cormorant', serif; font-size: 32px; font-weight: 500; margin-bottom: 6px; letter-spacing: -.02em; }
-.promos-hdr-s { font-size: 13.5px; color: var(--txm); line-height: 1.5; }
-.promos-section { margin-bottom: 52px; }
-.promos-section-title { font-family: 'Cormorant', serif; font-size: 22px; font-weight: 500; color: var(--tx); margin-bottom: 5px; }
-.promos-section-sub { font-size: 12.5px; color: var(--txd); margin-bottom: 20px; line-height: 1.5; }
-
-/* SOB card grid */
-.sob-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(296px, 1fr)); gap: 10px; }
-.sob-card {
-  background: var(--s1); border: 1px solid var(--bd);
-  border-top: 2px solid var(--cc, #333);
-  border-radius: 0 0 var(--rad) var(--rad);
-  display: flex; flex-direction: column;
-  transition: border-color .18s, box-shadow .2s, transform .2s;
-  position: relative;
-}
-.sob-card:hover { border-color: rgba(255,255,255,0.12); box-shadow: 0 12px 40px rgba(0,0,0,.35); transform: translateY(-2px); }
-.sob-card-head { padding: 13px 16px 11px; background: rgba(0,0,0,.15); border-bottom: 1px solid var(--bd); }
-.sob-card-name { font-size: 12px; font-weight: 600; color: var(--ccm, var(--txm)); letter-spacing: .02em; margin-bottom: 2px; }
-.sob-card-meta { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: var(--txd); }
-.sob-card-body { padding: 14px 16px 12px; flex: 1; }
-.sob-offer { font-size: 16px; font-weight: 600; color: var(--tx); line-height: 1.35; margin-bottom: 6px; }
-.sob-req { font-size: 11.5px; color: var(--txm); line-height: 1.5; }
-.sob-card-foot { padding: 10px 16px 12px; border-top: 1px solid var(--bd); }
-.sob-apply {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  width: 100%; padding: 9px 16px; border-radius: 7px;
-  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 600;
-  color: var(--bg); background: var(--tx);
-  text-decoration: none; border: none; cursor: pointer;
-  transition: all .15s;
-}
-.sob-apply:hover { background: #E8E8FF; box-shadow: 0 4px 20px rgba(160,160,255,0.20); }
-
-/* Transfer bonus cards */
-.promos-grid { display: flex; flex-direction: column; gap: 10px; }
-.promo-card {
-  background: var(--s1); border: 1px solid var(--bd); border-radius: var(--rad);
-  padding: 20px 24px; display: flex; align-items: flex-start; gap: 20px;
-  transition: border-color .18s, box-shadow .2s; flex-wrap: wrap;
-}
-.promo-card:hover { border-color: var(--bd2); box-shadow: 0 6px 28px rgba(0,0,0,.25); }
-.promo-card.hot { border-left: 3px solid var(--red); }
-.promo-card.warm { border-left: 3px solid var(--amber); }
-.promo-left { flex: 1; min-width: 0; }
-.promo-meta { font-size: 9.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--txd); margin-bottom: 6px; }
-.promo-bonus { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 4px; }
-.promo-bonus-label { font-size: 13px; color: var(--txm); font-family: 'Figtree', sans-serif; font-weight: 400; margin-left: 8px; }
-.promo-partner { font-size: 18px; font-weight: 600; color: var(--tx); margin-bottom: 14px; }
-.promo-chips-label { font-size: 9.5px; font-weight: 700; letter-spacing: .10em; text-transform: uppercase; color: var(--txd); margin-bottom: 7px; }
-.promo-chips { display: flex; flex-wrap: wrap; gap: 5px; }
-.pc { font-size: 11px; font-weight: 500; color: var(--txm); background: var(--s2); border: 1px solid var(--bd2); padding: 3px 9px; border-radius: 4px; white-space: nowrap; }
-.pc.owned { color: var(--green); border-color: rgba(36,184,112,0.28); background: rgba(36,184,112,0.07); }
-.promo-right { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0; padding-top: 4px; }
-.promo-exp { font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 5px 12px; border-radius: 6px; background: rgba(232,152,32,0.08); color: var(--amber); border: 1px solid rgba(232,152,32,0.14); }
-.promo-exp.hot { background: rgba(232,72,72,0.08); color: var(--red); border-color: rgba(232,72,72,0.18); }
-.promo-apply {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 9px 20px; border-radius: 7px;
-  font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 600;
-  color: var(--bg); background: var(--tx);
-  text-decoration: none; border: none; cursor: pointer; transition: all .15s; white-space: nowrap;
-}
-.promo-apply:hover { background: #E8E8FF; box-shadow: 0 4px 16px rgba(160,160,255,0.18); }
-.promos-empty { padding: 80px 0; text-align: center; color: var(--txd); font-size: 13px; }
-
-/* ══ MODALS ═════════════════════════════════════════ */
-.modal-overlay { position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.80); display: flex; align-items: center; justify-content: center; padding: 20px; animation: mfade .18s ease; }
-@keyframes mfade { from { opacity: 0; } to { opacity: 1; } }
-.modal { background: var(--s1); border: 1px solid var(--bd2); border-radius: 14px; padding: 34px 32px 28px; width: 100%; max-width: 400px; position: relative; animation: mslide .2s ease; }
-@keyframes mslide { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
-.modal-close { position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--txd); cursor: pointer; font-size: 18px; line-height: 1; padding: 4px; transition: color .15s; }
-.modal-close:hover { color: var(--txm); }
-.modal-title { font-family: 'Cormorant', serif; font-size: 26px; font-weight: 500; margin-bottom: 8px; }
-.modal-sub { font-size: 13.5px; color: var(--txm); margin-bottom: 24px; line-height: 1.6; }
-.modal-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
-.modal-divider-line { flex: 1; height: 1px; background: var(--bd); }
-.modal-divider-txt { font-size: 10.5px; color: var(--txd); letter-spacing: .08em; text-transform: uppercase; }
-.google-btn { display: flex; align-items: center; justify-content: center; gap: 11px; width: 100%; padding: 12px 16px; background: var(--s2); border: 1px solid var(--bd2); border-radius: 8px; font-family: 'Figtree', sans-serif; font-size: 13.5px; font-weight: 500; color: var(--tx); cursor: pointer; transition: all .15s; text-decoration: none; }
-.google-btn:hover { background: var(--s3); border-color: var(--bd3); }
-.google-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
-.magic-input { width: 100%; padding: 11px 14px; background: var(--s2); border: 1px solid var(--bd2); border-radius: 7px; font-family: 'Figtree', sans-serif; font-size: 13.5px; color: var(--tx); outline: none; transition: all .15s; }
-.magic-input::placeholder { color: var(--txd); }
-.magic-input:focus { border-color: var(--bd3); background: var(--s1); }
-.magic-submit { width: 100%; margin-top: 10px; padding: 11px; background: var(--tx); border: none; border-radius: 7px; font-family: 'Figtree', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--bg); cursor: pointer; transition: background .15s; }
-.magic-submit:hover { background: #E8E8FF; }
-.share-modal { background: var(--s1); border: 1px solid var(--bd2); border-radius: 14px; padding: 0; width: 100%; max-width: 580px; position: relative; overflow: hidden; animation: mslide .2s ease; }
-.share-header { padding: 24px 28px 18px; border-bottom: 1px solid var(--bd); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.share-title { font-family: 'Cormorant', serif; font-size: 24px; font-weight: 500; color: var(--tx); }
-.share-sub { font-size: 12.5px; color: var(--txm); margin-top: 4px; line-height: 1.5; }
-.share-preview { padding: 22px 28px 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.share-canvas-wrap { width: 100%; border-radius: 10px; overflow: hidden; border: 1px solid var(--bd2); position: relative; }
-.share-canvas-wrap canvas { width: 100%; height: auto; display: block; }
-.share-generating { position: absolute; inset: 0; background: var(--s2); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--txd); }
-.share-actions { padding: 18px 28px 24px; display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
-.share-act { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 7px; font-family: 'Figtree', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all .15s; border: 1px solid var(--bd2); text-decoration: none; white-space: nowrap; }
-.share-act-primary { background: var(--tx); color: var(--bg); border-color: transparent; font-weight: 600; }
-.share-act-primary:hover { background: #E8E8FF; }
-.share-act-secondary { background: transparent; color: var(--txm); }
-.share-act-secondary:hover { background: var(--s2); color: var(--tx); }
-.share-act-reddit { background: rgba(255,69,0,0.08); color: #FF6634; border-color: rgba(255,69,0,0.18); }
-.share-act-reddit:hover { background: rgba(255,69,0,0.15); }
-.share-act-twitter { background: rgba(29,161,242,0.08); color: #4DA8F0; border-color: rgba(29,161,242,0.18); }
-.share-act-twitter:hover { background: rgba(29,161,242,0.15); }
-.share-empty { padding: 32px; text-align: center; font-size: 13.5px; color: var(--txm); line-height: 1.65; }
-.share-empty strong { color: var(--tx); display: block; margin-bottom: 8px; font-size: 18px; font-family: 'Cormorant', serif; font-weight: 500; }
-.profile-panel { background: var(--s1); border: 1px solid var(--bd2); border-radius: 12px; padding: 20px; position: absolute; top: calc(100% + 8px); right: var(--px); width: 268px; z-index: 300; box-shadow: 0 12px 48px rgba(0,0,0,.6); animation: mslide .16s ease; }
-.profile-name { font-size: 14px; font-weight: 600; color: var(--tx); margin-bottom: 3px; }
-.profile-email { font-size: 11px; color: var(--txd); margin-bottom: 14px; }
-.profile-stat { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--bd); }
-.profile-stat:last-of-type { border-bottom: none; margin-bottom: 12px; }
-.profile-stat-l { font-size: 12.5px; color: var(--txm); }
-.profile-stat-v { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--tx); }
-.profile-actions { display: flex; gap: 7px; }
-.profile-action { flex: 1; padding: 8px; border-radius: 6px; font-family: 'Figtree', sans-serif; font-size: 12px; font-weight: 500; cursor: pointer; transition: all .15s; border: 1px solid var(--bd2); color: var(--txm); background: transparent; text-align: center; }
-.profile-action:hover { background: var(--s2); color: var(--tx); }
-.profile-action.danger { color: var(--txd); }
-.profile-action.danger:hover { color: var(--red); border-color: rgba(232,72,72,.2); }
-
-/* ══ TOAST + FOOTER ═════════════════════════════════ */
-.toast { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--s3); border: 1px solid var(--bd2); border-radius: 9px; padding: 11px 20px; font-size: 13px; color: var(--txm); display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 40px rgba(0,0,0,.5); transition: transform .28s cubic-bezier(.4,0,.2,1); z-index: 999; white-space: nowrap; }
-.toast.show { transform: translateX(-50%) translateY(0); }
-.footer-legal { font-size: 11.5px; color: var(--txd); padding: 16px var(--px); margin-top: auto; background: var(--s0); border-top: 1px solid var(--bd); line-height: 1.7; }
-.footer-legal a { color: var(--txd); text-decoration: underline; text-underline-offset: 3px; }
-.footer-legal a:hover { color: var(--txm); }
-
-/* ══ RESPONSIVE ═════════════════════════════════════ */
-@media(max-width:900px) {
-  :root { --px: 32px; }
-  .ph-logo { font-size: 42px; }
-}
-@media(max-width:640px) {
-  :root { --px: 20px; }
-  .ph { padding: 28px var(--px) 0; }
-  .ph-logo { font-size: 36px; } .ph-sub { font-size: 13px; }
-  .col { flex: 0 0 260px; } .gfade { display: none; }
-  .toolbar { flex-wrap: wrap; } .sw { max-width: 100%; flex: 0 0 100%; } .tb-cnt { margin-left: 0; }
-  .email-bar { flex-wrap: wrap; gap: 8px; } .eb-form { min-width: 100%; flex: 0 0 100%; }
-  .ew { padding: 72px var(--px) 60px; min-height: 400px; } .ew-t { font-size: 30px; }
-  .promo-card { flex-direction: column; } .promo-right { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
-  .sob-grid { grid-template-columns: 1fr; }
-  .pn-tab { padding: 0 14px; font-size: 12px; }
-}
-.ganim { animation: gfade .18s ease; }
-@keyframes gfade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.ganim{animation:gfade .18s ease}
+@keyframes gfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
+
 </head>
 <body>
 
 <!-- HEADER -->
 <div class="ph">
   <div class="ph-row">
-    <div>
+    <div class="ph-left">
       <div class="ph-logo">Card Roundup</div>
       <p class="ph-sub">Track every credit card benefit before it expires.</p>
     </div>
     <div class="ph-acts">
-      <button class="btn btn-save" id="saveWalletBtn" style="display:none" onclick="toggleAuthModal()">Save my wallet</button>
+      <!-- Only shown when user has wallet but no account -->
+      <button class="btn btn-save" id="saveWalletBtn" style="display:none" onclick="toggleAuthModal()">
+        Save my wallet
+      </button>
+      <!-- Auth: Sign in (anonymous) or Avatar (signed in) -->
       <button class="auth-btn" id="authBtn" onclick="handleAuthClick()">
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg>
         Sign in
       </button>
     </div>
   </div>
   <div class="ph-meta" id="phMeta">
     <span class="phm"><strong id="hMine">0</strong> in my wallet</span>
+    <span class="phm">·</span>
     <span class="phm"><strong>46</strong> cards tracked</span>
+    <span class="phm">·</span>
     <span class="phm"><strong>8</strong> issuers</span>
   </div>
-  <div class="ph-line"></div>
 </div>
 
-<!-- PRIMARY NAV -->
-<nav class="pnav">
-  <button class="pn-tab on" data-m="mycards" onclick="setMode('mycards')">
-    <span class="pn-dot" style="background:#28BE78"></span>My Cards
-    <span class="pn-badge" id="mcBadge">0</span>
+<!-- MODE BAR -->
+<div class="mode-bar">
+  <button class="mb on" data-m="mycards" onclick="setMode('mycards')">
+    <span class="mb-dot" style="background:#3DD68C"></span>My Cards
+    <span class="mcb" id="mcBadge">0</span>
   </button>
-  <button class="pn-tab" data-m="browse" onclick="setMode('browse')">
-    <span class="pn-dot" style="background:#5090E0"></span>Browse &amp; Compare
+  <button class="mb" data-m="browse" onclick="setMode('browse')">
+    <span class="mb-dot" style="background:#6AAEF0"></span>Browse All
   </button>
-  <button class="pn-tab" data-m="promos" onclick="setMode('promos')">
-    <span class="pn-dot" style="background:#E8A020"></span>Live Promos
+  <!-- Edit wallet lives here — contextual to mode, not header-level -->
+  <button class="mb mb-edit" id="editBtn" onclick="toggleWalletEdit()" style="margin-left:auto;border-left:1px solid var(--bd);padding-left:14px">
+    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
+    Edit wallet
   </button>
-</nav>
+</div>
 
-<!-- WALLET SETUP (slides in below nav in My Cards mode) -->
+
 <div class="ws" id="walletSetup" style="display:none">
-  <div class="ws-header">
-    <div>
-      <div class="ws-t">Add your cards</div>
-      <div class="ws-s">Tap the cards you carry — credits and resets track across all tabs.</div>
-    </div>
-    <button class="ws-close" onclick="toggleWalletEdit()">&#x2715;</button>
-  </div>
+  <div class="ws-t">Your Card Wallet</div>
+  <div class="ws-s">Select the cards you carry. Your view filters to these across all tabs.</div>
   <div class="ws-rows" id="wsRows"></div>
 </div>
 
-<!-- BROWSE PICKER (shows in browse mode) -->
+<!-- BROWSE PICKER (hidden in My Cards mode) -->
 <div class="bpicker" id="browsePicker" style="display:none"></div>
 
 <!-- EMAIL BAR -->
-<div class="email-bar" id="emailBar" style="display:none">
-  <div class="eb-text">&#x1F514; <strong>Get reset reminders</strong> &#x2014; 7 days before your credits expire</div>
+<div class="email-bar" id="emailBar">
+  <div class="eb-text">🔔 <strong>Get reset reminders</strong> — 7 days before your credits expire</div>
   <div class="eb-form" id="ebForm">
     <input class="eb-input" type="email" id="ebInput" placeholder="your@email.com" autocomplete="email">
     <button class="eb-sub" onclick="submitEmail()">Remind me</button>
   </div>
-  <button class="eb-x" onclick="dismissEmail()">&#x2715;</button>
+  <button class="eb-x" onclick="dismissEmail()">✕</button>
 </div>
 
 
+<!-- NAV -->
+<div class="nav-wrap">
+  <nav class="nav" id="navEl">
+    <div class="nav-ind" id="navInd"></div>
+    <button class="nb on" data-s="monthly"><span class="nd" style="background:#FF7A3C"></span>Monthly</button>
+    <button class="nb" data-s="quarterly"><span class="nd" style="background:#AA82F0"></span>Quarterly</button>
+    <button class="nb" data-s="semiannual"><span class="nd" style="background:#45C9A8"></span>Semi-annual</button>
+    <button class="nb" data-s="annual"><span class="nd" style="background:#6AAEF0"></span>Annual</button>
+    <button class="nb" data-s="multiyear"><span class="nd" style="background:#E8C84E"></span>Multi-year</button>
+    <button class="nb" data-s="static"><span class="nd" style="background:#888898"></span>Always-on</button>
+    <button class="nb" data-s="summary"><span class="nd" style="background:#C0C0D8"></span>Summary</button>
+  </nav>
+  <div class="reset-b" id="resetBadge"></div>
+</div>
 
-<!-- MY CARDS VIEW -->
-<div id="viewMycards">
-  <!-- Section tabs sit directly above the grid -->
-  <div class="section-bar" id="sectionBar" style="display:none">
-    <div class="sbar-ind" id="sbarInd"></div>
-    <button class="stab on" data-s="monthly"><span class="stab-dot" style="background:#FF7A3C"></span>Monthly</button>
-    <button class="stab" data-s="quarterly"><span class="stab-dot" style="background:#AA82F0"></span>Quarterly</button>
-    <button class="stab" data-s="semiannual"><span class="stab-dot" style="background:#45C9A8"></span>Semi-annual</button>
-    <button class="stab" data-s="annual"><span class="stab-dot" style="background:#5090E0"></span>Annual</button>
-    <button class="stab" data-s="multiyear"><span class="stab-dot" style="background:#E8C84E"></span>Multi-year</button>
-    <button class="stab" data-s="static"><span class="stab-dot" style="background:#888898"></span>Always-on</button>
-    <button class="stab" data-s="summary"><span class="stab-dot" style="background:#C0C0D8"></span>Summary</button>
-  </div>
-  <div class="reset-strip" id="resetBadge"></div>
-  <!-- Empty state -->
-  <div id="emptyState" style="display:none;flex-direction:column">
+<!-- MAIN -->
+<div class="main" id="mainContent">
+  <div id="emptyState" style="display:none">
     <div class="ew">
       <div class="ew-i">&#x25C8;</div>
       <div class="ew-t">Which cards do you carry?</div>
       <div class="ew-s">Add your cards and we'll track every credit expiring this month, quarter, and year &#x2014; so you never leave money on the table.</div>
-      <button class="btn btn-p btn-lg" id="ewPickBtn">
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
-        Add my cards
-      </button>
+      <button class="btn btn-p btn-lg" id="ewPickBtn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg> Add my cards</button>
       <div class="ew-browse">or <button class="ew-browse-link" id="ewBrowseBtn">compare all 46 cards side by side</button></div>
     </div>
   </div>
-  <!-- Card grid area (hidden when empty) -->
-  <div id="cardArea" style="display:none">
-    <div class="content-pad">
-      <div class="toolbar">
-        <div class="sw">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
-          <input class="si-inp" type="text" id="searchInput" placeholder="Search benefits&#x2026;" autocomplete="off">
-          <button class="sc-x" id="scX" onclick="clearSearch()">&#x2715;</button>
-        </div>
-        <button class="tb-cal" onclick="exportCalendar()">
-          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
-          Sync calendar
-        </button>
-        <button class="tb-edit" id="editBtn" onclick="toggleWalletEdit()" style="display:none">
-          <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
-          <span id="editBtnLabel">Edit wallet</span>
-        </button>
-        <span class="tb-cnt" id="tbCnt"></span>
-      </div>
-      <div class="gw"><div class="gfade" id="gFade"></div><div class="grid ganim" id="grid"></div></div>
-      <div class="scroll-track"><div class="scroll-thumb-el" id="scrollThumb" style="width:100%"></div></div>
-      <div id="summaryFooter"></div>
+  <div class="toolbar">
+    <div class="sw">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
+      <input class="si-inp" type="text" id="searchInput" placeholder="Search benefits…" autocomplete="off">
+      <button class="sc-x" id="scX" onclick="clearSearch()">✕</button>
     </div>
+    <button class="tb-cal" onclick="exportCalendar()" title="Sync reset dates to your calendar">
+      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
+      Sync calendar
+    </button>
+    <span class="tb-cnt" id="tbCnt"></span>
   </div>
+  <div class="gw">
+    <div class="gfade" id="gFade"></div>
+    <div class="grid ganim" id="grid"></div>
+  </div>
+  <div class="scroll-track"><div class="scroll-thumb-el" id="scrollThumb" style="width:100%"></div></div>
+  <!-- Summary tab: aggregate share CTA shown below all cards -->
+  <div id="summaryFooter"></div>
 </div>
 
-<!-- BROWSE & COMPARE VIEW -->
-<div id="viewBrowse" style="display:none">
-  <div class="section-bar" id="browseSectionBar">
-    <div class="sbar-ind" id="bsbarInd"></div>
-    <button class="stab on" data-s="monthly"><span class="stab-dot" style="background:#FF7A3C"></span>Monthly</button>
-    <button class="stab" data-s="quarterly"><span class="stab-dot" style="background:#AA82F0"></span>Quarterly</button>
-    <button class="stab" data-s="semiannual"><span class="stab-dot" style="background:#45C9A8"></span>Semi-annual</button>
-    <button class="stab" data-s="annual"><span class="stab-dot" style="background:#5090E0"></span>Annual</button>
-    <button class="stab" data-s="multiyear"><span class="stab-dot" style="background:#E8C84E"></span>Multi-year</button>
-    <button class="stab" data-s="static"><span class="stab-dot" style="background:#888898"></span>Always-on</button>
-    <button class="stab" data-s="summary"><span class="stab-dot" style="background:#C0C0D8"></span>Summary</button>
-  </div>
-  <div class="content-pad">
-    <div class="toolbar">
-      <div class="sw">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="6"/><path d="m15 15 3 3"/></svg>
-        <input class="si-inp" type="text" id="bSearchInput" placeholder="Search benefits&#x2026;" autocomplete="off">
-        <button class="sc-x" id="bScX" onclick="clearBrowseSearch()">&#x2715;</button>
-      </div>
-      <span class="tb-cnt" id="bTbCnt"></span>
-    </div>
-    <div class="gw"><div class="gfade" id="bGFade"></div><div class="grid ganim" id="browseGrid"></div></div>
-    <div class="scroll-track"><div class="scroll-thumb-el" id="bScrollThumb" style="width:100%"></div></div>
-    <div id="bSummaryFooter"></div>
-  </div>
+<!-- FOOTER: one FTC line only -->
+<div class="footer-legal">
+  Some cards include affiliate links — we earn a commission if you apply and are approved, at no cost to you. This never influences our data. <a href="#">Affiliate policy</a> · <a href="#">Terms</a>
 </div>
-
-<!-- LIVE PROMOS VIEW -->
-<div id="viewPromos" style="display:none">
-  <div class="promos-wrap"><div id="promosContent"></div></div>
-</div>
-
 <!-- SHARE MODAL -->
 <div id="shareModal" style="display:none">
   <div class="modal-overlay" onclick="if(event.target===this)closeShareModal()">
     <div class="share-modal">
       <div class="share-header">
-        <div><div class="share-title">Share your stack</div><div class="share-sub">A snapshot of your wallet &#x2014; credits, fees, and net value.</div></div>
-        <button class="modal-close" style="position:static;margin-top:-2px" onclick="closeShareModal()">&#x2715;</button>
+        <div>
+          <div class="share-title">Share your stack</div>
+          <div class="share-sub">A snapshot of your wallet — credits, fees, and net value. Post it anywhere.</div>
+        </div>
+        <button class="modal-close" style="position:static;margin-top:-2px" onclick="closeShareModal()">✕</button>
       </div>
       <div id="shareBody"></div>
     </div>
@@ -823,30 +364,40 @@ body {
 <div id="authModal" style="display:none">
   <div class="modal-overlay" onclick="if(event.target===this)closeAuthModal()">
     <div class="modal">
-      <button class="modal-close" onclick="closeAuthModal()">&#x2715;</button>
+      <button class="modal-close" onclick="closeAuthModal()">✕</button>
       <div class="modal-title">Save your wallet</div>
       <div class="modal-sub">Sign in to sync your cards across devices and get expiry reminders by email.</div>
+
+      <!-- Google Sign-In -->
       <button class="google-btn" onclick="signInGoogle()">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
         Continue with Google
       </button>
+
       <div class="modal-divider"><div class="modal-divider-line"></div><span class="modal-divider-txt">or</span><div class="modal-divider-line"></div></div>
+
       <input class="magic-input" type="email" id="magicEmail" placeholder="your@email.com" autocomplete="email">
       <button class="magic-submit" onclick="sendMagicLink()">Send magic link</button>
-      <div id="magicMsg" style="font-size:10.5px;color:var(--green);margin-top:8px;display:none">&#x2713; Check your email for a sign-in link.</div>
+      <div id="magicMsg" style="font-size:10.5px;color:var(--green);margin-top:8px;display:none">✓ Check your email for a sign-in link.</div>
     </div>
   </div>
 </div>
 
-<div id="profilePanel" style="display:none;position:relative;z-index:300"></div>
+<!-- PROFILE PANEL (shown when signed in, anchored to auth button) -->
+<div id="profilePanel" style="display:none;position:relative;z-index:200"></div>
+
 <div class="toast" id="toast"><span id="toastMsg"></span></div>
 
-<div class="footer-legal">
-  Some cards include affiliate links &#x2014; we earn a commission if you apply and are approved, at no cost to you. This never influences our data. <a href="#">Affiliate policy</a> &middot; <a href="#">Terms</a>
-</div>
-
 <script>
+// Analytics — replace with your PostHog key from posthog.com
 const POSTHOG_KEY = 'YOUR_POSTHOG_KEY';
+
+// Affiliate tracking
 const AFF={
   csr:'https://creditcards.chase.com/rewards-credit-cards/sapphire/reserve?ICID=AFFL_KBYLI_CJ',
   csp:'https://creditcards.chase.com/rewards-credit-cards/sapphire/preferred?ICID=AFFL_KBYLI_CJ',
@@ -1096,390 +647,435 @@ const CARDS=[
 
 const ISSUERS=['Chase','American Express','Capital One','Citi','Wells Fargo','U.S. Bank','Bank of America','Barclays'];
 const SK='kbyli_v4';
+let myCards=new Set((()=>{try{const s=localStorage.getItem(SK);return s?JSON.parse(s):[]}catch{return[]}})());
+let browseCards=new Set();
+let mode='mycards';
+let walletOpen=false;
+let section='monthly';
+let q='';
+let promoClosed=false;
 
-let myCards = new Set((()=>{ try{ const s=localStorage.getItem(SK); return s?JSON.parse(s):[]; }catch{ return []; } })());
-let browseCards = new Set();
-let mode = 'mycards';
-let walletOpen = false;
-let section = 'monthly';
-let bSection = 'monthly';
-let q = '';
-let bQ = '';
-let promoClosed = false;
+function saveMyCards(){try{localStorage.setItem(SK,JSON.stringify([...myCards]))}catch{}}
 
-function saveMyCards(){ try{ localStorage.setItem(SK, JSON.stringify([...myCards])); }catch{} }
-function daysUntil(dateStr){ const n=new Date(); n.setHours(0,0,0,0); const t=new Date(dateStr+'T00:00:00'); return Math.round((t-n)/86400000); }
-function esc(s){ if(!s)return''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-function showToast(msg,dur=2800){ const t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),dur); }
+/* ── ONBOARDING STRIP ──────────────── */
+function initOnboard(){
+  const dismissed = localStorage.getItem('ob_d');
+  const hasCards = myCards.size > 0;
+  const strip = document.getElementById('onboardStrip');
+  if(!strip) return;
+  // Show onboarding if: first visit (never dismissed) AND no wallet yet
+  if(!dismissed && !hasCards){
+    strip.style.display = 'flex';
+  } else {
+    strip.style.display = 'none';
+  }
+}
+function dismissOnboard(){
+  localStorage.setItem('ob_d','1');
+  document.getElementById('onboardStrip').style.display = 'none';
+}
+// Auto-dismiss onboarding when user adds first card
+function maybeHideOnboard(){
+  if(myCards.size > 0){
+    localStorage.setItem('ob_d','1');
+    const strip = document.getElementById('onboardStrip');
+    if(strip) strip.style.display = 'none';
+  }
+}
 
-/* ── HEADER ──────────────────── */
 function syncHeader(){
   document.getElementById('hMine').textContent = myCards.size;
   document.getElementById('mcBadge').textContent = myCards.size;
-  const sv = document.getElementById('saveWalletBtn');
-  if(sv) sv.style.display = (myCards.size>0 && !currentUser) ? 'flex' : 'none';
-  const eb = document.getElementById('editBtn');
-  if(eb) eb.style.display = (myCards.size>0 && mode==='mycards') ? 'inline-flex' : 'none';
+  // Show "Save my wallet" nudge when user has cards but isn't signed in
+  const saveBtn = document.getElementById('saveWalletBtn');
+  if(saveBtn) saveBtn.style.display = (myCards.size > 0 && !currentUser) ? 'flex' : 'none';
 }
 
-/* ── EMAIL BAR ───────────────── */
-function getSavedEmail(){ try{ return localStorage.getItem('cr_email')||''; }catch{ return ''; } }
-function saveEmail(e){ try{ localStorage.setItem('cr_email',e); }catch{} }
+/* ── EMAIL BAR ─────────────────── */
+// Email bar serves anonymous users only
+// If user is signed in with Google, email bar never shows — Google email handles sync
 function initEmailBar(){
   const bar = document.getElementById('emailBar');
   if(!bar) return;
-  const show = myCards.size>0 && !currentUser && !localStorage.getItem('eb_d') && !getSavedEmail();
-  bar.style.display = show ? 'flex' : 'none';
+  // Hide if: already dismissed, already signed in, or already gave email
+  var _showEb=myCards.size>0&&!currentUser&&!localStorage.getItem('eb_d')&&!getSavedEmail();
+  bar.style.display=_showEb?'flex':'none';
 }
-function dismissEmail(){ localStorage.setItem('eb_d','1'); document.getElementById('emailBar').style.display='none'; }
-async function syncWalletToResend(email,cards){
+function dismissEmail(){localStorage.setItem('eb_d','1');document.getElementById('emailBar').style.display='none';}
+
+function getSavedEmail(){ try{ return localStorage.getItem('cr_email')||''; }catch{ return ''; } }
+function saveEmail(email){ try{ localStorage.setItem('cr_email',email); }catch{} }
+
+// Core sync function — posts email + cards to Resend via our API
+async function syncWalletToResend(email, cards){
   if(!email) return;
-  try{ await fetch('/api/subscribe',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,cards})}); }catch(e){}
+  try {
+    await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email, cards})
+    });
+    console.log('[CardRoundup] Synced to Resend:', email);
+  } catch(e) {
+    console.log('[CardRoundup] Sync failed (offline?)');
+  }
 }
-window.addEventListener('beforeunload', ()=>{
+
+// Wallet syncs happen ONLY on explicit user actions:
+// 1. submitEmail() — user submits email bar
+// 2. onSignedIn() — user signs in with Google or magic link
+// 3. Page unload (sendBeacon) — captures final wallet state per session
+//    sendBeacon fires once when user closes/leaves tab — guaranteed delivery,
+//    never blocks the page, zero API spam regardless of how many cards toggled
+window.addEventListener('beforeunload', () => {
   const email = currentUser?.email || getSavedEmail();
-  if(!email || myCards.size===0) return;
-  navigator.sendBeacon('/api/subscribe', JSON.stringify({email, cards:[...myCards].join(',')}));
+  if(!email || myCards.size === 0) return;
+  // sendBeacon is fire-and-forget — browser guarantees delivery
+  navigator.sendBeacon('/api/subscribe', JSON.stringify({
+    email,
+    cards: [...myCards].join(',')
+  }));
 });
+
 async function submitEmail(){
-  const inp = document.getElementById('ebInput');
-  if(!inp) return;
-  const email = inp.value.trim();
-  if(!email||!email.includes('@')){ inp.style.borderColor='rgba(238,80,80,.4)'; inp.focus(); return; }
+  const inp=document.getElementById('ebInput'),email=inp.value.trim();
+  if(!email||!email.includes('@')){inp.style.borderColor='rgba(255,90,90,.4)';inp.focus();return;}
   inp.style.borderColor='';
+
+  // Save email to localStorage — marks this anonymous user as known
   saveEmail(email);
+
+  // One-time sync: captures their wallet at this moment
+  // If they later sign in with Google, auto-sync takes over
   await syncWalletToResend(email, [...myCards].join(','));
-  const form = document.getElementById('ebForm');
-  if(form) form.innerHTML = '<div class="eb-ok">&#x2713; You\'re on the list &#x2014; we\'ll remind you before credits expire.</div>';
+
+  document.getElementById('ebForm').innerHTML='<div class="eb-ok">✓ You\'re on the list — we\'ll remind you before credits expire.</div>';
   localStorage.setItem('eb_d','1');
-  setTimeout(()=>{ const b=document.getElementById('emailBar'); if(b)b.style.display='none'; }, 4000);
+  setTimeout(()=>document.getElementById('emailBar').style.display='none',4000);
 }
+document.getElementById('ebInput').addEventListener('keydown',e=>{if(e.key==='Enter')submitEmail();});
 
+/* ── PROMO TICKER ──────────────── */
+function daysUntil(d){const n=new Date();n.setHours(0,0,0,0);const t=new Date(d);t.setHours(0,0,0,0);return Math.round((t-n)/86400000);}
 
-/* ── MODE SWITCHING ──────────── */
+function renderPromoTicker(){
+  const bar=document.getElementById('promoBar');
+  const inner=document.getElementById('promoInner');
+  if(promoClosed){bar.style.display='none';return;}
+  const active=mode==='mycards'?myCards:browseCards;
+  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0&&p.cards.some(c=>active.has(c)));
+  if(live.length===0){bar.style.display='none';return;}
+  bar.style.display='block';
+  // Build pill HTML
+  const pill=p=>{
+    const d=daysUntil(p.expires),hot=d<=7;
+    return`<div class="pp"><span class="pp-cur">${p.currency}</span><span class="pp-bonus">${p.bonus}</span><span class="pp-arr">→</span><span class="pp-partner">${p.partner}</span><span class="pp-exp${hot?' hot':''}">exp ${d}d</span></div>`;
+  };
+  const html=live.map(pill).join('');
+  // Duplicate for seamless infinite loop
+  inner.innerHTML=html+html;
+  // Adjust animation speed to content width
+  const single=inner.scrollWidth/2;
+  const speed=Math.max(30,single/8); // ~8px per second
+  inner.style.animationDuration=speed+'s';
+}
+function closePromo(){promoClosed=true;document.getElementById('promoBar').style.display='none';}
+
+/* ── MODE ─────────────────────── */
 function setMode(m){
-  mode=m; walletOpen=false;
-  // Update primary nav
-  document.querySelectorAll('.pn-tab').forEach(b=>b.classList.toggle('on', b.dataset.m===m));
-  // Show/hide views
-  ['mycards','browse','promos'].forEach(v=>{
-    const el=document.getElementById('view'+(v.charAt(0).toUpperCase()+v.slice(1)));
-    if(el) el.style.display=(v===m)?'block':'none';
-  });
-  // Browse picker only in browse mode
-  const bp=document.getElementById('browsePicker');
-  if(bp) bp.style.display=(m==='browse')?'block':'none';
-  // Close wallet setup
-  const ws=document.getElementById('walletSetup');
-  if(ws) ws.style.display='none';
-  // Edit button
-  const eb=document.getElementById('editBtn');
-  if(eb) eb.style.display=(m==='mycards'&&myCards.size>0)?'inline-flex':'none';
-  // Render
-  if(m==='mycards'){ renderGrid(); updateTabCounts(); requestAnimationFrame(updateInd); }
-  if(m==='browse'){ renderBrowsePicker(); renderBrowseGrid(); requestAnimationFrame(updateBInd); }
-  if(m==='promos'){ renderPromosPage(); }
-
+  mode=m;walletOpen=false;
+  document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m===m));
+  document.getElementById('walletSetup').style.display='none';
+  document.getElementById('browsePicker').style.display=m==='browse'?'block':'none';
+  document.getElementById('editBtn').innerHTML=m==='mycards'
+    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet'
+    :'← My Cards';
+  renderGrid();
 }
-
-/* ── WALLET EDIT ─────────────── */
 function toggleWalletEdit(){
+  if(mode!=='mycards'){setMode('mycards');return;}
   walletOpen=!walletOpen;
-  const ws=document.getElementById('walletSetup');
-  if(ws){ ws.style.display=walletOpen?'block':'none'; if(walletOpen)renderWalletSetup(); }
-  const ebtn=document.getElementById('editBtn');
-  const ebl=document.getElementById('editBtnLabel');
-  if(ebtn) ebtn.classList.toggle('open',walletOpen);
-  if(ebl) ebl.textContent=walletOpen?'Done':'Edit wallet';
+  document.getElementById('walletSetup').style.display=walletOpen?'block':'none';
+  if(walletOpen)renderWalletSetup();
+  document.getElementById('editBtn').innerHTML=walletOpen
+    ?'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 2l12 12M14 2L2 14"/></svg> Done'
+    :'<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet';
 }
 
-/* ── WALLET SETUP ────────────── */
+/* ── WALLET SETUP ─────────────── */
 function renderWalletSetup(){
-  const el=document.getElementById('wsRows'); if(!el) return;
-  const byI={}; CARDS.forEach(c=>{ if(!byI[c.issuer])byI[c.issuer]=[]; byI[c.issuer].push(c); });
+  const el=document.getElementById('wsRows');
+  const byI={};CARDS.forEach(c=>{if(!byI[c.issuer])byI[c.issuer]=[];byI[c.issuer].push(c);});
   el.innerHTML=ISSUERS.filter(i=>byI[i]).map(issuer=>{
     const chips=byI[issuer].map(card=>{
-      const on=myCards.has(card.id), fee=card.fee===0?'$0':'$'+card.fee;
-      return '<button class="wchip'+(on?' on':'')+'" style="--chip-c:'+card.c+'" onclick="toggleMyCard(\''+ card.id +'\')"><span class="wchip-d"></span>'+ card.short +' '+fee+'</button>';
+      const on=myCards.has(card.id),fee=card.fee===0?'$0':'$'+card.fee;
+      return`<button class="wchip${on?' on':''}" style="--chip-c:${card.c}" onclick="toggleMyCard('${card.id}')"><span class="wchip-d"></span>${card.short} ${fee}</button>`;
     }).join('');
-    return '<div class="ws-row"><span class="ws-il">'+(issuer==='American Express'?'Amex':issuer)+'</span><div class="ws-chips">'+ chips +'</div></div>';
+    return`<div class="ws-row"><span class="ws-il">${issuer==='American Express'?'Amex':issuer}</span><div class="ws-chips">${chips}</div></div>`;
   }).join('');
 }
 function toggleMyCard(id){
-  if(myCards.has(id)) myCards.delete(id); else myCards.add(id);
-  saveMyCards(); syncHeader(); renderWalletSetup(); renderGrid(); updateTabCounts(); initEmailBar();
+  if(myCards.has(id))myCards.delete(id);else myCards.add(id);
+  saveMyCards();syncHeader();renderWalletSetup();renderPromoTicker();renderGrid();updateTabCounts();initEmailBar();
+  // No Resend sync here — wallet syncs once at email capture, never automatically
 }
 
-/* ── BROWSE PICKER ───────────── */
+/* ── BROWSE PICKER ────────────── */
 function renderBrowsePicker(){
-  const el=document.getElementById('browsePicker'); if(!el) return;
-  const byI={}; CARDS.forEach(c=>{ if(!byI[c.issuer])byI[c.issuer]=[]; byI[c.issuer].push(c); });
+  const el=document.getElementById('browsePicker');
+  const byI={};CARDS.forEach(c=>{if(!byI[c.issuer])byI[c.issuer]=[];byI[c.issuer].push(c);});
   const groups=ISSUERS.filter(i=>byI[i]).map(issuer=>{
     const chips=byI[issuer].map(card=>{
-      const on=browseCards.has(card.id), fee=card.fee===0?'$0':'$'+card.fee;
-      return '<button class="chip'+(on?' on':'')+'" style="--chip-c:'+card.c+'" onclick="toggleBrowse(\''+ card.id +'\')"><span class="chip-d"></span>'+ card.short +' '+fee+'</button>';
+      const on=browseCards.has(card.id),fee=card.fee===0?'$0':'$'+card.fee;
+      return`<button class="chip${on?' on':''}" style="--chip-c:${card.c}" onclick="toggleBrowse('${card.id}')"><span class="chip-d"></span>${card.short} ${fee}</button>`;
     }).join('');
-    return '<div class="bp-g"><span class="bp-il">'+(issuer==='American Express'?'Amex':issuer)+'</span>'+ chips +'</div>';
+    return`<div class="bp-g"><span class="bp-il">${issuer==='American Express'?'Amex':issuer}</span>${chips}</div>`;
   }).join('');
-  const sel=browseCards.size;
-  el.innerHTML='<div class="bp-header"><span class="bp-title">Pick cards to compare</span><div class="bp-actions"><button class="bp-a" onclick="browseAll()">All 46</button>'+(sel>0?'<button class="bp-a" onclick="browseClear()">Clear ('+ sel +')</button>':'')+'<span class="bp-count">'+(sel===0?'None selected': sel+' card'+(sel!==1?'s':'')+' selected')+'</span></div></div><div class="bp-chips">'+ groups +'</div>';
+  el.innerHTML=`<div class="bp-row"><span class="bp-l">Filter</span><div class="bp-div"></div><button class="bp-a" onclick="browseAll()">All ${CARDS.length}</button><button class="bp-a" onclick="browseClear()">Clear</button><span class="bp-cnt">${browseCards.size} / ${CARDS.length} shown</span></div><div class="bp-chips">${groups}</div>`;
 }
-function toggleBrowse(id){ if(browseCards.has(id))browseCards.delete(id); else browseCards.add(id); renderBrowsePicker(); renderBrowseGrid(); }
-function browseAll(){ browseCards=new Set(CARDS.map(c=>c.id)); renderBrowsePicker(); renderBrowseGrid(); }
-function browseClear(){ browseCards.clear(); renderBrowsePicker(); renderBrowseGrid(); }
+function toggleBrowse(id){if(browseCards.has(id))browseCards.delete(id);else browseCards.add(id);renderBrowsePicker();renderGrid();}
+function browseAll(){CARDS.forEach(c=>browseCards.add(c.id));renderBrowsePicker();renderGrid();}
+function browseClear(){browseCards.clear();renderBrowsePicker();renderGrid();}
 
-/* ── RESET BADGE ─────────────── */
+/* ── RESET BADGE ──────────────── */
 function nextReset(s){
   const t=new Date(),y=t.getFullYear(),m=t.getMonth();
-  if(s==='monthly') return {d:daysUntil(new Date(y,m+1,1).toISOString().slice(0,10)),label:'monthly reset'};
-  if(s==='quarterly'){ const qs=[0,3,6,9],nq=qs.find(q=>q>m)??(qs[0]+12); return {d:daysUntil(new Date(y+(nq>=12?1:0),nq%12,1).toISOString().slice(0,10)),label:'quarterly reset'}; }
-  if(s==='semiannual') return {d:daysUntil((m<6?new Date(y,6,1):new Date(y+1,0,1)).toISOString().slice(0,10)),label:'semi-annual reset'};
-  if(s==='annual') return {d:daysUntil(new Date(y+1,0,1).toISOString().slice(0,10)),label:'annual reset (Jan 1)'};
+  if(s==='monthly')return{d:daysUntil(new Date(y,m+1,1)),label:'monthly reset'};
+  if(s==='quarterly'){const qs=[0,3,6,9],nq=qs.find(q=>q>m)??(qs[0]+12);return{d:daysUntil(new Date(y+(nq>=12?1:0),nq%12,1)),label:'quarterly reset'};}
+  if(s==='semiannual')return{d:daysUntil(m<6?new Date(y,6,1):new Date(y+1,0,1)),label:'semi-annual reset'};
+  if(s==='annual')return{d:daysUntil(new Date(y+1,0,1)),label:'annual reset (Jan 1)'};
   return null;
 }
 function renderResetBadge(){
-  const el=document.getElementById('resetBadge'); if(!el) return;
+  const el=document.getElementById('resetBadge');
   const r=nextReset(section);
-  if(!r||r.d<0){ el.classList.remove('show','hot'); el.innerHTML=''; return; }
-  const hot=r.d<=7;
-  el.className='reset-strip show'+(hot?' hot':'');
-  el.innerHTML='<span class="reset-txt'+(hot?' hot':'')+'">&#x27F3; <strong>'+ r.d +' day'+(r.d===1?'':' s')+'</strong> until '+ r.label +'</span>';
+  if(!r||r.d<0){el.innerHTML='';el.style.display='none';return;}
+  el.style.display='flex';const hot=r.d<=7;
+  el.className='reset-b'+(hot?' urg':'');
+  el.innerHTML=`<span class="rb-t${hot?' hot':''}">⟳ <strong>${r.d} day${r.d===1?'':'s'}</strong> until ${r.label}</span>`;
 }
 
-/* ── SECTION TAB INDICATORS ──── */
+/* ── NAV INDICATOR ────────────── */
 function updateInd(){
-  const bar=document.getElementById('sectionBar');
-  const ind=document.getElementById('sbarInd');
-  const a=bar && bar.querySelector('.stab.on');
-  if(!a||!ind||!bar) return;
-  const br=a.getBoundingClientRect(), nr=bar.getBoundingClientRect();
+  const a=document.querySelector('.nb.on'),ind=document.getElementById('navInd'),nav=document.getElementById('navEl');
+  if(!a||!ind||!nav)return;
+  const br=a.getBoundingClientRect(),nr=nav.getBoundingClientRect();
   ind.style.width=br.width+'px';
-  ind.style.transform='translateX('+(br.left-nr.left+bar.scrollLeft)+'px)';
+  ind.style.transform=`translateX(${br.left-nr.left+nav.scrollLeft}px)`;
 }
-function updateBInd(){
-  const bar=document.getElementById('browseSectionBar');
-  const ind=document.getElementById('bsbarInd');
-  const a=bar && bar.querySelector('.stab.on');
-  if(!a||!ind||!bar) return;
-  const br=a.getBoundingClientRect(), nr=bar.getBoundingClientRect();
-  ind.style.width=br.width+'px';
-  ind.style.transform='translateX('+(br.left-nr.left+bar.scrollLeft)+'px)';
-}
-window.addEventListener('resize', ()=>{ updateInd(); updateBInd(); });
 
-/* ── CARD RENDERING ──────────── */
+/* ── SEARCH ───────────────────── */
+document.getElementById('searchInput').addEventListener('input',function(){
+  q=this.value.trim().toLowerCase();
+  document.getElementById('scX').style.display=q?'flex':'none';
+  renderGrid();
+});
+function clearSearch(){document.getElementById('searchInput').value='';q='';document.getElementById('scX').style.display='none';renderGrid();}
+
+/* ── RENDERING ────────────────── */
+function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function vis(){return CARDS.filter(c=>(mode==='mycards'?myCards:browseCards).has(c.id));}
+
+/* Card header — clean: name, fee, stale warning only if needed */
 function colHead(card){
   const fee=card.fee===0?'$0':'$'+card.fee;
   const stale=card.verified<'2026-01';
-  const meta=stale?'<div class="ch-meta"><span class="ch-ver stale">&#x26A0; may be outdated</span><button class="ch-flag" onclick="flagCard(\''+ card.id +'\')">flag</button></div>':'';
-  return '<div class="ch"><div class="ch-top"><span class="ch-name">'+esc(card.name)+'</span><span class="ch-fee">'+fee+'/yr</span></div>'+ meta +'</div>';
+  // Only show meta row if card is stale (otherwise it's noise)
+  const metaRow=stale
+    ?`<div class="ch-meta"><span class="ch-ver stale" title="Data may be outdated — ${esc(card.verified)}">⚠ data may be outdated</span><button class="ch-flag" onclick="flagCard('${card.id}')">flag</button></div>`
+    :'';
+  return`<div class="ch">
+    <div class="ch-top"><span class="ch-name">${esc(card.name)}</span><span class="ch-fee">${fee}/yr</span></div>
+    ${metaRow}
+  </div>`;
 }
-function applyFooter(card, sec){
-  const link=AFF[card.id]; if(!link||sec==='summary') return '';
-  return '<div class="apply-row"><a class="apply-link" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer" onclick="trackApply(\''+ card.id +'\')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>';
+
+/* Apply row appears on ALL tabs at bottom of every card.
+   On credit tabs: just "Apply →" link — unobtrusive.
+   On summary tab: shows full offer via buildSummary's applyRow call.
+   This is how we make money without looking like an ad site. */
+function applyFooter(card){
+  const link=AFF[card.id];
+  if(!link||section==='summary')return''; // summary handles it internally
+  return`<div class="apply-row">
+    <a class="apply-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
+  </div>`;
 }
+
+// applyRow for summary — shows full offer
 function applyRow(card){
-  const link=AFF[card.id]; if(!link) return '';
-  const s=card.sob&&card.sob.offer&&!card.sob.offer.startsWith('No');
-  return '<div class="apply-row">'+(s?'<div class="apply-row-offer"><strong>'+esc(card.sob.offer)+'</strong>'+(card.sob.req?'<br><span style="font-size:9.5px">'+esc(card.sob.req)+'</span>':'')+'</div>':'<div class="apply-row-offer">View current offers</div>')+'<a class="apply-link" href="'+esc(link)+'" target="_blank" rel="noopener noreferrer" onclick="trackApply(\''+ card.id +'\')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a></div>';
+  const link=AFF[card.id];
+  if(!link)return'';
+  const s=card.sob;
+  const hasOffer=s&&s.offer&&!s.offer.startsWith('No');
+  return`<div class="apply-row">
+    ${hasOffer?`<div class="apply-row-offer"><strong>${esc(s.offer)}</strong>${s.req?'<br><span style="font-size:9.5px">'+esc(s.req)+'</span>':''}</div>`:'<div class="apply-row-offer">View current offers</div>'}
+    <a class="apply-link" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">Apply <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
+  </div>`;
 }
-function buildCredits(card, sec, searchQ){
-  const items=card.credits[sec]||[];
-  const filtered=searchQ?items.filter(it=>it.n.toLowerCase().includes(searchQ)||(it.note&&it.note.toLowerCase().includes(searchQ))):items;
+
+function buildCredits(card){
+  const items=card.credits[section]||[];
+  const filtered=q?items.filter(it=>it.n.toLowerCase().includes(q)||(it.note&&it.note.toLowerCase().includes(q))):items;
   let body='';
-  if(items.length===0) body='<div class="empty">No credits this cadence</div>';
-  else if(filtered.length===0&&searchQ) body='<div class="nomatch">No match for &ldquo;'+esc(searchQ)+'&rdquo;</div>';
-  else body=filtered.map(it=>'<div class="ci"><div class="ci-top"><span class="ci-n'+(it.warn?' warn':'')+'">'+esc(it.n)+'</span><span class="ci-a">'+esc(it.a)+'</span></div>'+(it.note?'<div class="ci-note">'+esc(it.note)+'</div>':'')+'</div>').join('');
-  return '<div class="cb">'+ body +'</div>';
+  if(items.length===0)body='<div class="empty">No credits this cadence</div>';
+  else if(filtered.length===0&&q)body=`<div class="nomatch">No match for "${esc(q)}"</div>`;
+  else body=filtered.map(it=>`<div class="ci"><div class="ci-top"><span class="ci-n${it.warn?' warn':''}">${esc(it.n)}</span><span class="ci-a">${esc(it.a)}</span></div>${it.note?`<div class="ci-note">${esc(it.note)}</div>`:''}</div>`).join('');
+  return`<div class="cb">${body}</div>`;
 }
+
 const SMAX=3200;
 function buildSummary(card){
   const s=card.summary;
-  const sob=card.sob&&card.sob.offer&&!card.sob.offer.startsWith('No')?'<div class="si"><div class="si-top"><span class="si-l">Sign-on bonus</span><span class="si-v" style="color:var(--green)">'+esc(card.sob.offer)+'</span></div>'+(card.sob.req?'<div class="si-note">'+esc(card.sob.req)+'</div>':'')+'</div>':'';
-  const feeRow='<div class="si-fee"><span class="si-fl">Annual fee</span><span class="si-fv">'+(card.fee===0?'$0':'$'+card.fee+'/yr')+'</span></div>';
-  const rows=s.rows.map(r=>{ const p=Math.min(100,Math.round(r.v/SMAX*100)); return '<div class="si"><div class="si-top"><span class="si-l">'+esc(r.l)+'</span><span class="si-v">'+esc(r.a)+'</span></div><div class="bar"><div class="bar-f" style="width:'+p+'%"></div></div>'+(r.note?'<div class="si-note">'+esc(r.note)+'</div>':'')+'</div>'; }).join('');
+  const sob=card.sob&&card.sob.offer&&!card.sob.offer.startsWith('No')
+    ?`<div class="si"><div class="si-top"><span class="si-l">Sign-on bonus</span><span class="si-v" style="color:var(--green);font-size:11px">${esc(card.sob.offer)}</span></div>${card.sob.req?`<div class="si-note">${esc(card.sob.req)}</div>`:''}</div>`:'';
+  const feeRow=`<div class="si-fee"><span class="si-fl">Annual fee</span><span class="si-fv">${card.fee===0?'$0':'$'+card.fee+'/yr'}</span></div>`;
+  const rows=s.rows.map(r=>{const p=Math.min(100,Math.round(r.v/SMAX*100));return`<div class="si"><div class="si-top"><span class="si-l">${esc(r.l)}</span><span class="si-v">${esc(r.a)}</span></div><div class="bar"><div class="bar-f" style="width:${p}%"></div></div>${r.note?`<div class="si-note">${esc(r.note)}</div>`:''}</div>`;}).join('');
   const tp=Math.min(100,Math.round(s.totalV/SMAX*100));
-  const tot='<div class="si tot"><div class="si-top"><span class="si-l">Total potential credits</span><span class="si-v">'+esc(s.total)+'</span></div><div class="bar" style="height:2.5px"><div class="bar-f" style="width:'+tp+'%"></div></div>'+(s.note?'<div class="si-note">'+esc(s.note)+'</div>':'')+'</div>';
-  return '<div class="cb">'+sob+feeRow+rows+tot+'</div>'+applyRow(card);
+  const total=`<div class="si tot"><div class="si-top"><span class="si-l">Total potential credits</span><span class="si-v">${esc(s.total)}</span></div><div class="bar" style="height:2.5px"><div class="bar-f" style="width:${tp}%"></div></div>${s.note?`<div class="si-note">${esc(s.note)}</div>`:''}</div>`;
+  return`<div class="cb">${sob}${feeRow}${rows}${total}</div>${applyRow(card)}`;
 }
 
-function buildGrid(cards, gridId, thumbId, fadeId, sfId, sec, searchQ){
-  const gridEl=document.getElementById(gridId); if(!gridEl) return;
-  let sorted=cards;
-  if(sec!=='summary'&&sec!=='static'){
-    const with_=cards.filter(c=>(c.credits[sec]||[]).length>0);
-    if(!searchQ&&with_.length>0) sorted=with_;
-  }
-  const cntId=gridId==='grid'?'tbCnt':'bTbCnt';
-  const cntEl=document.getElementById(cntId);
-  if(cntEl) cntEl.innerHTML='<strong>'+sorted.length+'</strong> card'+(sorted.length!==1?'s':'');
-  const fadeEl=document.getElementById(fadeId);
-  if(fadeEl) fadeEl.style.display=sorted.length>3?'block':'none';
-  gridEl.innerHTML='';
-  if(sorted.length===0){ gridEl.innerHTML='<div style="padding:40px;text-align:center;color:var(--txd);font-size:13px">No results.</div>'; return; }
-  sorted.forEach(card=>{
-    const col=document.createElement('div'); col.className='col';
-    col.style.cssText='--cc:'+card.c+';--ccm:'+card.cm;
-    col.innerHTML=colHead(card)+(sec==='summary'?buildSummary(card):buildCredits(card,sec,searchQ))+applyFooter(card,sec);
-    gridEl.appendChild(col);
-  });
-  // Summary footer
-  if(sfId){
-    const sfEl=document.getElementById(sfId);
-    if(sfEl){ if(sec==='summary'&&sorted.length>=2) renderSummaryFooter(sorted,sfEl); else sfEl.innerHTML=''; }
-  }
-  // Scroll thumb
-  setTimeout(()=>{
-    const g=document.getElementById(gridId), thumb=document.getElementById(thumbId);
-    if(!g||!thumb) return;
-    const upd=()=>{ const r=g.scrollWidth>g.clientWidth?g.clientWidth/g.scrollWidth:1, p=g.scrollWidth>g.clientWidth?g.scrollLeft/(g.scrollWidth-g.clientWidth):0; thumb.style.width=(r*100)+'%'; thumb.style.transform='translateX('+p*(100/r*(1-r))+'%)'; if(fadeEl)fadeEl.style.opacity=p<0.97?'1':'0'; };
-    g.removeEventListener('scroll',g._sh); g._sh=upd; g.addEventListener('scroll',upd,{passive:true}); upd();
-  }, 60);
+/* Summary tab footer — share CTA shown once below ALL cards, not per-card */
+function renderSummaryFooter(cards){
+  if(!cards||cards.length<2)return;
+  const totalCredits=cards.reduce((a,c)=>a+(c.summary?.totalV||0),0);
+  const totalFees=cards.reduce((a,c)=>a+c.fee,0);
+  const net=totalCredits-totalFees;
+  const el=document.getElementById('summaryFooter');
+  if(!el)return;
+  el.innerHTML=`<div style="padding:20px 0 4px;display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+    <div style="font-size:12px;color:var(--txm)">
+      <span style="color:var(--tx);font-weight:500">Your stack total:</span>
+      $${totalCredits.toLocaleString()}/yr in credits · $${totalFees.toLocaleString()}/yr in fees ·
+      <span style="color:${net>=0?'var(--green)':'var(--red)'};font-weight:500">${net>=0?'+':'-'}$${Math.abs(net).toLocaleString()} net</span>
+    </div>
+    <button class="btn btn-share" style="margin-left:auto;flex-shrink:0" onclick="openShareModal()">
+      <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>
+      Share your stack
+    </button>
+  </div>`;
 }
 
-/* ── MY CARDS GRID ───────────── */
 function renderGrid(){
-  const empty=myCards.size===0;
-  const es=document.getElementById('emptyState'); if(es)es.style.display=empty?'flex':'none';
-  const ca=document.getElementById('cardArea'); if(ca)ca.style.display=empty?'none':'block';
-  const sb=document.getElementById('sectionBar'); if(sb)sb.style.display=empty?'none':'flex';
-  const rb=document.getElementById('resetBadge'); if(rb&&empty){ rb.classList.remove('show','hot'); rb.innerHTML=''; }
-  if(empty) return;
-  renderResetBadge();
-  const cards=CARDS.filter(c=>myCards.has(c.id));
-  buildGrid(cards,'grid','scrollThumb','gFade','summaryFooter',section,q);
-  requestAnimationFrame(updateInd);
-}
+  const gridEl=document.getElementById('grid');
+  if(!gridEl)return;
+  const allVisible=vis();
 
-/* ── BROWSE GRID ─────────────── */
-function renderBrowseGrid(){
-  const gridEl=document.getElementById('browseGrid'); if(!gridEl) return;
-  if(browseCards.size===0){
-    gridEl.innerHTML='<div class="browse-empty"><div class="browse-empty-t">Select cards above to compare</div><div class="browse-empty-s">Click any chip to add a card.<br>Pick multiple to see credits side by side.</div></div>';
-    const cnt=document.getElementById('bTbCnt'); if(cnt)cnt.innerHTML='';
+  const _isEmpty=allVisible.length===0&&mode==='mycards';
+  var _esEl=document.getElementById('emptyState');
+  var _tbEl=document.querySelector('.toolbar');
+  var _gwEl=document.querySelector('.gw');
+  if(_esEl)_esEl.style.display=_isEmpty?'flex':'none';
+  if(_tbEl)_tbEl.style.display=_isEmpty?'none':'flex';
+  if(_gwEl)_gwEl.style.display=_isEmpty?'none':'';
+  if(_isEmpty){var g2=document.getElementById('grid');if(g2)g2.innerHTML='';return;}
+
+  // For credit tabs: sort cards with credits first, empty cards go to end
+  // For summary/always-on: show all in order
+  let sorted=allVisible;
+  if(section!=='summary'&&section!=='static'){
+    const withCredits=allVisible.filter(c=>(c.credits[section]||[]).length>0);
+    const withoutCredits=allVisible.filter(c=>(c.credits[section]||[]).length===0);
+    sorted=[...withCredits,...withoutCredits];
+    // Only show empty cards if there are no non-empty ones, or user is searching
+    if(!q&&withCredits.length>0){
+      sorted=withCredits; // Hide empty cards entirely — unclutter
+    }
+  }
+
+  const cntEl=document.getElementById('tbCnt');
+  if(cntEl)cntEl.innerHTML=`<strong>${sorted.length}</strong> card${sorted.length!==1?'s':''}`;
+  const fadeEl=document.getElementById('gFade');
+  if(fadeEl)fadeEl.style.display=sorted.length>3?'block':'none';
+
+  gridEl.innerHTML='';
+  if(sorted.length===0){
+    gridEl.innerHTML='<div style="padding:40px;text-align:center;color:var(--txd);font-size:12px">No results.</div>';
     return;
   }
-  const cards=CARDS.filter(c=>browseCards.has(c.id));
-  buildGrid(cards,'browseGrid','bScrollThumb','bGFade','bSummaryFooter',bSection,bQ);
-  requestAnimationFrame(updateBInd);
+  sorted.forEach(card=>{
+    const col=document.createElement('div');
+    col.className='col';
+    col.style.cssText=`--cc:${card.c};--ccm:${card.cm}`;
+    col.innerHTML=colHead(card)+(section==='summary'?buildSummary(card):buildCredits(card))+applyFooter(card);
+    gridEl.appendChild(col);
+  });
+
+  // Clear/render summary footer
+  const sfEl=document.getElementById('summaryFooter');
+  if(sfEl){
+    if(section==='summary'&&sorted.length>=2) renderSummaryFooter(sorted);
+    else sfEl.innerHTML='';
+  }
+  setTimeout(()=>{
+    const g=document.getElementById('grid');
+    const thumb=document.getElementById('scrollThumb');
+    if(!g||!thumb)return;
+    const upd=()=>{
+      const r=g.scrollWidth>g.clientWidth?g.clientWidth/g.scrollWidth:1;
+      const p=g.scrollWidth>g.clientWidth?g.scrollLeft/(g.scrollWidth-g.clientWidth):0;
+      thumb.style.width=(r*100)+'%';
+      thumb.style.transform=`translateX(${p*(100/r*(1-r))}%)`;
+      if(fadeEl)fadeEl.style.opacity=p<0.97?'1':'0';
+    };
+    g.removeEventListener('scroll',g._scrollHandler);
+    g._scrollHandler=upd;
+    g.addEventListener('scroll',upd,{passive:true});
+    upd();
+  },60);
 }
 
-/* ── LIVE PROMOS PAGE ────────── */
-function renderPromosPage(){
-  const el=document.getElementById('promosContent'); if(!el) return;
-
-  // ── SECTION 1: Sign-on Bonuses (primary revenue driver) ──
-  // Cards with affiliate links sorted by bonus value (estimated points)
-  const sobCards=CARDS.filter(c=>AFF[c.id]&&c.sob&&c.sob.offer&&!c.sob.offer.startsWith('No'));
-  const sobRows=sobCards.map(card=>{
-    const link=AFF[card.id];
-    const owned=myCards.has(card.id);
-    return `<div class="sob-card" style="--cc:${card.c};--ccm:${card.cm}">
-      <div class="sob-card-head">
-        <div class="sob-card-name">${esc(card.name)}</div>
-        <div class="sob-card-fee">${card.fee===0?'No annual fee':'$'+card.fee+'/yr'}${owned?' &middot; <span style=\"color:var(--green)\">In your wallet</span>':''}</div>
-      </div>
-      <div class="sob-card-body">
-        <div class="sob-offer">${esc(card.sob.offer)}</div>
-        ${card.sob.req?`<div class="sob-req">Spend requirement: ${esc(card.sob.req)}</div>`:''}
-      </div>
-      <div class="sob-card-foot">
-        <a class="sob-apply" href="${esc(link)}" target="_blank" rel="noopener noreferrer" onclick="trackApply('${card.id}')">
-          Apply now <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg>
-        </a>
-      </div>
-    </div>`;
-  }).join('');
-
-  // ── SECTION 2: Transfer Bonuses ──
-  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0).sort((a,b)=>daysUntil(a.expires)-daysUntil(b.expires));
-  const ownedCount=live.filter(p=>p.cards.some(id=>myCards.has(id))).length;
-  const eligibleNote=myCards.size>0
-    ?`<strong style="color:var(--green)">${ownedCount} of ${live.length} match your wallet.</strong> Green chips = your cards.`
-    :'<a href="#" onclick="setMode('mycards');return false;" style="color:var(--blue)">Add your cards</a> to see which promos you qualify for.';
-  const promoChips=p=>{
-    return CARDS.filter(cd=>p.cards.includes(cd.id))
-      .map(cd=>`<span class="pc${myCards.has(cd.id)?' owned':''}">${esc(cd.short)}</span>`).join('');
-  };
-  const promoRows=live.map(p=>{
-    const d=daysUntil(p.expires),hot=d<=7,warm=d<=14;
-    const link='https://www.google.com/search?q='+encodeURIComponent(p.currency+' '+p.partner+' transfer bonus');
-    return `<div class="promo-card${hot?' hot':warm?' warm':''}">
-      <div class="promo-left">
-        <div class="promo-meta">${esc(p.currency)}</div>
-        <div><span class="promo-bonus">${esc(p.bonus)}</span><span class="promo-bonus-label">transfer bonus</span></div>
-        <div class="promo-partner">${esc(p.partner)}</div>
-        <div class="promo-chips-label">Eligible cards</div>
-        <div class="promo-chips">${promoChips(p)}</div>
-      </div>
-      <div class="promo-right">
-        <span class="promo-exp${hot?' hot':''}">${hot?'&#x26A0; ':''}${d===0?'Expires today':'Expires in '+d+' day'+(d!==1?'s':'')}</span>
-        <a class="promo-apply" href="${esc(link)}" target="_blank" rel="noopener">Transfer points <svg width="11" height="11" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8L8 2M4 2h4v4"/></svg></a>
-      </div>
-    </div>`;
-  }).join('');
-
-  el.innerHTML=`
-    <div class="promos-hdr">
-      <div class="promos-hdr-t">Live Promos &amp; Offers</div>
-      <div class="promos-hdr-s">Current sign-on bonuses and transfer promotions. Apply through our links at no cost to you.</div>
-    </div>
-    <div class="promos-section">
-      <div class="promos-section-title">&#x1F4B3; Sign-on Bonuses</div>
-      <div class="promos-section-sub">Current welcome offers on premium cards. These are often elevated — apply before they drop.</div>
-      <div class="sob-grid">${sobRows}</div>
-    </div>
-    ${live.length>0?`<div class="promos-section">
-      <div class="promos-section-title">&#x1F501; Live Transfer Bonuses</div>
-      <div class="promos-section-sub">Active point transfer promotions. ${eligibleNote}</div>
-      <div class="promos-grid">${promoRows}</div>
-    </div>`:''}
-  `;
-}
-
-/* ── SUMMARY FOOTER ──────────── */
-function renderSummaryFooter(cards, el){
-  const tc=cards.reduce((a,c)=>a+(c.summary?.totalV||0),0);
-  const tf=cards.reduce((a,c)=>a+c.fee,0);
-  const net=tc-tf;
-  el.innerHTML='<div style="padding:20px 0 4px;display:flex;align-items:center;gap:12px;flex-wrap:wrap"><div style="font-size:13px;color:var(--txm)"><span style="color:var(--tx);font-weight:500">Stack total:</span> $'+tc.toLocaleString()+'/yr credits &middot; $'+tf.toLocaleString()+'/yr fees &middot; <span style="color:'+(net>=0?'var(--green)':'var(--red)')+';font-weight:500">'+(net>=0?'+':'-')+'$'+Math.abs(net).toLocaleString()+' net</span></div><button class="btn btn-share" style="margin-left:auto;flex-shrink:0" onclick="openShareModal()"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg> Share your stack</button></div>';
-}
-
-/* ── TAB COUNTS ──────────────── */
+/* Update nav tab count badges based on visible cards */
 function updateTabCounts(){
-  const allVis=CARDS.filter(c=>myCards.has(c.id));
-  document.querySelectorAll('#sectionBar .stab').forEach(btn=>{
-    const s=btn.dataset.s; if(!['monthly','quarterly','semiannual','annual','multiyear','static'].includes(s)) return;
-    let cnt=btn.querySelector('.stab-cnt');
-    if(!cnt){ cnt=document.createElement('span'); cnt.className='stab-cnt'; btn.appendChild(cnt); }
+  const allVis=vis();
+  const sections=['monthly','quarterly','semiannual','annual','multiyear','static'];
+  document.querySelectorAll('.nb').forEach(btn=>{
+    const s=btn.dataset.s;
+    if(!sections.includes(s))return;
+    let cnt=btn.querySelector('.nb-cnt');
+    if(!cnt){cnt=document.createElement('span');cnt.className='nb-cnt';btn.appendChild(cnt);}
     const n=allVis.filter(c=>(c.credits[s]||[]).length>0).length;
-    cnt.textContent=n; cnt.style.display=n>0?'inline-block':'none';
+    cnt.textContent=n;
+    cnt.style.display=n>0?'inline-block':'none';
   });
 }
 
-/* ── SEARCH ──────────────────── */
-function clearSearch(){ document.getElementById('searchInput').value=''; q=''; document.getElementById('scX').style.display='none'; renderGrid(); }
-function clearBrowseSearch(){ document.getElementById('bSearchInput').value=''; bQ=''; document.getElementById('bScX').style.display='none'; renderBrowseGrid(); }
+function trackApply(id){
+  const card=CARDS.find(c=>c.id===id);
+  console.log('[CardRoundup affiliate] click →',id,card?.name);
+  if(window.posthog) posthog.capture('apply_click',{card_id:id,card_name:card?.name,section});
+}
+function flagCard(id){const card=CARDS.find(c=>c.id===id);showToast(`Flagged "${card?.name}" as outdated — thanks`);}
 
-/* ── MISC ────────────────────── */
-function trackApply(id){ const card=CARDS.find(c=>c.id===id); if(window.posthog)posthog.capture('apply_click',{card_id:id,card_name:card?.name,section}); }
-function flagCard(id){ const card=CARDS.find(c=>c.id===id); showToast('Flagged "'+card?.name+'" &#x2014; thanks'); }
-
-/* ── CALENDAR EXPORT ─────────── */
+/* ── CALENDAR EXPORT ──────────── */
 function exportCalendar(){
   const today=new Date(),y=today.getFullYear(),m=today.getMonth();
-  const pad=n=>String(n).padStart(2,'0'), id=d=>d.getFullYear()+""+pad(d.getMonth()+1)+""+pad(d.getDate()), uid=()=>Math.random().toString(36).slice(2)+'@kbyli.app';
-  const visible=CARDS.filter(c=>myCards.has(c.id)), events=[];
-  for(let i=0;i<3;i++){ const d=new Date(y,m+1+i,1); const mc=visible.filter(c=>(c.credits.monthly||[]).length>0); if(mc.length>0)events.push({date:d,title:'Monthly credits reset &#x2014; '+mc.length+' cards',note:mc.map(c=>c.name).join(', ')}); }
-  [0,3,6,9].forEach(q=>{ const d=new Date(y+(q+1>11?1:0),(q+1)%12,1); if(daysUntil(d.toISOString().slice(0,10))>0){ const qc=visible.filter(c=>(c.credits.quarterly||[]).length>0); if(qc.length>0)events.push({date:d,title:'Quarterly reset &#x2014; '+qc.length+' cards',note:qc.map(c=>c.name).join(', ')}); } });
-  const ac=visible.filter(c=>(c.credits.annual||[]).length>0); if(ac.length>0)events.push({date:new Date(y+1,0,1),title:'Annual credits reset &#x2014; '+ac.length+' cards',note:ac.map(c=>c.name).join(', ')});
-  if(events.length===0){ showToast('No upcoming resets to export'); return; }
-  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Card Roundup//EN\r\nCALSCALE:GREGORIAN\r\n';
-  events.forEach(e=>{ ics+='BEGIN:VEVENT\r\nUID:'+uid()+'\r\nDTSTAMP:'+id(new Date())+'T000000Z\r\nDTSTART;VALUE=DATE:'+id(e.date)+'\r\nDTEND;VALUE=DATE:'+id(e.date)+'\r\nSUMMARY:\uD83D\uDCB3 '+e.title+'\r\nDESCRIPTION:'+e.note+'\r\nEND:VEVENT\r\n'; });
+  const pad=n=>String(n).padStart(2,'0'),id=d=>`${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`,uid=()=>Math.random().toString(36).slice(2)+'@kbyli.app';
+  const visible=vis(),events=[];
+  for(let i=0;i<3;i++){const d=new Date(y,m+1+i,1);const mc=visible.filter(c=>(c.credits.monthly||[]).length>0);if(mc.length>0)events.push({date:d,title:`Monthly credits reset — ${mc.length} cards`,note:mc.map(c=>c.name).join(', ')});}
+  [0,3,6,9].forEach(q=>{const d=new Date(y+(q+1>11?1:0),(q+1)%12,1);if(daysUntil(d)>0&&daysUntil(d)<366){const qc=visible.filter(c=>(c.credits.quarterly||[]).length>0);if(qc.length>0)events.push({date:d,title:`Quarterly reset — ${qc.length} cards`,note:qc.map(c=>c.name).join(', ')});}});
+  [{mo:7,l:'Semi-annual reset H2'},{mo:1,l:'Semi-annual reset H1'}].forEach(({mo,l})=>{const d=new Date(y+(mo===1?1:0),mo-1,1);if(daysUntil(d)>0){const sc=visible.filter(c=>(c.credits.semiannual||[]).length>0);if(sc.length>0)events.push({date:d,title:l+` — ${sc.length} cards`,note:sc.map(c=>c.name).join(', ')});}});
+  const ac=visible.filter(c=>(c.credits.annual||[]).length>0);if(ac.length>0)events.push({date:new Date(y+1,0,1),title:`Annual credits reset — ${ac.length} cards`,note:ac.map(c=>c.name).join(', ')});
+  if(events.length===0){showToast('No upcoming resets to export');return;}
+  let ics='BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Know Before You Lose It//EN\r\nCALSCALE:GREGORIAN\r\n';
+  events.forEach(e=>{ics+=`BEGIN:VEVENT\r\nUID:${uid()}\r\nDTSTAMP:${id(new Date())}T000000Z\r\nDTSTART;VALUE=DATE:${id(e.date)}\r\nDTEND;VALUE=DATE:${id(e.date)}\r\nSUMMARY:💳 ${e.title}\r\nDESCRIPTION:${e.note}\r\nBEGIN:VALARM\r\nTRIGGER:-P3D\r\nACTION:DISPLAY\r\nDESCRIPTION:Reminder: ${e.title}\r\nEND:VALARM\r\nEND:VEVENT\r\n`;});
   ics+='END:VCALENDAR';
-  const b=new Blob([ics],{type:'text/calendar'}); const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='card-resets.ics'; a.click();
-  showToast('Exported '+events.length+' reset events');
+  const b=new Blob([ics],{type:'text/calendar'});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='card-resets.ics';a.click();
+  showToast(`Exported ${events.length} reset events`);
 }
+
+function showToast(msg,dur=2800){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),dur);}
+
+/* ── NAV ──────────────────────── */
+document.querySelectorAll('.nb').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.nb').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');section=btn.dataset.s;
+    renderResetBadge();renderGrid();requestAnimationFrame(updateInd);
+  });
+});
+window.addEventListener('resize',updateInd);
 
 /* ══════════════════════════════════════════════════════
    AUTH SYSTEM
@@ -1923,55 +1519,31 @@ document.addEventListener('keydown', e => {
   if(e.key==='Escape'){closeAuthModal();closeProfilePanel();closeShareModal();}
 });
 
-
-
-/* ═══════════════ INIT ═══════════════ */
-// All DOM wiring happens here, after all elements exist
-(function init(){
-  // Section tabs - My Cards
-  document.querySelectorAll('#sectionBar .stab').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('#sectionBar .stab').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); section=btn.dataset.s;
-      renderGrid(); renderResetBadge(); requestAnimationFrame(updateInd);
-    });
-  });
-  // Section tabs - Browse
-  document.querySelectorAll('#browseSectionBar .stab').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      document.querySelectorAll('#browseSectionBar .stab').forEach(b=>b.classList.remove('on'));
-      btn.classList.add('on'); bSection=btn.dataset.s;
-      renderBrowseGrid(); requestAnimationFrame(updateBInd);
-    });
-  });
-  // Search inputs
-  const si=document.getElementById('searchInput');
-  if(si) si.addEventListener('input', function(){ q=this.value.trim().toLowerCase(); const x=document.getElementById('scX'); if(x)x.style.display=q?'flex':'none'; renderGrid(); });
-  const bi=document.getElementById('bSearchInput');
-  if(bi) bi.addEventListener('input', function(){ bQ=this.value.trim().toLowerCase(); const x=document.getElementById('bScX'); if(x)x.style.display=bQ?'flex':'none'; renderBrowseGrid(); });
-  // Email input enter key
-  const ei=document.getElementById('ebInput');
-  if(ei) ei.addEventListener('keydown', e=>{ if(e.key==='Enter')submitEmail(); });
-  // Empty state buttons
-  const ewp=document.getElementById('ewPickBtn');
-  if(ewp) ewp.addEventListener('click', ()=>{
-    walletOpen=true;
-    const ws=document.getElementById('walletSetup'); if(ws){ ws.style.display='block'; renderWalletSetup(); }
-    const eb=document.getElementById('editBtn'); if(eb){ eb.style.display='inline-flex'; eb.classList.add('open'); }
-    const ebl=document.getElementById('editBtnLabel'); if(ebl)ebl.textContent='Done';
-    const wsel=document.getElementById('walletSetup'); if(wsel)wsel.scrollIntoView({behavior:'smooth',block:'nearest'});
-  });
-  const ewb=document.getElementById('ewBrowseBtn');
-  if(ewb) ewb.addEventListener('click', ()=>setMode('browse'));
-
-  // Boot
-  initEmailBar();
-  initAuth();
-  syncHeader();
-  renderGrid();
-  updateTabCounts();
-  requestAnimationFrame(updateInd);
-})();
+/* ── INIT ──────────────────────── */
+if(mode==='browse'){
+  document.querySelectorAll('.mb').forEach(b=>b.classList.toggle('on',b.dataset.m==='browse'));
+  document.getElementById('browsePicker').style.display='block';
+}
+initEmailBar();
+initAuth();
+syncHeader();
+renderBrowsePicker();
+var ewP=document.getElementById('ewPickBtn');
+var ewB=document.getElementById('ewBrowseBtn');
+if(ewP) ewP.addEventListener('click',function(){
+  walletOpen=true;
+  var ws=document.getElementById('walletSetup');
+  if(ws){ws.style.display='block';renderWalletSetup();}
+  var eb=document.getElementById('editBtn');
+  if(eb)eb.innerHTML='Done';
+  if(ws)ws.scrollIntoView({behavior:'smooth',block:'nearest'});
+});
+if(ewB) ewB.addEventListener('click',function(){setMode('browse');});
+renderPromoTicker();
+renderResetBadge();
+renderGrid();
+updateTabCounts();
+requestAnimationFrame(updateInd);
 </script>
 </body>
 </html>
