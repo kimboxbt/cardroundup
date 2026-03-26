@@ -712,30 +712,9 @@ let promoClosed=false;
 function saveMyCards(){try{localStorage.setItem(SK,JSON.stringify([...myCards]))}catch{}}
 
 /* ── ONBOARDING STRIP ──────────────── */
-function initOnboard(){
-  const dismissed = localStorage.getItem('ob_d');
-  const hasCards = myCards.size > 0;
-  const strip = document.getElementById('onboardStrip');
-  if(!strip) return;
-  // Show onboarding if: first visit (never dismissed) AND no wallet yet
-  if(!dismissed && !hasCards){
-    strip.style.display = 'flex';
-  } else {
-    strip.style.display = 'none';
-  }
-}
-function dismissOnboard(){
-  localStorage.setItem('ob_d','1');
-  document.getElementById('onboardStrip').style.display = 'none';
-}
-// Auto-dismiss onboarding when user adds first card
-function maybeHideOnboard(){
-  if(myCards.size > 0){
-    localStorage.setItem('ob_d','1');
-    const strip = document.getElementById('onboardStrip');
-    if(strip) strip.style.display = 'none';
-  }
-}
+function initOnboard(){}
+function dismissOnboard(){}
+function maybeHideOnboard(){}
 
 function syncHeader(){
   document.getElementById('hMine').textContent = myCards.size;
@@ -812,28 +791,8 @@ document.getElementById('ebInput').addEventListener('keydown',e=>{if(e.key==='En
 /* ── PROMO TICKER ──────────────── */
 function daysUntil(d){const n=new Date();n.setHours(0,0,0,0);const t=new Date(d);t.setHours(0,0,0,0);return Math.round((t-n)/86400000);}
 
-function renderPromoTicker(){
-  const bar=document.getElementById('promoBar');
-  const inner=document.getElementById('promoInner');
-  if(promoClosed){bar.style.display='none';return;}
-  const active=mode==='mycards'?myCards:browseCards;
-  const live=PROMOS.filter(p=>daysUntil(p.expires)>=0&&p.cards.some(c=>active.has(c)));
-  if(live.length===0){bar.style.display='none';return;}
-  bar.style.display='block';
-  // Build pill HTML
-  const pill=p=>{
-    const d=daysUntil(p.expires),hot=d<=7;
-    return`<div class="pp"><span class="pp-cur">${p.currency}</span><span class="pp-bonus">${p.bonus}</span><span class="pp-arr">→</span><span class="pp-partner">${p.partner}</span><span class="pp-exp${hot?' hot':''}">exp ${d}d</span></div>`;
-  };
-  const html=live.map(pill).join('');
-  // Duplicate for seamless infinite loop
-  inner.innerHTML=html+html;
-  // Adjust animation speed to content width
-  const single=inner.scrollWidth/2;
-  const speed=Math.max(30,single/8); // ~8px per second
-  inner.style.animationDuration=speed+'s';
-}
-function closePromo(){promoClosed=true;document.getElementById('promoBar').style.display='none';}
+function renderPromoTicker(){/* promo ticker removed — see Live Promos tab */}
+function closePromo(){promoClosed=false;}
 
 /* ── MODE ─────────────────────── */
 function setMode(m){
@@ -1582,8 +1541,6 @@ document.addEventListener('keydown', e => {
 
 
 /* ── LIVE PROMOS PAGE ─────────────────────────── */
-function daysUntil(d){var n=new Date();n.setHours(0,0,0,0);var t=new Date(d+'T00:00:00');return Math.round((t-n)/86400000);}
-
 function renderPromosPage(){
   var el=document.getElementById('promosContent');if(!el)return;
 
@@ -1659,7 +1616,6 @@ if(ewP) ewP.addEventListener('click',function(){
   if(ws)ws.scrollIntoView({behavior:'smooth',block:'nearest'});
 });
 if(ewB) ewB.addEventListener('click',function(){setMode('browse');});
-renderPromoTicker();
 renderResetBadge();
 renderGrid();
 updateTabCounts();
