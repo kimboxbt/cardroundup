@@ -13,9 +13,7 @@ const RESEND_API_KEY  = process.env.RESEND_API_KEY;
 const ALERT_EMAIL     = process.env.ALERT_EMAIL;       // your personal email
 const FROM_EMAIL      = process.env.RESEND_FROM_EMAIL || 'alerts@cardroundup.com';
 const CRON_SECRET     = process.env.CRON_SECRET;
-const BASE_URL        = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : 'http://localhost:3000';
+const BASE_URL        = process.env.SITE_URL || 'https://www.cardroundup.com';
 
 // Cards verified more than this many days ago get flagged as stale
 const STALE_DEFAULT  = 90;   // days
