@@ -292,7 +292,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 
 
 /* PROFILE DROPDOWN PANEL */
-.profile-panel{position:absolute;top:calc(100% + 8px);right:0;background:var(--s1);border:1px solid var(--bd2);border-radius:10px;padding:16px;width:220px;z-index:400;box-shadow:0 12px 40px rgba(0,0,0,.6);animation:mslide .16s ease}
+.profile-panel{position:absolute;top:calc(100% + 12px);right:0;background:var(--s1);border:1px solid var(--bd2);border-radius:10px;padding:16px;width:220px;z-index:400;box-shadow:0 12px 40px rgba(0,0,0,.6);animation:mslide .16s ease}
 .pp-email{font-size:11px;color:var(--txd);margin-bottom:12px;word-break:break-all;line-height:1.4}
 .pp-signout{width:100%;padding:8px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd2);color:var(--txm);background:transparent;transition:all .15s;text-align:center}.pp-signout:hover{color:var(--red);border-color:rgba(232,72,72,.2);background:rgba(232,72,72,.04)}
 
@@ -318,6 +318,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
         <div class="auth-avatar" id="userAvatar"></div>
         <span id="userName" style="font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
       </button>
+      <div id="profile-panel-wrap" style="position:relative;z-index:400"></div>
     </div>
   </div>
   <div class="ph-meta">
@@ -493,7 +494,6 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   </div>
 </div>
 
-<div id="profile-panel-wrap" style="position:relative;z-index:300"></div>
 <div class="toast" id="toast"><span id="toast-msg"></span></div>
 
 <div class="footer">
@@ -1131,6 +1131,8 @@ function initGoogleSignIn() {
     setTimeout(initGoogleSignIn, 500);
     return;
   }
+  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === '645643410488-h8b9o5qp2a6abm6gjtgrtrl7st1v1o0g.apps.googleusercontent.com') return;
+
   google.accounts.id.initialize({
     client_id: GOOGLE_CLIENT_ID,
     callback: handleGoogleCredential,
@@ -1159,6 +1161,7 @@ function handleAuthClick() { openAuthModal(); }
 
 function renderGoogleButton() {
   if (typeof google === 'undefined' || !google.accounts) return;
+  if (!GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === '645643410488-h8b9o5qp2a6abm6gjtgrtrl7st1v1o0g.apps.googleusercontent.com') return;
   var container = document.getElementById('gsi-btn-container');
   if (!container) return;
   // Clear and re-render — Google fails silently on hidden/zero-size elements
