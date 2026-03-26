@@ -1,6 +1,4 @@
 // /api/get-wallet.js
-// Returns a user's saved card list from Resend by email
-
 const RESEND_BASE = 'https://api.resend.com';
 
 export default async function handler(req, res) {
@@ -30,20 +28,21 @@ export default async function handler(req, res) {
       }
     );
 
-    console.log('[CardRoundup] get-wallet status:', r.status, 'for', email);
-
     if (!r.ok) {
       return res.status(200).json({ cards: '', found: false });
     }
 
     const data = await r.json();
-    console.log('[CardRoundup] get-wallet data:', JSON.stringify(data));
 
-    const cards = data.properties?.cards || data.cards || '';
-    const found = true;
-    console.log('[CardRoundup] returning cards:', cards);
+    // Resend returns custom properties as {value: "...", type: "string"}
+    // Must extract .value, not the object itself
+    const cardsRaw = data.properties?.cards;
+    const cards = (cardsRaw && typeof cardsRaw === 'object')
+      ? (cardsRaw.value || '')
+      : (cardsRaw || '');
 
-    return res.status(200).json({ cards, found });
+    console.log('[CardRoundup] get-wallet:', email, '→ cards:', cards);
+    return res.status(200).json({ cards, found: true });
 
   } catch (e) {
     console.error('[CardRoundup] get-wallet error:', e);
