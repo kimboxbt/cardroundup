@@ -1,6 +1,5 @@
 // /api/get-wallet.js
 // Returns a user's saved card list from Resend by email
-// Called after Google Sign-In on a new device to restore their wallet
 
 const RESEND_BASE = 'https://api.resend.com';
 
@@ -16,7 +15,7 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return res.status(200).json({ cards: '' });
+    return res.status(200).json({ cards: '', found: false });
   }
 
   try {
@@ -25,19 +24,26 @@ export default async function handler(req, res) {
       {
         headers: {
           'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
           'User-Agent': 'CardRoundup/1.0',
         },
       }
     );
 
+    console.log('[CardRoundup] get-wallet status:', r.status, 'for', email);
+
     if (!r.ok) {
-      // Contact not found — new user, empty wallet
       return res.status(200).json({ cards: '', found: false });
     }
 
     const data = await r.json();
-    const cards = data.properties?.cards || '';
-    return res.status(200).json({ cards, found: true });
+    console.log('[CardRoundup] get-wallet data:', JSON.stringify(data));
+
+    const cards = data.properties?.cards || data.cards || '';
+    const found = true;
+    console.log('[CardRoundup] returning cards:', cards);
+
+    return res.status(200).json({ cards, found });
 
   } catch (e) {
     console.error('[CardRoundup] get-wallet error:', e);
