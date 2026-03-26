@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Card Roundup — Never lose a credit card benefit again</title>
 <meta name="description" content="Track every credit card benefit before it expires. 46 premium cards, free.">
+<link rel="icon" href="data:,">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -326,10 +327,6 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   <button class="tn" data-view="promos">
     <span class="tn-dot" style="background:#E89820"></span>Live Promos
   </button>
-  <button class="tn tn-edit" id="edit-btn" style="display:none">
-    <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
-    Edit wallet
-  </button>
 </nav>
 
 <!-- WALLET SETUP -->
@@ -341,6 +338,9 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
     <div class="rp-label">When does the annual fee renew for <span id="rp-card-name" class="rp-card-name"></span>?</div>
     <div class="rp-months" id="rp-months"></div>
     <button class="rp-skip" id="rp-skip">Skip &mdash; I'll set this later</button>
+  </div>
+  <div style="padding-top:18px;border-top:1px solid var(--bd);margin-top:18px">
+    <button class="btn btn-g" id="ws-done-btn" style="font-size:12px">&#x2713; Done adding cards</button>
   </div>
 </div>
 
@@ -401,6 +401,10 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
       <button class="tb-cal" id="cal-btn">
         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
         Sync calendar
+      </button>
+      <button class="tb-cal" id="edit-btn" style="display:none">
+        <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
+        Edit wallet
       </button>
       <span class="tb-cnt" id="mc-cnt"></span>
     </div>
@@ -1302,6 +1306,20 @@ function checkMonthlyUrgency() {
     var picker = document.getElementById('renewal-picker');
     if (picker) picker.classList.remove('show');
     pendingRenewalCard = null;
+  });
+  // Wallet panel "Done adding cards" button
+  var wsDoneBtn = document.getElementById('ws-done-btn');
+  if (wsDoneBtn) wsDoneBtn.addEventListener('click', function() {
+    walletOpen = false;
+    var ws = document.getElementById('wallet-setup');
+    if (ws) ws.style.display = 'none';
+    var picker = document.getElementById('renewal-picker');
+    if (picker) picker.classList.remove('show');
+    var editBtn3 = document.getElementById('edit-btn');
+    if (editBtn3) editBtn3.innerHTML = '<svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg> Edit wallet';
+    // Scroll to card grid
+    var grid = document.getElementById('mc-grid');
+    if (grid) grid.scrollIntoView({behavior: 'smooth', block: 'start'});
   });
   // Calendar button
   var calBtn = document.getElementById('cal-btn');
