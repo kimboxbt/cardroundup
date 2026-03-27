@@ -25,8 +25,6 @@ function headers(apiKey) {
 }
 
 // ─── CARD CREDITS DATA ───────────────────────────────────────────
-// All 46 cards, credits organized by cadence
-// Only cards with actual credits in a given cadence are listed
 const CARDS = {
   csr:        { name:'Chase Sapphire Reserve',    monthly:['Lyft rides — $10','DoorDash promos — $25','Peloton — up to $10'], semiannual:['The Edit hotel — $250','Exclusive Tables dining — $150','StubHub/Viagogo — $150'], annual:['Travel credit — $300 (anniversary-based ⚠ not Jan 1)','The Shops at Chase — up to $250'] },
   csp:        { name:'Chase Sapphire Preferred',  annual:['Hotel credit — up to $50','DashPass — complimentary'] },
@@ -73,23 +71,79 @@ function daysUntil(date) {
   return Math.round((d - now) / 86400000);
 }
 
-// Returns upcoming resets within their thresholds
-// Monthly ≤14d, Quarterly ≤30d, Semi-annual ≤45d, Annual ≤60d
 function getUpcomingResets() {
   const now = new Date(), y = now.getFullYear(), m = now.getMonth();
   const quarters = [0,3,6,9];
   const nextQ = quarters.find(q => q > m) ?? 12;
 
   return [
-    { cadence:'monthly',    label:'Monthly',     color:'#FF7A3C', threshold:14,
+    { cadence:'monthly',    label:'Monthly',     color:'#D44A00', threshold:14,
       days: daysUntil(new Date(y, m+1, 1)) },
-    { cadence:'quarterly',  label:'Quarterly',   color:'#AA82F0', threshold:30,
+    { cadence:'quarterly',  label:'Quarterly',   color:'#7744CC', threshold:30,
       days: daysUntil(new Date(y+(nextQ>=12?1:0), nextQ%12, 1)) },
-    { cadence:'semiannual', label:'Semi-annual', color:'#45C9A8', threshold:45,
+    { cadence:'semiannual', label:'Semi-annual', color:'#1A8870', threshold:45,
       days: daysUntil(m<6 ? new Date(y,6,1) : new Date(y+1,0,1)) },
-    { cadence:'annual',     label:'Annual',      color:'#6AAEF0', threshold:60,
+    { cadence:'annual',     label:'Annual',      color:'#2255AA', threshold:60,
       days: daysUntil(new Date(y+1, 0, 1)) },
   ].filter(r => r.days >= 0 && r.days <= r.threshold);
+}
+
+// ─── HTML HELPERS ─────────────────────────────────────────────────
+function section({ color, title, days, rows }) {
+  return `
+    <div style="background:#F4F4F8;border-left:3px solid ${color};border-radius:0 8px 8px 0;
+         padding:18px 20px;margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;
+           margin-bottom:${rows ? '12px' : '0'};">
+        <div style="font-size:14px;font-weight:700;color:#111122;">${title}</div>
+        ${days ? `<div style="font-size:12px;font-weight:700;color:${color};">${days}</div>` : ''}
+      </div>
+      ${rows}
+    </div>`;
+}
+
+function layout({ sub, intro, body, cta }) {
+  return `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+</head>
+<body style="margin:0;padding:0;background:#F0F0F6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
+<div style="max-width:560px;margin:0 auto;padding:32px 16px;">
+
+  <!-- Header -->
+  <div style="background:#111122;border-radius:10px 10px 0 0;padding:24px 28px;">
+    <div style="font-size:20px;font-weight:700;color:#FFFFFF;letter-spacing:-0.02em;">Card Roundup</div>
+    <div style="font-size:11px;color:#6868A0;margin-top:3px;letter-spacing:0.08em;text-transform:uppercase;">${sub}</div>
+  </div>
+
+  <!-- Body -->
+  <div style="background:#FFFFFF;border-radius:0 0 10px 10px;padding:28px 28px 32px;">
+    <div style="font-size:15px;color:#444455;line-height:1.7;margin-bottom:22px;">${intro}</div>
+    ${body}
+    <div style="text-align:center;margin-top:28px;">
+      <a href="https://cardroundup.com"
+         style="display:inline-block;padding:14px 40px;background:#111122;color:#FFFFFF;
+                border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;
+                letter-spacing:-0.01em;">${cta}</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="padding:20px 4px 0;text-align:center;">
+    <div style="font-size:11px;color:#AAAABD;line-height:2;">
+      Card Roundup · <a href="https://cardroundup.com" style="color:#AAAABD;text-decoration:none;">cardroundup.com</a><br>
+      You signed up at cardroundup.com<br>
+      <a href="https://cardroundup.com" style="color:#AAAABD;text-decoration:none;">
+        Sign in with Google to keep your wallet in sync →
+      </a><br>
+      <a href="https://cardroundup.com" style="color:#AAAABD;text-decoration:underline;">Unsubscribe</a>
+    </div>
+  </div>
+
+</div>
+</body></html>`;
 }
 
 // ─── EMAIL BUILDERS ──────────────────────────────────────────────
@@ -110,13 +164,13 @@ function buildEmail(email, cardIds, welcomed) {
         sub: 'Your wallet is empty',
         intro: "You're signed up for reminders but haven't added your cards yet.",
         body: section({
-          color: '#3DD68C',
+          color: '#24B870',
           title: 'Add your cards',
           days: null,
-          rows: `<div style="font-size:13px;color:#9898AD;line-height:1.65;">
-            Select which cards you carry at <a href="https://cardroundup.com" 
-            style="color:#E4E4EF;">cardroundup.com</a> and we'll track every 
-            credit expiry for you. We cover 46 cards across Chase, Amex, 
+          rows: `<div style="font-size:14px;color:#555566;line-height:1.65;">
+            Select which cards you carry at <a href="https://cardroundup.com"
+            style="color:#24B870;font-weight:600;">cardroundup.com</a> and we'll track every
+            credit expiry for you. We cover 46 cards across Chase, Amex,
             Capital One, Citi, Bilt, U.S. Bank, BofA, and Barclays.
           </div>`,
         }),
@@ -144,10 +198,10 @@ function buildEmail(email, cardIds, welcomed) {
 
     const cardRows = relevant.map(({ data }) =>
       `<div style="margin-bottom:14px;">
-        <div style="font-size:11px;font-weight:600;color:#E4E4EF;margin-bottom:5px;
+        <div style="font-size:12px;font-weight:700;color:#111122;margin-bottom:5px;
              text-transform:uppercase;letter-spacing:0.06em;">${data.name}</div>
         ${data[reset.cadence].map(c =>
-          `<div style="font-size:13px;color:#9898AD;margin:3px 0;padding-left:10px;">· ${c}</div>`
+          `<div style="font-size:13px;color:#555566;margin:4px 0;padding-left:10px;border-left:2px solid #E8E8F0;">· ${c}</div>`
         ).join('')}
       </div>`
     ).join('');
@@ -158,15 +212,14 @@ function buildEmail(email, cardIds, welcomed) {
   // Case 3: Has cards but nothing expiring soon
   if (!hasExpiring) {
     sections = `
-      <div style="background:#141419;border:1px solid rgba(255,255,255,0.07);
-           border-radius:10px;padding:28px 24px;text-align:center;margin-bottom:14px;">
-        <div style="font-size:16px;margin-bottom:8px;">✓</div>
-        <div style="font-size:15px;color:#E4E4EF;margin-bottom:8px;font-weight:500;">You're all caught up</div>
-        <div style="font-size:13px;color:#9898AD;line-height:1.6;">No credits expiring in the next 60 days. We'll remind you when something's coming up.</div>
+      <div style="background:#F4F4F8;border-radius:8px;padding:24px;text-align:center;margin-bottom:14px;">
+        <div style="font-size:20px;margin-bottom:8px;">✓</div>
+        <div style="font-size:15px;color:#111122;margin-bottom:8px;font-weight:600;">You're all caught up</div>
+        <div style="font-size:13px;color:#666677;line-height:1.6;">No credits expiring in the next 60 days. We'll remind you when something's coming up.</div>
       </div>`;
   }
 
-  // Build subject line based on soonest reset
+  // Build subject line
   const resets2 = getUpcomingResets();
   let subject = 'Your monthly Card Roundup check — all caught up ✓';
   if (resets2.length > 0 && hasExpiring) {
@@ -190,22 +243,22 @@ function buildEmail(email, cardIds, welcomed) {
   };
 }
 
-// Case 1: Welcome email
+// Case 1: Welcome email (sent by digest if welcomed=false)
 function buildWelcomeEmail(hasCards, cardIds) {
   const userCards = hasCards
     ? cardIds.split(',').filter(Boolean).map(id => CARDS[id]).filter(Boolean) : [];
 
   const cardList = userCards.length > 0
-    ? `<div style="margin-top:12px;">
+    ? `<div style="margin-top:10px;">
         ${userCards.map(c =>
-          `<div style="font-size:13px;color:#9898AD;margin:4px 0;padding-left:10px;">· ${c.name}</div>`
+          `<div style="font-size:14px;color:#333344;padding:5px 0;border-bottom:1px solid #EBEBF5;">${c.name}</div>`
         ).join('')}
-        <div style="font-size:12px;color:#58586A;margin-top:10px;">
+        <div style="font-size:12px;color:#888899;margin-top:10px;">
           We'll remind you before any of these credits expire.
         </div>
       </div>`
-    : `<div style="font-size:13px;color:#9898AD;line-height:1.65;margin-top:8px;">
-        Add your cards at <a href="https://cardroundup.com" style="color:#E4E4EF;">cardroundup.com</a> 
+    : `<div style="font-size:14px;color:#444455;line-height:1.65;margin-top:8px;">
+        Add your cards at <a href="https://cardroundup.com" style="color:#24B870;font-weight:600;">cardroundup.com</a>
         to start getting personalized credit reminders. Takes 30 seconds.
       </div>`;
 
@@ -215,7 +268,7 @@ function buildWelcomeEmail(hasCards, cardIds) {
       sub: 'Welcome to Card Roundup',
       intro: "You're signed up. We track expiring credits across 46 premium cards so you never lose money you've already paid for.",
       body: section({
-        color: '#3DD68C',
+        color: '#24B870',
         title: userCards.length > 0
           ? `${userCards.length} card${userCards.length !== 1 ? 's' : ''} in your wallet`
           : 'Get started',
@@ -227,54 +280,7 @@ function buildWelcomeEmail(hasCards, cardIds) {
   };
 }
 
-// ─── HTML HELPERS ─────────────────────────────────────────────────
-function section({ color, title, days, rows }) {
-  return `
-    <div style="background:#141419;border:1px solid rgba(255,255,255,0.07);
-         border-left:3px solid ${color};border-radius:0 10px 10px 0;
-         padding:20px 24px;margin-bottom:14px;">
-      <div style="display:flex;justify-content:space-between;align-items:baseline;
-           margin-bottom:${rows ? '14px' : '0'};">
-        <div style="font-size:15px;font-weight:600;color:#E4E4EF;">${title}</div>
-        ${days ? `<div style="font-size:13px;font-weight:700;color:${color};">${days}</div>` : ''}
-      </div>
-      ${rows}
-    </div>`;
-}
-
-function layout({ sub, intro, body, cta }) {
-  return `<!DOCTYPE html><html><head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-</head>
-<body style="margin:0;padding:0;background:#0B0B0F;font-family:'Helvetica Neue',Arial,sans-serif;">
-<div style="max-width:560px;margin:0 auto;padding:40px 24px;">
-  <div style="margin-bottom:28px;">
-    <div style="font-size:22px;font-weight:700;color:#E4E4EF;letter-spacing:-0.02em;">Card Roundup</div>
-    <div style="font-size:11px;color:#58586A;margin-top:4px;letter-spacing:0.1em;text-transform:uppercase;">${sub}</div>
-  </div>
-  <div style="font-size:13px;color:#9898AD;margin-bottom:24px;line-height:1.6;">${intro}</div>
-  ${body}
-  <div style="text-align:center;margin:28px 0;">
-    <a href="https://cardroundup.com"
-       style="display:inline-block;padding:14px 36px;background:#E4E4EF;color:#0B0B0F;
-              border-radius:6px;text-decoration:none;font-weight:700;font-size:14px;">${cta}</a>
-  </div>
-  <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:20px;text-align:center;">
-    <div style="font-size:11px;color:#58586A;line-height:1.8;">
-      You signed up at cardroundup.com<br>
-      <a href="https://cardroundup.com" style="color:#9898AD;text-decoration:none;">
-        Sign in with Google to keep your wallet in sync automatically →
-      </a><br>
-      <a href="https://cardroundup.com" style="color:#58586A;text-decoration:underline;">Unsubscribe</a>
-    </div>
-  </div>
-</div>
-</body></html>`;
-}
-
 // ─── MARK WELCOMED ────────────────────────────────────────────────
-// After sending first email, set welcomed='true' on the contact
 async function markWelcomed(apiKey, contactId, cardIds) {
   try {
     await fetch(`${RESEND_BASE}/contacts/${contactId}`, {
@@ -300,7 +306,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Fetch all contacts (global, no audience ID needed)
     const contactsRes = await fetch(`${RESEND_BASE}/contacts`, {
       headers: headers(apiKey)
     });
@@ -320,7 +325,6 @@ export default async function handler(req, res) {
 
     for (const contact of active) {
       try {
-        // Resend returns custom properties as {value: "...", type: "string"} objects
         const cardsRaw    = contact.properties?.cards;
         const welcomedRaw = contact.properties?.welcomed;
         const cardIds  = (cardsRaw    && typeof cardsRaw    === 'object') ? (cardsRaw.value    || '') : (cardsRaw    || '');
@@ -331,17 +335,11 @@ export default async function handler(req, res) {
         const emailRes = await fetch(`${RESEND_BASE}/emails`, {
           method: 'POST',
           headers: headers(apiKey),
-          body: JSON.stringify({
-            from: fromEmail,
-            to: contact.email,
-            subject,
-            html,
-          }),
+          body: JSON.stringify({ from: fromEmail, to: contact.email, subject, html }),
         });
 
         if (emailRes.ok) {
           sent++;
-          // Mark as welcomed after first successful send
           if (welcomed !== 'true') {
             await markWelcomed(apiKey, contact.id, cardIds);
           }
