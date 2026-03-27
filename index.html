@@ -88,7 +88,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .eb-ok{font-size:13px;color:var(--green)}
 
 /* SECTION TABS */
-.sectabs{background:var(--s2);border-top:1px solid var(--bd2);border-bottom:1px solid var(--bd2);display:none;overflow-x:auto;scrollbar-width:none;position:sticky;top:48px;z-index:199;padding:0 var(--px)}
+.sectabs{background:var(--s2);border-top:3px solid var(--bd2);border-bottom:1px solid var(--bd);display:none;overflow-x:auto;scrollbar-width:none;position:relative;padding:0 var(--px)}
 .sectabs::-webkit-scrollbar{display:none}
 .st{display:inline-flex;align-items:center;gap:7px;padding:0 20px;height:48px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 .st:hover{color:var(--txm)}.st.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.35)}
@@ -368,18 +368,6 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
   </button>
 </nav>
 
-<!-- SECTION TABS — sits directly below topnav, both sticky siblings -->
-<div class="sectabs" id="sect-tabs">
-  <div class="st-ind" id="st-ind"></div>
-  <button class="st on" data-s="monthly"><span class="st-dot" style="background:#FF7A3C"></span>Monthly</button>
-  <button class="st" data-s="quarterly"><span class="st-dot" style="background:#AA82F0"></span>Quarterly</button>
-  <button class="st" data-s="semiannual"><span class="st-dot" style="background:#45C9A8"></span>Semi-annual</button>
-  <button class="st" data-s="annual"><span class="st-dot" style="background:#6AAEF0"></span>Annual</button>
-  <button class="st" data-s="multiyear"><span class="st-dot" style="background:#E8C84E"></span>Multi-year</button>
-  <button class="st" data-s="static"><span class="st-dot" style="background:#888898"></span>Always-on</button>
-  <button class="st" data-s="summary"><span class="st-dot" style="background:#C0C0D8"></span>Summary</button>
-</div>
-
 <!-- WALLET SETUP -->
 <div class="ws" id="wallet-setup">
   <div class="ws-t">Your cards</div>
@@ -410,6 +398,16 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 
 <!-- MY CARDS VIEW -->
 <div id="view-mycards" class="active">
+  <div class="sectabs" id="sect-tabs">
+    <div class="st-ind" id="st-ind"></div>
+    <button class="st on" data-s="monthly"><span class="st-dot" style="background:#FF7A3C"></span>Monthly</button>
+    <button class="st" data-s="quarterly"><span class="st-dot" style="background:#AA82F0"></span>Quarterly</button>
+    <button class="st" data-s="semiannual"><span class="st-dot" style="background:#45C9A8"></span>Semi-annual</button>
+    <button class="st" data-s="annual"><span class="st-dot" style="background:#6AAEF0"></span>Annual</button>
+    <button class="st" data-s="multiyear"><span class="st-dot" style="background:#E8C84E"></span>Multi-year</button>
+    <button class="st" data-s="static"><span class="st-dot" style="background:#888898"></span>Always-on</button>
+    <button class="st" data-s="summary"><span class="st-dot" style="background:#C0C0D8"></span>Summary</button>
+  </div>
   <div class="reset-strip" id="reset-strip"></div>
   <!-- Wallet net value banner -->
   <div class="wallet-banner" id="wallet-banner">
@@ -693,9 +691,6 @@ function switchView(view) {
   // Share button only on mycards with cards
   var shareBtn = document.getElementById('share-btn');
   if (shareBtn) shareBtn.style.display = (view === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
-  // Sectabs only visible on mycards (it's now outside view-mycards)
-  var sectabs = document.getElementById('sect-tabs');
-  if (sectabs) sectabs.style.display = (view === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
   // Render the view
   if (view === 'mycards') { renderMycards(); }
   if (view === 'browse') { renderBrowsePicker(); renderBrowse(); }
