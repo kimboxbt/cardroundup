@@ -296,6 +296,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .pp-email{font-size:11px;color:var(--txd);margin-bottom:12px;word-break:break-all;line-height:1.4}
 .pp-signout{width:100%;padding:8px;border-radius:6px;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--bd2);color:var(--txm);background:transparent;transition:all .15s;text-align:center}.pp-signout:hover{color:var(--red);border-color:rgba(232,72,72,.2);background:rgba(232,72,72,.04)}
 
+.chip.chip-owned .chip-d{opacity:1;background:var(--green)}.chip.chip-owned{border-color:rgba(36,184,112,0.3)}
 .ganim{animation:gfade .18s ease}@keyframes gfade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 </style>
 </head>
@@ -730,8 +731,9 @@ function renderBrowsePicker() {
   var groups = ISSUERS.filter(function(i){ return byI[i]; }).map(function(issuer) {
     var chips = byI[issuer].map(function(card) {
       var on = browseCards.has(card.id);
+      var owned = myCards.has(card.id);
       var fee = card.fee === 0 ? '$0' : '$' + card.fee;
-      return '<button class="chip' + (on ? ' on' : '') + '" style="--chip-c:' + card.c + '" data-id="' + card.id + '">'
+      return '<button class="chip' + (on ? ' on' : '') + (owned && !on ? ' chip-owned' : '') + '" style="--chip-c:' + card.c + '" data-id="' + card.id + '">'
         + '<span class="chip-d"></span>' + esc(card.short) + ' ' + fee + '</button>';
     }).join('');
     var label = issuer === 'American Express' ? 'Amex' : issuer;
