@@ -22,6 +22,7 @@ async function ensureProperties(apiKey) {
   const props = [
     { key: 'cards',    type: 'string',  fallbackValue: '' },
     { key: 'welcomed', type: 'string',  fallbackValue: 'false' },
+    { key: 'claimed',  type: 'string',  fallbackValue: '{}' },
   ];
   for (const prop of props) {
     try {
