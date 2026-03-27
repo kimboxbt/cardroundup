@@ -41,7 +41,8 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .auth-avatar{width:22px;height:22px;border-radius:50%;background:var(--s3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--txm);overflow:hidden;flex-shrink:0}.auth-avatar img{width:100%;height:100%;object-fit:cover}
 
 /* STICKY NAV */
-.topnav{background:rgba(6,6,14,0.95);border-bottom:1px solid var(--bd2);position:sticky;top:0;z-index:200;display:flex;align-items:stretch;padding:0 var(--px);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.topnav::-webkit-scrollbar{display:none}
+.topnav{background:rgba(6,6,14,0.95);border-bottom:1px solid var(--bd2);position:sticky;top:0;z-index:200;display:flex;align-items:stretch;padding:0 var(--px);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);overflow-x:auto;scrollbar-width:none}
 .tn{display:flex;align-items:center;gap:7px;padding:0 20px;height:48px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:13px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 .tn:hover{color:var(--txm)}.tn.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.45)}
 .tn-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;opacity:.35;transition:opacity .15s}.tn.on .tn-dot{opacity:1}
@@ -247,7 +248,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .footer{font-size:11.5px;color:var(--txd);padding:16px var(--px);margin-top:auto;background:var(--s0);border-top:1px solid var(--bd);line-height:1.7}
 .footer a{color:var(--txd);text-decoration:underline;text-underline-offset:3px}.footer a:hover{color:var(--txm)}
 @media(max-width:900px){:root{--px:32px}}
-@media(max-width:640px){:root{--px:20px}.col{flex:0 0 260px}.grid-fade{display:none!important}.toolbar{flex-wrap:wrap}.search-wrap{max-width:100%;flex:0 0 100%}.tb-cnt{margin-left:0}.email-bar{flex-wrap:wrap;gap:8px}.eb-form{min-width:100%;flex:0 0 100%}.empty-state{padding:72px var(--px) 60px;min-height:400px}.es-title{font-size:30px}.sob-grid{grid-template-columns:1fr}.tr-card{flex-direction:column}.tr-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}}
+@media(max-width:640px){:root{--px:20px}.ph{padding:24px var(--px) 20px}.ph-logo{font-size:32px}.wb-sep{display:none}.wb-stat{gap:6px}.col{flex:0 0 260px}.grid-fade{display:none!important}.toolbar{flex-wrap:wrap}.search-wrap{max-width:100%;flex:0 0 100%}.tb-cnt{margin-left:0}.email-bar{flex-wrap:wrap;gap:8px}.eb-form{min-width:100%;flex:0 0 100%}.empty-state{padding:72px var(--px) 60px;min-height:400px}.es-title{font-size:30px}.sob-grid{grid-template-columns:1fr}.tr-card{flex-direction:column}.tr-right{align-items:flex-start;flex-direction:row;flex-wrap:wrap}}
 
 /* WALLET NET VALUE BANNER */
 .wallet-banner{padding:12px var(--px);background:linear-gradient(90deg,rgba(36,184,112,0.06) 0%,transparent 60%);border-bottom:1px solid rgba(36,184,112,0.10);display:none;align-items:center;gap:16px;flex-wrap:wrap}
@@ -342,7 +343,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
           <div class="auth-avatar" id="userAvatar"></div>
           <span id="userName" style="font-size:12px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></span>
         </button>
-        <div id="profile-panel" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--s1);border:1px solid var(--bd2);border-radius:10px;padding:16px;width:220px;z-index:9999;box-shadow:0 12px 40px rgba(0,0,0,.6)">
+        <div id="profile-panel" style="display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--s1);border:1px solid var(--bd2);border-radius:10px;padding:16px;width:220px;max-width:calc(100vw - 24px);z-index:9999;box-shadow:0 12px 40px rgba(0,0,0,.6)">
           <div id="pp-name" style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:4px"></div>
           <div id="pp-email-text" class="pp-email"></div>
           <button class="pp-signout" id="pp-signout-btn">Sign out</button>
