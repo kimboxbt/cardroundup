@@ -1414,7 +1414,12 @@ async function signInUser(email, name, pic) {
       }
       showToast('\u2713 Signed in as ' + name.split(' ')[0] + ' — wallet saved');
     } else {
-      // No cards anywhere yet
+      // No cards anywhere yet — register contact so welcome email fires
+      fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, cards: '' }),
+      }).catch(function(){});
       showToast('\u2713 Signed in as ' + name.split(' ')[0]);
     }
   } catch(e) {
