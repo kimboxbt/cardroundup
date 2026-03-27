@@ -267,6 +267,10 @@ export default async function handler(req, res) {
     // Send immediate welcome email to brand new subscribers
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'Card Roundup <reminders@cardroundup.com>';
     if (alreadyWelcomed !== 'true') {
+      // Brief pause to avoid Resend's 5 req/s rate limit — ensureProperties + GET + POST
+      // fires 5 calls before we get here, so we wait for the window to clear.
+      await new Promise(r => setTimeout(r, 500));
+
       const { subject, html } = buildWelcomeEmail(cards);
       const emailRes = await fetch(`${RESEND_BASE}/emails`, {
         method: 'POST',
