@@ -320,8 +320,11 @@ export default async function handler(req, res) {
 
     for (const contact of active) {
       try {
-        const cardIds  = contact.properties?.cards    || '';
-        const welcomed = contact.properties?.welcomed  || 'false';
+        // Resend returns custom properties as {value: "...", type: "string"} objects
+        const cardsRaw    = contact.properties?.cards;
+        const welcomedRaw = contact.properties?.welcomed;
+        const cardIds  = (cardsRaw    && typeof cardsRaw    === 'object') ? (cardsRaw.value    || '') : (cardsRaw    || '');
+        const welcomed = (welcomedRaw && typeof welcomedRaw === 'object') ? (welcomedRaw.value || 'false') : (welcomedRaw || 'false');
 
         const { html, subject } = buildEmail(contact.email, cardIds, welcomed);
 
