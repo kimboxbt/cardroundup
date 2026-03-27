@@ -626,8 +626,6 @@ function syncHeader() {
   if (editBtn) editBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
   var shareBtn = document.getElementById('share-btn');
   if (shareBtn) shareBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
-  var shareBtn = document.getElementById('share-btn');
-  if (shareBtn) shareBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1514,7 +1512,67 @@ function openShareModal() {
   var m = document.getElementById('share-modal');
   if (m) m.style.display = 'block';
   var body = document.getElementById('share-body');
-  if (body) body.innerHTML = '<div class="share-empty"><strong>Share coming soon</strong>Export your wallet as an image to share with the community.</div>';
+  if (!body) return;
+  var cards = CARDS.filter(function(c){ return myCards.has(c.id); });
+  if (cards.length === 0) {
+    body.innerHTML = '<div class="share-empty"><strong>Add cards first</strong>Add at least one card to generate a share image.</div>';
+    return;
+  }
+  body.innerHTML = '<div class="share-preview"><div class="share-canvas-wrap"><div class="share-gen" id="share-gen">Building your card...</div>'
+    + '<canvas id="share-canvas" width="1200" height="630" style="display:block;width:100%;height:auto"></canvas></div></div>'
+    + '<div class="share-acts">'
+    + '<button class="share-act primary" id="share-dl">&#8595; Download PNG</button>'
+    + '<button class="share-act secondary" id="share-copy">Copy image</button>'
+    + '<a class="share-act twitter" href="#" id="share-tweet" target="_blank" rel="noopener">Post to X</a>'
+    + '</div>'
+    + '<div style="padding:0 28px 20px;font-size:11px;color:var(--txd);">Tip: Download the PNG then attach it to your tweet.</div>';
+  requestAnimationFrame(function(){ drawShareCard(cards); });
+}
+function drawShareCard(cards) {
+  var canvas = document.getElementById('share-canvas');
+  var gen = document.getElementById('share-gen');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = 1200, H = 630;
+  ctx.fillStyle = '#06060E'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle = 'rgba(255,255,255,0.025)';
+  for (var gx=36;gx<W;gx+=36) { for (var gy=36;gy<H;gy+=36) { ctx.beginPath();ctx.arc(gx,gy,1,0,Math.PI*2);ctx.fill(); } }
+  var tg = ctx.createLinearGradient(0,0,W*0.6,0);
+  tg.addColorStop(0,'#24B870');tg.addColorStop(0.5,'#4888D8');tg.addColorStop(1,'transparent');
+  ctx.fillStyle=tg;ctx.fillRect(0,0,W,3);
+  ctx.font='600 52px Georgia,serif';ctx.fillStyle='#FFFFFF';ctx.fillText('Card Roundup',60,88);
+  ctx.font='500 16px Helvetica,sans-serif';ctx.fillStyle='#4A4A72';ctx.fillText('MY CREDIT CARD STACK',62,116);
+  var tc=cards.reduce(function(a,c){return a+(c.summary?c.summary.totalV||0:0);},0);
+  var tf=cards.reduce(function(a,c){return a+c.fee;},0);
+  var net=tc-tf;
+  var stats=[{l:'CARDS',v:String(cards.length),c:'#FFFFFF'},{l:'POTENTIAL/YR',v:'$'+tc.toLocaleString(),c:'#FFFFFF'},{l:'ANNUAL FEES',v:'$'+tf.toLocaleString(),c:'#FFFFFF'},{l:'NET VALUE',v:(net>=0?'+':'')+('$'+Math.abs(net).toLocaleString()),c:net>=0?'#24B870':'#E84848'}];
+  var sx=60;
+  stats.forEach(function(s){ctx.font='bold 30px Helvetica,sans-serif';ctx.fillStyle=s.c;ctx.fillText(s.v,sx,178);ctx.font='500 11px Helvetica,sans-serif';ctx.fillStyle='#3A3A60';ctx.fillText(s.l,sx,198);sx+=240;});
+  ctx.fillStyle='rgba(255,255,255,0.05)';ctx.fillRect(60,218,W-120,1);
+  var mx=Math.min(cards.length,8),cols=mx<=3?mx:mx<=6?3:4,rows=Math.ceil(mx/cols);
+  var cw=(W-120-12*(cols-1))/cols,ch=rows===1?340:158,sy=238;
+  for (var i=0;i<mx;i++) {
+    var card=cards[i],col=i%cols,row=Math.floor(i/cols),cx=60+col*(cw+12),cy=sy+row*(ch+12);
+    ctx.fillStyle='#0E0E1C';
+    ctx.beginPath();ctx.roundRect(cx,cy,cw,ch,8);ctx.fill();
+    ctx.fillStyle=card.c||'#333';
+    ctx.beginPath();ctx.roundRect(cx,cy,3,ch,[8,0,0,8]);ctx.fill();
+    ctx.font='bold 14px Helvetica,sans-serif';ctx.fillStyle='#E8E8F4';
+    var nm=card.name||card.short||'';if(nm.length>22)nm=nm.slice(0,20)+'…';
+    ctx.fillText(nm,cx+16,cy+26);
+    ctx.font='11px Helvetica,sans-serif';ctx.fillStyle='#3A3A60';
+    ctx.fillText(card.fee>0?'$'+card.fee+'/yr':'No annual fee',cx+16,cy+43);
+    var tv=card.summary?(card.summary.totalV||0):0;
+    if(tv>0&&card.summary&&card.summary.total){ctx.font='bold 20px Helvetica,sans-serif';ctx.fillStyle=card.cm||card.c||'#24B870';ctx.fillText(card.summary.total,cx+16,cy+78);ctx.font='9px Helvetica,sans-serif';ctx.fillStyle='#3A3A60';ctx.fillText('IN ANNUAL CREDITS',cx+16,cy+92);}
+  }
+  ctx.font='500 15px Helvetica,sans-serif';ctx.fillStyle='#2A2A42';ctx.textAlign='right';ctx.fillText('cardroundup.com',W-60,H-28);ctx.textAlign='left';
+  if(gen)gen.style.display='none';
+  var dl=document.getElementById('share-dl');
+  if(dl)dl.addEventListener('click',function(){var a=document.createElement('a');a.download='my-card-stack.png';a.href=canvas.toDataURL('image/png');a.click();showToast('Downloaded!');});
+  var cp=document.getElementById('share-copy');
+  if(cp)cp.addEventListener('click',function(){canvas.toBlob(function(blob){try{navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(function(){showToast('Copied!');}).catch(function(){showToast('Use Download instead');});}catch(e){showToast('Use Download instead');}});});
+  var tw=document.getElementById('share-tweet');
+  if(tw){var ns=(net>=0?'+$':'-$')+Math.abs(net).toLocaleString();tw.href='https://x.com/intent/tweet?text='+encodeURIComponent('My credit card stack: '+cards.length+' cards, '+ns+' net value/yr.\n\nTrack your own at cardroundup.com');}
 }
 function closeShareModal() { shareModalOpen = false; var m = document.getElementById('share-modal'); if (m) m.style.display = 'none'; }
 
@@ -1758,8 +1816,6 @@ function checkMonthlyUrgency() {
   var calBtn = document.getElementById('cal-btn');
   if (calBtn) calBtn.addEventListener('click', exportCalendar);
   // Share stack button
-  var shareBtnEl = document.getElementById('share-btn');
-  if (shareBtnEl) shareBtnEl.addEventListener('click', function() { openShareModal(); });
   var shareBtnEl = document.getElementById('share-btn');
   if (shareBtnEl) shareBtnEl.addEventListener('click', function() { openShareModal(); });
   // Auth modal close buttons
