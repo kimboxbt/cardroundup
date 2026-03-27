@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Card Roundup — Never lose a credit card benefit again</title>
 <meta name="description" content="Track every credit card benefit before it expires. 46 premium cards, free.">
-<link rel="icon" href="data:,">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%2306060E'/><text x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-family='Georgia,serif' font-size='14' font-weight='600' fill='%23E8E8F4'>CR</text></svg>">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -88,7 +88,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .eb-ok{font-size:13px;color:var(--green)}
 
 /* SECTION TABS */
-.sectabs{background:var(--s3);border-top:2px solid var(--bd2);border-bottom:1px solid var(--bd);display:none;overflow-x:auto;scrollbar-width:none;position:relative;padding:0 var(--px)}
+.sectabs{background:var(--s0);border-bottom:1px solid var(--bd);display:none;overflow-x:auto;scrollbar-width:none;position:relative;padding:0 var(--px)}
 .sectabs::-webkit-scrollbar{display:none}
 .st{display:inline-flex;align-items:center;gap:6px;padding:0 14px;height:42px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 .st:hover{color:var(--txm)}.st.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.35)}
@@ -254,7 +254,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 .wb-val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:600}
 .wb-val.pos{color:var(--green)}.wb-val.neg{color:var(--red)}
 .wb-sep{width:1px;height:20px;background:var(--bd2);flex-shrink:0}
-.wb-sub{font-size:11px;color:var(--txd);margin-left:auto}
+.wb-sub{font-size:11px;color:var(--txd)}
 
 /* RENEWAL MONTH PICKER */
 .renewal-picker{margin-top:14px;padding:14px 16px;background:var(--s2);border:1px solid var(--bd2);border-radius:8px;display:none}
@@ -443,6 +443,10 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
         <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v3M11 1v3"/></svg>
         Sync calendar
       </button>
+      <button class="tb-cal btn-share" id="share-btn" style="display:none">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>
+        Share stack
+      </button>
       <button class="tb-cal" id="edit-btn" style="display:none">
         <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
         Edit wallet
@@ -620,6 +624,8 @@ function syncHeader() {
   if (profileBtn) profileBtn.style.display = currentUser ? 'inline-flex' : 'none';
   var editBtn = document.getElementById('edit-btn');
   if (editBtn) editBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
+  var shareBtn = document.getElementById('share-btn');
+  if (shareBtn) shareBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -682,6 +688,8 @@ function switchView(view) {
   // Edit button only on mycards
   var editBtn = document.getElementById('edit-btn');
   if (editBtn) editBtn.style.display = (view === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
+  var shareBtn = document.getElementById('share-btn');
+  if (shareBtn) shareBtn.style.display = (view === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
   // Render the view
   if (view === 'mycards') { renderMycards(); }
   if (view === 'browse') { renderBrowsePicker(); renderBrowse(); }
@@ -1503,8 +1511,80 @@ function openShareModal() {
   var m = document.getElementById('share-modal');
   if (m) m.style.display = 'block';
   var body = document.getElementById('share-body');
-  if (body) body.innerHTML = '<div class="share-empty"><strong>Share coming soon</strong>Export your wallet as an image to share with the community.</div>';
+  if (!body) return;
+  var cards = CARDS.filter(function(c){ return myCards.has(c.id); });
+  if (cards.length === 0) {
+    body.innerHTML = '<div class="share-empty"><strong>Add cards first</strong>Add at least one card to generate a share image.</div>';
+    return;
+  }
+  body.innerHTML = '<div class="share-preview"><div class="share-canvas-wrap"><div class="share-gen" id="share-gen">Building your card...</div><canvas id="share-canvas" width="1200" height="630" style="display:block;width:100%;height:auto"></canvas></div></div>'
+    + '<div class="share-acts">'
+    + '<button class="share-act primary" id="share-dl"><svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v8M5 8l3 3 3-3"/><path d="M2 13h12"/></svg> Download PNG</button>'
+    + '<button class="share-act secondary" id="share-copy">Copy image</button>'
+    + '<a class="share-act twitter" href="#" id="share-tweet" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path d="M12.6 2h2.4l-5.2 5.9L16 14h-4.8l-3.4-4.4L4 14H1.6l5.6-6.3L0 2h4.9l3.1 4 3.6-4zm-.8 10.8h1.3L4.2 3.3H2.8l9 9.5z"/></svg> Post to X</a>'
+    + '</div>'
+    + '<div style="padding:0 28px 20px;font-size:11px;color:var(--txd);">💡 Download the PNG then attach it to your tweet for maximum reach.</div>';
+  requestAnimationFrame(function(){ drawShareCard(cards); });
 }
+
+function drawShareCard(cards) {
+  var canvas = document.getElementById('share-canvas');
+  var gen = document.getElementById('share-gen');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = 1200, H = 630;
+  ctx.fillStyle = '#06060E'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle = 'rgba(255,255,255,0.025)';
+  for (var gx=36;gx<W;gx+=36) for (var gy=36;gy<H;gy+=36) { ctx.beginPath();ctx.arc(gx,gy,1,0,Math.PI*2);ctx.fill(); }
+  var topGrad = ctx.createLinearGradient(0,0,W*0.6,0);
+  topGrad.addColorStop(0,'#24B870'); topGrad.addColorStop(0.5,'#4888D8'); topGrad.addColorStop(1,'transparent');
+  ctx.fillStyle = topGrad; ctx.fillRect(0,0,W,3);
+  ctx.font = '600 52px Georgia,serif'; ctx.fillStyle = '#FFFFFF'; ctx.fillText('Card Roundup',60,88);
+  ctx.font = '500 16px Helvetica,sans-serif'; ctx.fillStyle = '#4A4A72'; ctx.fillText('MY CREDIT CARD STACK',62,116);
+  var totalCredits = cards.reduce(function(a,c){return a+(c.summary?c.summary.totalV||0:0);},0);
+  var totalFees = cards.reduce(function(a,c){return a+c.fee;},0);
+  var net = totalCredits - totalFees;
+  var stats = [{label:'CARDS',value:String(cards.length),color:'#FFFFFF'},{label:'POTENTIAL/YR',value:'$'+totalCredits.toLocaleString(),color:'#FFFFFF'},{label:'ANNUAL FEES',value:'$'+totalFees.toLocaleString(),color:'#FFFFFF'},{label:'NET VALUE',value:(net>=0?'+':'')+('$'+Math.abs(net).toLocaleString()),color:net>=0?'#24B870':'#E84848'}];
+  var sx=60;
+  stats.forEach(function(s){ ctx.font='bold 30px Helvetica,sans-serif';ctx.fillStyle=s.color;ctx.fillText(s.value,sx,178);ctx.font='500 11px Helvetica,sans-serif';ctx.fillStyle='#3A3A60';ctx.fillText(s.label,sx,198);sx+=240; });
+  ctx.fillStyle='rgba(255,255,255,0.05)';ctx.fillRect(60,218,W-120,1);
+  var maxShow=Math.min(cards.length,8),cols=maxShow<=3?maxShow:maxShow<=6?3:4,rows=Math.ceil(maxShow/cols);
+  var padX=60,gapX=12,gapY=12,cardW=(W-padX*2-gapX*(cols-1))/cols,cardH=rows===1?340:158,startY=238;
+  for (var i=0;i<maxShow;i++) {
+    var card=cards[i],col=i%cols,row=Math.floor(i/cols),cx=padX+col*(cardW+gapX),cy=startY+row*(cardH+gapY);
+    ctx.fillStyle='#0E0E1C'; crRoundRect(ctx,cx,cy,cardW,cardH,8); ctx.fill();
+    ctx.fillStyle=card.c||'#333'; crRoundRect(ctx,cx,cy,3,cardH,[8,0,0,8]); ctx.fill();
+    ctx.font='bold 14px Helvetica,sans-serif';ctx.fillStyle='#E8E8F4';
+    var nameStr=card.name||card.short||'';if(nameStr.length>22)nameStr=nameStr.slice(0,20)+'…';
+    ctx.fillText(nameStr,cx+16,cy+26);
+    ctx.font='11px Helvetica,sans-serif';ctx.fillStyle='#3A3A60';
+    ctx.fillText(card.fee>0?'$'+card.fee+'/yr':'No annual fee',cx+16,cy+43);
+    var totalV=card.summary?(card.summary.totalV||0):0;
+    if (totalV>0&&card.summary&&card.summary.total) {
+      ctx.font='bold 20px Helvetica,sans-serif';ctx.fillStyle=card.cm||card.c||'#24B870';
+      ctx.fillText(card.summary.total,cx+16,cy+78);
+      ctx.font='9px Helvetica,sans-serif';ctx.fillStyle='#3A3A60';ctx.fillText('IN ANNUAL CREDITS',cx+16,cy+92);
+    }
+  }
+  ctx.font='500 15px Helvetica,sans-serif';ctx.fillStyle='#2A2A42';ctx.textAlign='right';
+  ctx.fillText('cardroundup.com',W-60,H-28);ctx.textAlign='left';
+  if (gen) gen.style.display='none';
+  var dlBtn=document.getElementById('share-dl');
+  if (dlBtn) dlBtn.addEventListener('click',function(){ var a=document.createElement('a');a.download='my-card-stack.png';a.href=canvas.toDataURL('image/png');a.click();showToast('Downloaded!'); });
+  var copyBtn=document.getElementById('share-copy');
+  if (copyBtn) copyBtn.addEventListener('click',function(){ canvas.toBlob(function(blob){ try { navigator.clipboard.write([new ClipboardItem({'image/png':blob})]).then(function(){showToast('Copied!');}).catch(function(){showToast('Use Download instead');}); } catch(e){showToast('Use Download instead');} }); });
+  var tweetBtn=document.getElementById('share-tweet');
+  if (tweetBtn) { var netStr=(net>=0?'+$':'-$')+Math.abs(net).toLocaleString();tweetBtn.href='https://x.com/intent/tweet?text='+encodeURIComponent('My credit card stack: '+cards.length+' cards, '+netStr+' net value/yr.\n\nTrack your own at cardroundup.com'); }
+}
+
+function crRoundRect(ctx,x,y,w,h,r){
+  if(typeof r==='number')r=[r,r,r,r];
+  ctx.beginPath();ctx.moveTo(x+r[0],y);ctx.lineTo(x+w-r[1],y);ctx.quadraticCurveTo(x+w,y,x+w,y+r[1]);
+  ctx.lineTo(x+w,y+h-r[2]);ctx.quadraticCurveTo(x+w,y+h,x+w-r[2],y+h);
+  ctx.lineTo(x+r[3],y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r[3]);
+  ctx.lineTo(x,y+r[0]);ctx.quadraticCurveTo(x,y,x+r[0],y);ctx.closePath();
+}
+
 function closeShareModal() { shareModalOpen = false; var m = document.getElementById('share-modal'); if (m) m.style.display = 'none'; }
 
 
@@ -1783,6 +1863,8 @@ function checkMonthlyUrgency() {
     initGoogleSignIn();
     // Expose functions needed by inline HTML event handlers
     window.toggleClaimed = toggleClaimed;
+    window.openShareModal = openShareModal;
+    window.showRenewalPicker = showRenewalPicker;
   }).catch(function(e) {
     console.error('Boot error:', e);
     renderMycards();
