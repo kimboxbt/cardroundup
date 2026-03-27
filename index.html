@@ -1380,14 +1380,35 @@ async function signInUser(email, name, pic) {
       renderMycards();
       updateTabCounts();
       requestAnimationFrame(updateTabInd);
+      // Also upload any local claimed state to server (edge case)
+      if (Object.keys(claimed).length > 0) {
+        fetch('/api/save-claimed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, claimed: claimed }),
+        }).catch(function(){});
+      }
       showToast('\u2713 Wallet restored — ' + serverCards.length + ' card' + (serverCards.length !== 1 ? 's' : ''));
     } else if (localCards.length > 0) {
-      // This device has cards — restore claimed state then sync
-      if (data.claimed && typeof data.claimed === 'object' && Object.keys(data.claimed).length > 0) {
-        claimed = data.claimed;
+      // This device has cards — merge claimed state then sync everything to server
+      // Local claimed state (checked before sign-in) + server state merged
+      var serverClaimed = (data.claimed && typeof data.claimed === 'object') ? data.claimed : {};
+      var localClaimed = claimed; // already loaded from localStorage
+      // Merge: local wins on conflict (local is most recent action)
+      var mergedClaimed = Object.assign({}, serverClaimed, localClaimed);
+      if (Object.keys(mergedClaimed).length > 0) {
+        claimed = mergedClaimed;
         try { localStorage.setItem('cr_claimed', JSON.stringify(claimed)); } catch(e) {}
       }
+      // Sync both cards AND claimed to server immediately
       await syncWalletToServer(email);
+      if (Object.keys(claimed).length > 0) {
+        fetch('/api/save-claimed', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, claimed: claimed }),
+        }).catch(function(){});
+      }
       showToast('\u2713 Signed in as ' + name.split(' ')[0] + ' — wallet saved');
     } else {
       // No cards anywhere yet
