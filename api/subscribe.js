@@ -18,157 +18,135 @@ function headers(apiKey) {
 // consumed 3 of Resend's 5 req/s budget and caused rate limit 429s on the
 // welcome email send. If you ever need to re-register properties, call this
 // manually once from a test script or re-add it temporarily.
-//
-// async function ensureProperties(apiKey) { ... }
 
 function buildWelcomeEmail(cards) {
   const cardNames = cards && cards.trim()
     ? cards.split(',').filter(Boolean).map(id => CARD_NAMES[id]).filter(Boolean)
     : [];
 
-  const cardRows = cardNames.length > 0
-    ? cardNames.map(n =>
-        `<div style="font-size:13px;color:#9898AD;margin:5px 0;padding-left:12px;
-              border-left:2px solid rgba(255,255,255,0.08);">
-           ${n}
-         </div>`
-      ).join('')
-    : `<div style="font-size:13px;color:#9898AD;line-height:1.65;">
-         <a href="https://cardroundup.com" style="color:#E4E4EF;text-decoration:none;">
-           Visit cardroundup.com
-         </a> and click <strong style="color:#E4E4EF;">+ Add my cards</strong> 
-         to set up your wallet. Takes 30 seconds.
-       </div>`;
-
   const walletSection = cardNames.length > 0
-    ? `<div style="background:#141419;border:1px solid rgba(255,255,255,0.07);
-            border-left:3px solid #24B870;border-radius:0 10px 10px 0;
-            padding:20px 24px;margin-bottom:14px;">
-         <div style="font-size:15px;font-weight:600;color:#E4E4EF;margin-bottom:12px;">
+    ? `<div style="background:#F4F4F8;border-left:3px solid #24B870;border-radius:0 8px 8px 0;padding:18px 20px;margin-bottom:24px;">
+         <div style="font-size:13px;font-weight:700;color:#111122;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">
            Your wallet — ${cardNames.length} card${cardNames.length !== 1 ? 's' : ''}
          </div>
-         ${cardRows}
-         <div style="font-size:12px;color:#58586A;margin-top:12px;line-height:1.6;">
-           We'll send you a reminder on the 25th of each month before any credits expire.
+         ${cardNames.map(n => `<div style="font-size:14px;color:#333344;padding:4px 0;border-bottom:1px solid #E8E8F0;">${n}</div>`).join('')}
+         <div style="font-size:12px;color:#888899;margin-top:12px;">
+           We'll remind you on the 25th of each month before any credits expire.
          </div>
        </div>`
-    : `<div style="background:#141419;border:1px solid rgba(255,255,255,0.07);
-            border-left:3px solid #24B870;border-radius:0 10px 10px 0;
-            padding:20px 24px;margin-bottom:14px;">
-         <div style="font-size:15px;font-weight:600;color:#E4E4EF;margin-bottom:12px;">
-           Get started
+    : `<div style="background:#F4F4F8;border-left:3px solid #24B870;border-radius:0 8px 8px 0;padding:18px 20px;margin-bottom:24px;">
+         <div style="font-size:13px;font-weight:700;color:#111122;margin-bottom:8px;">Get started</div>
+         <div style="font-size:14px;color:#444455;line-height:1.6;">
+           Visit <a href="https://cardroundup.com" style="color:#24B870;text-decoration:none;font-weight:600;">cardroundup.com</a> 
+           and click <strong>+ Add my cards</strong> to set up your wallet. Takes 30 seconds.
          </div>
-         ${cardRows}
        </div>`;
 
-  const featuresSection = `
-    <div style="margin-bottom:14px;">
-      <div style="font-size:11px;font-weight:700;color:#58586A;letter-spacing:0.1em;
-           text-transform:uppercase;margin-bottom:14px;">What Card Roundup does</div>
-
-      <div style="display:table;width:100%;margin-bottom:10px;">
-        <div style="display:table-row;">
-          <div style="display:table-cell;width:28px;font-size:18px;vertical-align:top;padding-top:1px;">📅</div>
-          <div style="display:table-cell;padding-left:10px;">
-            <div style="font-size:13px;font-weight:600;color:#E4E4EF;margin-bottom:2px;">Monthly reminders</div>
-            <div style="font-size:12px;color:#9898AD;line-height:1.5;">
-              Email you on the 25th before monthly, quarterly, and annual credits reset.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:table;width:100%;margin-bottom:10px;">
-        <div style="display:table-row;">
-          <div style="display:table-cell;width:28px;font-size:18px;vertical-align:top;padding-top:1px;">✅</div>
-          <div style="display:table-cell;padding-left:10px;">
-            <div style="font-size:13px;font-weight:600;color:#E4E4EF;margin-bottom:2px;">Credit tracker</div>
-            <div style="font-size:12px;color:#9898AD;line-height:1.5;">
-              Check off credits as you use them. See exactly how much you've claimed vs. what's still available.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:table;width:100%;margin-bottom:10px;">
-        <div style="display:table-row;">
-          <div style="display:table-cell;width:28px;font-size:18px;vertical-align:top;padding-top:1px;">🔍</div>
-          <div style="display:table-cell;padding-left:10px;">
-            <div style="font-size:13px;font-weight:600;color:#E4E4EF;margin-bottom:2px;">46 cards tracked</div>
-            <div style="font-size:12px;color:#9898AD;line-height:1.5;">
-              Chase, Amex, Capital One, Citi, Bilt, U.S. Bank, BofA, and Barclays — all in one place.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="display:table;width:100%;">
-        <div style="display:table-row;">
-          <div style="display:table-cell;width:28px;font-size:18px;vertical-align:top;padding-top:1px;">🔄</div>
-          <div style="display:table-cell;padding-left:10px;">
-            <div style="font-size:13px;font-weight:600;color:#E4E4EF;margin-bottom:2px;">Syncs across devices</div>
-            <div style="font-size:12px;color:#9898AD;line-height:1.5;">
-              Sign in with Google to access your wallet from any device. Your progress saves automatically.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>`;
-
-  const html = `<!DOCTYPE html><html><head>
+  const html = `<!DOCTYPE html>
+<html>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
-<body style="margin:0;padding:0;background:#0B0B0F;font-family:'Helvetica Neue',Arial,sans-serif;">
-<div style="max-width:560px;margin:0 auto;padding:40px 24px;">
+<body style="margin:0;padding:0;background:#F0F0F6;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
 
-  <div style="margin-bottom:32px;">
-    <div style="font-size:24px;font-weight:700;color:#E4E4EF;letter-spacing:-0.02em;">
-      Card Roundup
+<div style="max-width:560px;margin:0 auto;padding:32px 16px;">
+
+  <!-- Header -->
+  <div style="background:#111122;border-radius:10px 10px 0 0;padding:24px 28px;margin-bottom:0;">
+    <div style="font-size:20px;font-weight:700;color:#FFFFFF;letter-spacing:-0.02em;">Card Roundup</div>
+    <div style="font-size:11px;color:#6868A0;margin-top:3px;letter-spacing:0.08em;text-transform:uppercase;">Never lose a credit again</div>
+  </div>
+
+  <!-- Body -->
+  <div style="background:#FFFFFF;border-radius:0 0 10px 10px;padding:28px 28px 32px;">
+
+    <div style="font-size:22px;font-weight:700;color:#111122;margin-bottom:8px;">You're in. 👋</div>
+    <div style="font-size:15px;color:#444455;line-height:1.7;margin-bottom:24px;">
+      Thanks for signing up to Card Roundup. We track every credit on your cards 
+      and remind you before they expire — so you never leave money on the table 
+      that you've already paid for.
     </div>
-    <div style="font-size:11px;color:#58586A;margin-top:4px;letter-spacing:0.1em;text-transform:uppercase;">
-      Never lose a credit again
+
+    ${walletSection}
+
+    <!-- Features -->
+    <div style="border-top:1px solid #EBEBF5;padding-top:20px;margin-bottom:24px;">
+      <div style="font-size:11px;font-weight:700;color:#AAAABD;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;">What Card Roundup does</div>
+
+      <table style="border-collapse:collapse;width:100%;margin-bottom:14px;">
+        <tr>
+          <td style="width:32px;font-size:20px;vertical-align:top;padding-top:2px;">📅</td>
+          <td style="padding-left:10px;">
+            <div style="font-size:14px;font-weight:600;color:#111122;margin-bottom:2px;">Monthly reminders</div>
+            <div style="font-size:13px;color:#666677;line-height:1.5;">Email you on the 25th before monthly, quarterly, and annual credits reset.</div>
+          </td>
+        </tr>
+      </table>
+
+      <table style="border-collapse:collapse;width:100%;margin-bottom:14px;">
+        <tr>
+          <td style="width:32px;font-size:20px;vertical-align:top;padding-top:2px;">✅</td>
+          <td style="padding-left:10px;">
+            <div style="font-size:14px;font-weight:600;color:#111122;margin-bottom:2px;">Credit tracker</div>
+            <div style="font-size:13px;color:#666677;line-height:1.5;">Check off credits as you use them. See exactly how much you've claimed vs. what's still available.</div>
+          </td>
+        </tr>
+      </table>
+
+      <table style="border-collapse:collapse;width:100%;margin-bottom:14px;">
+        <tr>
+          <td style="width:32px;font-size:20px;vertical-align:top;padding-top:2px;">🔍</td>
+          <td style="padding-left:10px;">
+            <div style="font-size:14px;font-weight:600;color:#111122;margin-bottom:2px;">46 cards tracked</div>
+            <div style="font-size:13px;color:#666677;line-height:1.5;">Chase, Amex, Capital One, Citi, Bilt, U.S. Bank, BofA, and Barclays — all in one place.</div>
+          </td>
+        </tr>
+      </table>
+
+      <table style="border-collapse:collapse;width:100%;">
+        <tr>
+          <td style="width:32px;font-size:20px;vertical-align:top;padding-top:2px;">🔄</td>
+          <td style="padding-left:10px;">
+            <div style="font-size:14px;font-weight:600;color:#111122;margin-bottom:2px;">Syncs across devices</div>
+            <div style="font-size:13px;color:#666677;line-height:1.5;">Sign in with Google to access your wallet from any device. Your progress saves automatically.</div>
+          </td>
+        </tr>
+      </table>
     </div>
-  </div>
 
-  <div style="font-size:15px;font-weight:600;color:#E4E4EF;margin-bottom:8px;">
-    You're in. 👋
-  </div>
-  <div style="font-size:13px;color:#9898AD;margin-bottom:28px;line-height:1.7;">
-    Thanks for signing up to Card Roundup. We track every credit on your cards 
-    and remind you before they expire — so you never leave money on the table 
-    that you've already paid for.
-  </div>
-
-  ${walletSection}
-  ${featuresSection}
-
-  <div style="text-align:center;margin:32px 0;">
-    <a href="https://cardroundup.com"
-       style="display:inline-block;padding:14px 40px;background:#E4E4EF;color:#0B0B0F;
-              border-radius:7px;text-decoration:none;font-weight:700;font-size:14px;
-              letter-spacing:-0.01em;">
-      Open my wallet →
-    </a>
-  </div>
-
-  <div style="background:#141419;border:1px solid rgba(255,255,255,0.06);border-radius:10px;
-       padding:18px 22px;margin-bottom:28px;">
-    <div style="font-size:12px;color:#58586A;line-height:1.8;">
-      💡 <strong style="color:#9898AD;">Pro tip:</strong> Sign in with Google to sync your wallet 
-      across devices and track which credits you've already used this month.
+    <!-- CTA -->
+    <div style="text-align:center;margin-bottom:24px;">
+      <a href="https://cardroundup.com"
+         style="display:inline-block;padding:14px 40px;background:#111122;color:#FFFFFF;
+                border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;
+                letter-spacing:-0.01em;">
+        Open my wallet →
+      </a>
     </div>
+
+    <!-- Pro tip -->
+    <div style="background:#F4F4F8;border-radius:8px;padding:14px 18px;margin-bottom:4px;">
+      <div style="font-size:13px;color:#555566;line-height:1.7;">
+        💡 <strong style="color:#333344;">Pro tip:</strong> Sign in with Google to sync your wallet 
+        across devices and track which credits you've already used this month.
+      </div>
+    </div>
+
   </div>
 
-  <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:20px;text-align:center;">
-    <div style="font-size:11px;color:#58586A;line-height:2;">
-      Card Roundup · <a href="https://cardroundup.com" style="color:#58586A;text-decoration:none;">cardroundup.com</a><br>
+  <!-- Footer -->
+  <div style="padding:20px 4px 0;text-align:center;">
+    <div style="font-size:11px;color:#AAAABD;line-height:2;">
+      Card Roundup · <a href="https://cardroundup.com" style="color:#AAAABD;text-decoration:none;">cardroundup.com</a><br>
       You'll receive a reminder on the 25th of each month.<br>
-      <a href="https://cardroundup.com" style="color:#58586A;text-decoration:underline;">Unsubscribe</a>
+      <a href="https://cardroundup.com" style="color:#AAAABD;text-decoration:underline;">Unsubscribe</a>
     </div>
   </div>
+
 </div>
-</body></html>`;
+</body>
+</html>`;
 
   return {
     subject: '👋 Welcome to Card Roundup — your credits are tracked',
