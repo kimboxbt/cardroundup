@@ -1227,8 +1227,10 @@ async function signInUser(email, name, pic) {
       // New device with no local cards — restore from server
       serverCards.forEach(function(id) { myCards.add(id); });
       saveMyCards();
+      syncHeader();
       renderMycards();
       updateTabCounts();
+      requestAnimationFrame(updateTabInd);
       showToast('\u2713 Wallet restored — ' + serverCards.length + ' card' + (serverCards.length !== 1 ? 's' : ''));
     } else if (localCards.length > 0) {
       // This device has cards — sync them to server (don't overwrite with empty)
