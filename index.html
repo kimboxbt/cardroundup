@@ -90,7 +90,7 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
 /* SECTION TABS */
 .sectabs{background:var(--s0);border-bottom:1px solid var(--bd);display:none;overflow-x:auto;scrollbar-width:none;position:relative;padding:0 var(--px)}
 .sectabs::-webkit-scrollbar{display:none}
-.st{display:inline-flex;align-items:center;gap:6px;padding:0 20px;height:42px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
+.st{display:inline-flex;align-items:center;gap:7px;padding:0 20px;height:42px;border:none;background:transparent;font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;color:var(--txd);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .15s,border-color .15s}
 .st:hover{color:var(--txm)}.st.on{color:var(--tx);border-bottom-color:rgba(255,255,255,0.35)}
 .st-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;opacity:.4;transition:opacity .15s}.st.on .st-dot{opacity:1}
 .st-cnt{font-family:'JetBrains Mono',monospace;font-size:8px;background:var(--s3);color:var(--txd);padding:1px 5px;border-radius:8px;border:1px solid var(--bd)}.st.on .st-cnt{background:rgba(255,255,255,.08);color:var(--txm)}
@@ -1631,27 +1631,27 @@ function drawShareCard(cards) {
     ctx.fillStyle = card.c || '#333';
     crRoundRect(ctx, cx, cy, 3, cardH, [8,0,0,8]); ctx.fill();
 
-    // Card name
-    ctx.font = 'bold 15px -apple-system, Helvetica, sans-serif';
+    // Card name — use full name, truncate if needed
+    ctx.font = 'bold 14px -apple-system, Helvetica, sans-serif';
     ctx.fillStyle = '#E8E8F4';
-    var nameStr = card.short || card.name;
-    if (nameStr.length > 24) nameStr = nameStr.slice(0,22)+'…';
-    ctx.fillText(nameStr, cx+16, cy+28);
+    var nameStr = card.name || card.short || '';
+    if (nameStr.length > 22) nameStr = nameStr.slice(0,20)+'…';
+    ctx.fillText(nameStr, cx+16, cy+26);
 
     // Fee
-    ctx.font = '12px -apple-system, Helvetica, sans-serif';
+    ctx.font = '11px -apple-system, Helvetica, sans-serif';
     ctx.fillStyle = '#3A3A60';
-    ctx.fillText('$'+card.fee+'/yr', cx+16, cy+46);
+    ctx.fillText(card.fee > 0 ? '$'+card.fee+'/yr' : 'No annual fee', cx+16, cy+43);
 
-    // Credits amount
-    if (card.summary && card.summary.total) {
-      ctx.font = 'bold 22px -apple-system, Helvetica, sans-serif';
+    // Credits amount — only show if card has meaningful credits
+    var totalV = card.summary ? (card.summary.totalV || 0) : 0;
+    if (totalV > 0 && card.summary && card.summary.total) {
+      ctx.font = 'bold 20px -apple-system, Helvetica, sans-serif';
       ctx.fillStyle = card.cm || card.c || '#24B870';
-      var creditStr = card.summary.total;
-      ctx.fillText(creditStr, cx+16, cy+82);
-      ctx.font = '10px -apple-system, Helvetica, sans-serif';
+      ctx.fillText(card.summary.total, cx+16, cy+78);
+      ctx.font = '9px -apple-system, Helvetica, sans-serif';
       ctx.fillStyle = '#3A3A60';
-      ctx.fillText('IN ANNUAL CREDITS', cx+16, cy+98);
+      ctx.fillText('IN ANNUAL CREDITS', cx+16, cy+92);
     }
   }
 
