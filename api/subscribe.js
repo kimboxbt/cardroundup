@@ -12,22 +12,14 @@ function headers(apiKey) {
   };
 }
 
-async function ensureProperties(apiKey) {
-  const props = [
-    { key: 'cards',    type: 'string', fallbackValue: '' },
-    { key: 'welcomed', type: 'string', fallbackValue: 'false' },
-    { key: 'claimed',  type: 'string', fallbackValue: '{}' },
-  ];
-  for (const prop of props) {
-    try {
-      await fetch(`${RESEND_BASE}/contact-properties`, {
-        method: 'POST',
-        headers: headers(apiKey),
-        body: JSON.stringify(prop),
-      });
-    } catch {}
-  }
-}
+// NOTE: ensureProperties() is intentionally NOT called on every subscribe.
+// The three contact properties (cards, welcomed, claimed) are already registered
+// in Resend and only need to be created once. Calling this on every request
+// consumed 3 of Resend's 5 req/s budget and caused rate limit 429s on the
+// welcome email send. If you ever need to re-register properties, call this
+// manually once from a test script or re-add it temporarily.
+//
+// async function ensureProperties(apiKey) { ... }
 
 function buildWelcomeEmail(cards) {
   const cardNames = cards && cards.trim()
@@ -232,11 +224,8 @@ export default async function handler(req, res) {
   }
 
   try {
-    await ensureProperties(apiKey);
-
     // Check if contact already exists — preserve welcomed flag
     let alreadyWelcomed = 'false';
-    let isNewContact = true;
     try {
       const existing = await fetch(
         `${RESEND_BASE}/contacts/${encodeURIComponent(email)}`,
@@ -246,7 +235,6 @@ export default async function handler(req, res) {
         const d = await existing.json();
         const wRaw = d.properties?.welcomed;
         alreadyWelcomed = (wRaw && typeof wRaw === 'object') ? (wRaw.value || 'false') : (wRaw || 'false');
-        isNewContact = false;
       }
     } catch {}
 
@@ -267,10 +255,6 @@ export default async function handler(req, res) {
     // Send immediate welcome email to brand new subscribers
     const fromEmail = process.env.RESEND_FROM_EMAIL || 'Card Roundup <reminders@cardroundup.com>';
     if (alreadyWelcomed !== 'true') {
-      // Brief pause to avoid Resend's 5 req/s rate limit — ensureProperties + GET + POST
-      // fires 5 calls before we get here, so we wait for the window to clear.
-      await new Promise(r => setTimeout(r, 500));
-
       const { subject, html } = buildWelcomeEmail(cards);
       const emailRes = await fetch(`${RESEND_BASE}/emails`, {
         method: 'POST',
