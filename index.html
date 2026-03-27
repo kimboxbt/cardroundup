@@ -447,6 +447,10 @@ body{font-family:'Figtree',sans-serif;background:var(--bg);color:var(--tx);font-
         <svg width="9" height="9" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3v10M3 8h10"/></svg>
         Edit wallet
       </button>
+      <button class="tb-cal btn-share" id="share-btn" style="display:none">
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>
+        Share stack
+      </button>
       <span class="tb-cnt" id="mc-cnt"></span>
     </div>
     <div class="grid-wrap">
@@ -620,6 +624,10 @@ function syncHeader() {
   if (profileBtn) profileBtn.style.display = currentUser ? 'inline-flex' : 'none';
   var editBtn = document.getElementById('edit-btn');
   if (editBtn) editBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
+  var shareBtn = document.getElementById('share-btn');
+  if (shareBtn) shareBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
+  var shareBtn = document.getElementById('share-btn');
+  if (shareBtn) shareBtn.style.display = (currentView === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -683,6 +691,10 @@ function switchView(view) {
   // Edit button only on mycards
   var editBtn = document.getElementById('edit-btn');
   if (editBtn) editBtn.style.display = (view === 'mycards' && myCards.size > 0) ? 'flex' : 'none';
+  var shareBtn2 = document.getElementById('share-btn');
+  if (shareBtn2) shareBtn2.style.display = (view === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
+  var shareBtn2 = document.getElementById('share-btn');
+  if (shareBtn2) shareBtn2.style.display = (view === 'mycards' && myCards.size > 0) ? 'inline-flex' : 'none';
   // Render the view
   if (view === 'mycards') { renderMycards(); }
   if (view === 'browse') { renderBrowsePicker(); renderBrowse(); }
@@ -1241,9 +1253,7 @@ function renderSummaryFooter(cards, el) {
     + ' $' + tc.toLocaleString() + '/yr credits &middot; $' + tf.toLocaleString() + '/yr fees &middot; '
     + '<span style="color:' + (net >= 0 ? 'var(--green)' : 'var(--red)') + ';font-weight:500">'
     + (net >= 0 ? '+' : '-') + '$' + Math.abs(net).toLocaleString() + ' net</span></div>'
-    + '<button class="btn btn-share" style="margin-left:auto;flex-shrink:0" onclick="openShareModal()">'
-    + '<svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="3" r="1.5"/><circle cx="4" cy="8" r="1.5"/><circle cx="12" cy="13" r="1.5"/><path d="M5.5 7l5-3M10.5 10l-5 3"/></svg>'
-    + ' Share your stack</button></div>';
+    + '</div>';
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1747,6 +1757,11 @@ function checkMonthlyUrgency() {
   // Calendar button
   var calBtn = document.getElementById('cal-btn');
   if (calBtn) calBtn.addEventListener('click', exportCalendar);
+  // Share stack button
+  var shareBtnEl = document.getElementById('share-btn');
+  if (shareBtnEl) shareBtnEl.addEventListener('click', function() { openShareModal(); });
+  var shareBtnEl = document.getElementById('share-btn');
+  if (shareBtnEl) shareBtnEl.addEventListener('click', function() { openShareModal(); });
   // Auth modal close buttons
   var authModalX = document.getElementById('auth-modal-x');
   if (authModalX) authModalX.addEventListener('click', function() { closeAuthModal(); });
@@ -1784,6 +1799,7 @@ function checkMonthlyUrgency() {
     initGoogleSignIn();
     // Expose functions needed by inline HTML event handlers
     window.toggleClaimed = toggleClaimed;
+    window.openShareModal = openShareModal;
   }).catch(function(e) {
     console.error('Boot error:', e);
     renderMycards();
