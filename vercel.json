@@ -27,6 +27,9 @@
     },
     "api/get-wallet.js": {
       "maxDuration": 10
+    },
+    "api/save-claimed.js": {
+      "maxDuration": 10
     }
   },
   "headers": [
